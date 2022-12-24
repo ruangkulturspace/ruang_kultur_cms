@@ -48,7 +48,7 @@ const Index = ({ titles, currentCard, setCurrentCard }) => {
       />
       <div className="w-11/12 flex flex-nowrap gap-5 justify-center">
         {titles.map((e, index) => {
-          return <Card title={e} index={index} />;
+          return <Card title={e} key={index} />;
         })}
       </div>
       <RightOutlined
