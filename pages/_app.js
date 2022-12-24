@@ -6,6 +6,7 @@ import AppProvider from "../components/shared/AppProvider";
 import { GlobalStyles } from "../components/styles/GlobalStyles";
 import "../public/app.css";
 import "../public/nprogress.css";
+import "../styles/globals.css";
 
 import Head from "next/head";
 import NProgress from "nprogress";

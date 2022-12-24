@@ -18,6 +18,7 @@ const NonDashboardRoutes = [
   "/lockscreen",
   "/_error",
   "/reports/documentpdf",
+  "/"
 ];
 
 const Page = ({ router, children, auth }) => {
@@ -55,7 +56,7 @@ const Page = ({ router, children, auth }) => {
                       fontSize: "12px",
                     }}
                   >
-                    © 2021 Datasintesa Boilerplate next. by c3budiman.
+                    © 2022 Ruang Kultur
                   </center>
                 )}
               </Content>

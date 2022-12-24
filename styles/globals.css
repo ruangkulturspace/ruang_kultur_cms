@@ -1,0 +1,707 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap");
+
+/* =============== CUSTOM GLOBAL STYLING HERE ===============  */
+:root {
+  --baktibluedark: rgb(47, 58, 86);
+  --baktiblue: rgb(44, 50, 128);
+  --baktiblue50: rgba(44, 50, 128, 0.5);
+  --baktiblue3: rgb(29, 35, 116);
+  --baktiblue350: rgba(29, 35, 116, 0.5);
+  --baktiblue2: rgb(0, 121, 193);
+  --baktiblue250: rgba(0, 121, 193, 0.5);
+  --baktibluelight: rgb(121, 181, 185);
+  --baktibluelight50: rgba(121, 181, 185, 0.5);
+  --baktibluelight2: rgb(205, 231, 233);
+  --baktibluelight250: rgba(205, 231, 233, 0.5);
+  --baktibluegrey: rgb(247, 247, 247);
+  --baktibluegrey50: rgba(247, 247, 247, 0.5);
+  --baktired: rgba(180, 69, 69);
+  --baktired50: rgba(180, 69, 69, 0.5);
+
+  --cnblue: rgba(14, 110, 253, 1);
+  --lightcnblue: rgba(207, 226, 255, 1);
+  --bg: #f6f8fd;
+  --darkGrey: rgba(93, 94, 110, 1);
+  --medGrey: rgba(133, 134, 146, 1);
+  --lightGrey: #aeafb7;
+  --twitterblue: #1da1f2;
+  --fbblue: #4267b2;
+  --whatsappgreen: #25d366;
+  --linkedinblue: #0072b1;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  font-family: "Inter", sans-serif;
+}
+
+/* supaya preview image antd tidak rusak  */
+img {
+  display: unset !important;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.no-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+/* Background Colors */
+.bgMe {
+  background-color: tomato;
+}
+.bgJi {
+  background-color: lightsalmon;
+}
+
+.bgKu {
+  background-color: lemonchiffon;
+}
+
+.bgHi {
+  background-color: darkseagreen;
+}
+
+.bgBi {
+  background-color: powderblue;
+}
+
+.bgNi {
+  background-color: lavender;
+}
+
+.bgU {
+  background-color: thistle;
+}
+
+.bgW {
+  background-color: white;
+}
+
+.bgLg {
+  background-color: lightslategrey;
+}
+
+.bgB {
+  background-color: black;
+}
+
+.bgBg {
+  background-color: var(--bg);
+}
+
+.bgCnBlue {
+  background-color: var(--cnblue);
+}
+
+.bgLightCnBlue {
+  background-color: var(--lightcnblue);
+}
+
+.bgbaktibluedark {
+  background-color: var(--baktibluedark) !important;
+}
+.bgBaktiBlue {
+  background-color: var(--baktiblue) !important;
+}
+
+.bgBaktiBlue2 {
+  background-color: var(--baktiblue2) !important;
+}
+
+.bgBaktiBlueGrey {
+  background-color: var(--baktibluegrey) !important;
+}
+
+.bgBaktiBlueLight {
+  background-color: var(--baktibluelight) !important;
+}
+
+.bgBaktiBlueLight2 {
+  background-color: var(--baktibluelight2) !important;
+}
+
+.bgBaktiRed {
+  background-color: var(--baktired) !important;
+}
+
+/* Color  */
+.cMe {
+  color: tomato;
+}
+.cJi {
+  color: lightsalmon;
+}
+
+.cKu {
+  color: lemonchiffon;
+}
+
+.cHi {
+  color: darkseagreen;
+}
+
+.cBi {
+  color: powderblue;
+}
+
+.cInfo {
+  color: dodgerblue;
+}
+
+.cNi {
+  color: lavender;
+}
+
+.cU {
+  color: thistle;
+}
+
+.cW {
+  color: white;
+}
+
+.cG {
+  color: grey;
+}
+.cLg {
+  color: lightslategrey;
+}
+
+.cB {
+  color: black;
+}
+
+.cDarkgrey {
+  color: var(--darkGrey) !important;
+}
+
+.cMedgrey {
+  color: var(--medGrey) !important;
+}
+
+.cLightgrey {
+  color: var(--lightGrey) !important;
+}
+
+.cCnBlue {
+  color: var(--cnblue) !important;
+}
+
+.cBaktiBlueDark {
+  color: var(--baktibluedark) !important;
+}
+.cBaktiBlue {
+  color: var(--baktiblue) !important;
+}
+
+.bBaktiBlue {
+  border-color: var(--baktiblue) !important;
+}
+
+.cBaktiBlue2 {
+  color: var(--baktiblue2) !important;
+}
+
+.cBaktiBlueGrey {
+  color: var(--baktibluegrey) !important;
+}
+
+.cBaktiBlueLight {
+  color: var(--baktibluelight) !important;
+}
+
+.cBaktiBlueLight2 {
+  color: var(--baktibluelight2) !important;
+}
+
+.cBaktiRed {
+  color: var(--baktired) !important;
+}
+
+.shadowNone {
+  box-shadow: none;
+}
+
+.shadowBaktiBottom {
+  box-shadow: 0px 4px 12px var(--baktiblue50) !important;
+}
+
+.shadowBaktiBottom2 {
+  box-shadow: 0px 4px 12px var(--baktiblue350) !important;
+}
+
+.shadowBaktiTop {
+  box-shadow: 0px -4px 12px var(--baktiblue50) !important;
+}
+
+/* Buttons  */
+.btnCnBlue {
+  color: white;
+  background-color: var(--cnblue);
+  border: 2px solid var(--cnblue);
+  border-radius: 29px;
+  padding: 5px 30px;
+}
+
+.btnCnBlue:hover {
+  color: var(--cnblue);
+  background-color: white;
+  border: 2px solid var(--cnblue);
+  border-radius: 29px;
+  padding: 5px 30px;
+}
+
+.btnLightCnBlue {
+  color: var(--cnblue);
+  background-color: var(--lightcnblue);
+  border: 2px solid var(--lightcnblue);
+  border-radius: 29px;
+  padding: 0px 15px;
+}
+
+.btnLightCnBlue:hover {
+  color: var(--lightcnblue);
+  background-color: var(--cnblue);
+  border: 2px solid var(--cnblue);
+  border-radius: 29px;
+  padding: 0px 15px;
+}
+
+.btnCnBlueNoBorder {
+  color: var(--cnblue);
+  border-radius: 29px;
+  padding: 5px 30px;
+}
+
+.btnCnBlueBorder {
+  color: var(--cnblue);
+  border: 2px solid var(--cnblue);
+  border-radius: 29px;
+  padding: 5px 30px;
+}
+
+.btnCnBlueBorder:hover {
+  color: white;
+  border: 2px solid var(--cnblue);
+  background-color: var(--cnblue);
+  border-radius: 29px;
+  padding: 5px 30px;
+}
+
+.btnBaktiBlue {
+  background-color: var(--baktiblue) !important;
+}
+.btnBaktiBlue:hover {
+  background-color: var(--baktiblue3) !important;
+}
+
+.exportBtn {
+  background-color: var(--baktibluelight2) !important;
+}
+.exportBtn:hover {
+  background-color: var(--baktibluelight) !important;
+  transition: 600ms;
+}
+
+.checkboxLightCnBlue .ant-checkbox-wrapper {
+  color: #aeafb7;
+  background-color: #ffffff;
+  border: 1px solid #d9d9dd;
+  border-radius: 29px;
+  padding: 0px 15px !important;
+  margin-bottom: 5px !important;
+}
+
+.checkboxLightCnBlue .ant-checkbox-wrapper-checked {
+  color: var(--cnblue);
+  background-color: var(--lightcnblue);
+  border: 2px solid var(--lightcnblue);
+  border-radius: 29px;
+  padding: 0px 15px;
+}
+
+/* Flex box */
+.flexboxRowCenter {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.flexboxColCenter {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.flexboxRowStart {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.flexboxColStart {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.flexboxRowEnd {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.flexboxColEnd {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+}
+
+.flexboxRowBetween {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  justify-items: center;
+  align-content: center;
+}
+
+.alignEndImp {
+  align-items: flex-end !important;
+}
+
+.flexboxColBetween {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.flexboxRowAround {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.flexboxColAround {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+.flexboxRowEvenly {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.flexboxColEvenly {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+/* =================== delete later if not needed (for video player) =================== */
+
+.screenshot-image {
+  width: 150px;
+  height: 90px;
+  border-radius: 4px;
+  border: 2px solid whitesmoke;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.1);
+  position: absolute;
+  bottom: 5px;
+  left: 10px;
+  background: white;
+}
+
+.display-cover {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin: 5% auto;
+  position: relative;
+}
+
+video {
+  width: 100%;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.video-options {
+  position: absolute;
+  left: 10px;
+  bottom: 10px;
+}
+
+.controls {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  display: flex;
+}
+
+.controls > button {
+  width: 20px;
+  height: 20px;
+  text-align: center;
+  border-radius: 100%;
+  margin: 0 6px;
+  background: transparent;
+}
+
+.controls > button:hover svg {
+  color: white !important;
+}
+
+@media (min-width: 300px) and (max-width: 400px) {
+  .controls {
+    flex-direction: column;
+  }
+
+  .controls button {
+    margin: 5px 0 !important;
+  }
+}
+
+.controls > button > svg {
+  height: 20px;
+  width: 18px;
+  text-align: center;
+  margin: 0 auto;
+  padding: 0;
+}
+
+.controls button:nth-child(1) {
+  border: 2px solid #d2002e;
+}
+
+.controls button:nth-child(1) svg {
+  color: #d2002e;
+}
+
+.controls button:nth-child(2) {
+  border: 2px solid #008496;
+}
+
+.controls button:nth-child(2) svg {
+  color: #008496;
+}
+
+.controls button:nth-child(3) {
+  border: 2px solid #00b541;
+}
+
+.controls button:nth-child(3) svg {
+  color: #00b541;
+}
+
+.controls > button {
+  width: 45px;
+  height: 45px;
+  text-align: center;
+  border-radius: 100%;
+  margin: 0 6px;
+  background: transparent;
+}
+
+.controls > button:hover svg {
+  color: white;
+}
+
+.btnBaktiDisabled {
+  background-color: lightgrey !important;
+  color: black !important;
+  cursor: no-drop !important;
+}
+
+.hide {
+  display: none !important;
+}
+/* =================== delete later if not needed (for video player) =================== */
+
+/* custome antd styling:  */
+
+.ant-upload-list-text-container {
+  display: none;
+}
+
+.slick-arrow.slick-prev {
+  background-color: red;
+  color: red;
+}
+.slick-arrow.slick-next {
+  background-color: red;
+  color: red;
+}
+
+.ant-menu {
+  color: white !important;
+}
+
+.ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected {
+  background-color: rgba(255, 255, 255, 0.15) !important;
+  color: white !important;
+}
+
+.ant-menu-inline,
+.ant-menu-vertical,
+.ant-menu-vertical-left {
+  border: none !important;
+}
+
+.ant-menu-vertical .ant-menu-item::after,
+.ant-menu-vertical-left .ant-menu-item::after,
+.ant-menu-vertical-right .ant-menu-item::after,
+.ant-menu-inline .ant-menu-item::after {
+  border-right: none !important;
+}
+
+.ant-layout-sider-light .ant-layout-sider-trigger {
+  background-color: var(--cnblue) !important;
+  color: white !important;
+}
+
+.ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+  color: var(--baktiblue) !important;
+}
+
+.ant-tabs-ink-bar {
+  background: var(--baktiblue) !important;
+}
+
+.mapboxgl-ctrl-top-left {
+  display: none !important;
+}
+.mapboxgl-ctrl-bottom-right {
+  display: none !important;
+}
+
+.ant-table table {
+  font-size: 12px;
+}
+
+.ant-form-vertical .ant-form-item-label > label,
+.ant-col-24.ant-form-item-label > label,
+.ant-col-xl-24.ant-form-item-label > label {
+  color: var(--lightGrey) !important;
+  font-weight: 600;
+}
+
+/* Screen vh vw */
+
+.h-90vh {
+  height: 90vh;
+}
+
+.h-80vh {
+  height: 80vh;
+}
+
+.h-50vh {
+  height: 505vh;
+}
+
+.w-90vh {
+  height: 90vw;
+}
+
+.w-80vh {
+  height: 80vw;
+}
+
+.w-50vh {
+  height: 50vw;
+}
+
+.ant-select-selector {
+  border-radius: 0.5rem !important;
+}
+
+/* ================== ANIMATIONS ================== */
+
+@-webkit-keyframes sidebarAnimate {
+  from {
+    left: -250px;
+    display: none;
+  }
+  to {
+    left: 0;
+    display: inline;
+  }
+}
+@keyframes sidebarAnimate {
+  from {
+    left: -250px;
+    display: none;
+  }
+  to {
+    left: 0;
+    display: inline;
+  }
+}
+
+@-webkit-keyframes sidebarClosing {
+  from {
+    left: 0;
+    display: inline;
+  }
+  to {
+    left: -250px;
+    display: none;
+  }
+}
+@keyframes sidebarClosing {
+  from {
+    left: 0;
+    display: inline;
+  }
+  to {
+    left: -250px;
+    display: none;
+  }
+}
+
+ul li {
+  list-style-type: disc;
+}
+
+ul {
+  padding-left: 2.5rem;
+}
+
+div.DraftEditor-root {
+  border: 1px solid #f1f1f1;
+  padding: 5px;
+  min-height: 20rem;
+}
+
+.rdw-link-modal {
+  height: 235px !important;
+  left: -135px !important;
+}
+
+.rdw-image-modal {
+  left: -85px !important;
+}

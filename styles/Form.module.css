@@ -1,0 +1,7 @@
+.rounded__input {
+  border-radius: 0.5rem;
+}
+
+.rounded__submit {
+  border-radius: 9999px
+}
