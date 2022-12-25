@@ -45,7 +45,7 @@ const Home = () => {
     <>
       {/* <Progress isAnimating={isAnimating} /> */}
       <LandingPage title="Beranda">
-        <Carousel />
+        {/* <Carousel />
         <CardMenuSlider
           titles={["Multimedia", "Programming", "Network", "Wirausaha"]}
           currentCard={currentCard}
@@ -115,30 +115,30 @@ const Home = () => {
           title="Testimonials"
           cta="Berbagi Pengalaman & Karya"
           cta2="di Career Network"
-          // cardInfo={[
-          //   {
-          //     name: "Tri Prastia",
-          //     occupation: "Mahasiswa",
-          //     comment:
-          //       "Mentornya keren cara menyampaikan setiap materinya juga detail dan mudah dipahami.",
-          //     imageName: "person1",
-          //   },
-          //   {
-          //     name: "M Reza Saputra",
-          //     occupation: "Wirausaha",
-          //     comment:
-          //       "Kelas yang paling recommended pokoknya buat investasi ilmu di era revolusi industri 4.0.",
-          //     imageName: "person2",
-          //   },
-          //   {
-          //     name: "Chaerul Marwan",
-          //     occupation: "Pelajar",
-          //     comment:
-          //       "Kelas yang sangat bermanfaat dan ilmu up-to-date dan yang paling penting biayanya terjangkau.",
-          //     imageName: "person3",
-          //   },
-          // ]}
-        />
+          cardInfo={[
+            {
+              name: "Tri Prastia",
+              occupation: "Mahasiswa",
+              comment:
+                "Mentornya keren cara menyampaikan setiap materinya juga detail dan mudah dipahami.",
+              imageName: "person1",
+            },
+            {
+              name: "M Reza Saputra",
+              occupation: "Wirausaha",
+              comment:
+                "Kelas yang paling recommended pokoknya buat investasi ilmu di era revolusi industri 4.0.",
+              imageName: "person2",
+            },
+            {
+              name: "Chaerul Marwan",
+              occupation: "Pelajar",
+              comment:
+                "Kelas yang sangat bermanfaat dan ilmu up-to-date dan yang paling penting biayanya terjangkau.",
+              imageName: "person3",
+            },
+          ]}
+        /> */}
       </LandingPage>
     </>
   );

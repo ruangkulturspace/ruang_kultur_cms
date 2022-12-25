@@ -30,7 +30,7 @@ const CardStats = ({ auth }) => {
 
   return (
     <div className="flex flex-row gap-5 justify-between flex-wrap">
-      <div className="grow bgCnBlue lg:w-1/5 md:w-1/3 sm:w-1/2 px-5 py-4 rounded-lg cW text-xs flex flex-row gap-5 items-center">
+      <div className="grow bgRkGreen lg:w-1/5 md:w-1/3 sm:w-1/2 px-5 py-4 rounded-lg cW text-xs flex flex-row gap-5 items-center">
         <div
           style={{ borderRadius: "100px", width: "45px", height: "45px" }}
           className="bgW aspect-square"

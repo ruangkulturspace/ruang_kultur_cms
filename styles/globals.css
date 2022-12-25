@@ -100,12 +100,12 @@ img {
   background-color: var(--bg);
 }
 
-.bgCnBlue {
-  background-color: var(--cnblue);
+.bgRkGreen {
+  background-color: #BAFF4A;
 }
 
-.bgLightCnBlue {
-  background-color: var(--lightcnblue);
+.bgLightRkGreen {
+  background-color: #F8FFEC;
 }
 
 .bgbaktibluedark {
@@ -195,7 +195,7 @@ img {
 }
 
 .cCnBlue {
-  color: var(--cnblue) !important;
+  color: #BAFF4A !important;
 }
 
 .cBaktiBlueDark {
@@ -248,53 +248,53 @@ img {
 /* Buttons  */
 .btnCnBlue {
   color: white;
-  background-color: var(--cnblue);
-  border: 2px solid var(--cnblue);
+  background-color: #BAFF4A;
+  border: 2px solid #BAFF4A;
   border-radius: 29px;
   padding: 5px 30px;
 }
 
 .btnCnBlue:hover {
-  color: var(--cnblue);
+  color: #BAFF4A;
   background-color: white;
-  border: 2px solid var(--cnblue);
+  border: 2px solid #BAFF4A;
   border-radius: 29px;
   padding: 5px 30px;
 }
 
 .btnLightCnBlue {
-  color: var(--cnblue);
-  background-color: var(--lightcnblue);
-  border: 2px solid var(--lightcnblue);
+  color: #BAFF4A;
+  background-color: #40571C;
+  border: 2px solid #40571C;
   border-radius: 29px;
   padding: 0px 15px;
 }
 
 .btnLightCnBlue:hover {
-  color: var(--lightcnblue);
-  background-color: var(--cnblue);
-  border: 2px solid var(--cnblue);
+  color: #40571C;
+  background-color: #BAFF4A;
+  border: 2px solid #BAFF4A;
   border-radius: 29px;
   padding: 0px 15px;
 }
 
 .btnCnBlueNoBorder {
-  color: var(--cnblue);
+  color: #BAFF4A;
   border-radius: 29px;
   padding: 5px 30px;
 }
 
 .btnCnBlueBorder {
-  color: var(--cnblue);
-  border: 2px solid var(--cnblue);
+  color: #BAFF4A;
+  border: 2px solid #BAFF4A;
   border-radius: 29px;
   padding: 5px 30px;
 }
 
 .btnCnBlueBorder:hover {
   color: white;
-  border: 2px solid var(--cnblue);
-  background-color: var(--cnblue);
+  border: 2px solid #BAFF4A;
+  background-color: #BAFF4A;
   border-radius: 29px;
   padding: 5px 30px;
 }
@@ -324,9 +324,9 @@ img {
 }
 
 .checkboxLightCnBlue .ant-checkbox-wrapper-checked {
-  color: var(--cnblue);
-  background-color: var(--lightcnblue);
-  border: 2px solid var(--lightcnblue);
+  color: #BAFF4A;
+  background-color: #40571C;
+  border: 2px solid #40571C;
   border-radius: 29px;
   padding: 0px 15px;
 }
@@ -579,7 +579,7 @@ video {
 }
 
 .ant-layout-sider-light .ant-layout-sider-trigger {
-  background-color: var(--cnblue) !important;
+  background-color: #BAFF4A !important;
   color: white !important;
 }
 

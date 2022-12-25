@@ -6,7 +6,7 @@ const Index = ({ titles, currentCard, setCurrentCard }) => {
     if (currentCard === index) {
       return (
         <div
-          className="flex items-center justify-center border-solid border-white rounded bgCnBlue px-5 py-2 relative"
+          className="flex items-center justify-center border-solid border-white rounded bgRkGreen px-5 py-2 relative"
           style={{ width: "280px", height: "68px" }}
           onClick={() => setCurrentCard(index)}
         >

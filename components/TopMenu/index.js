@@ -70,7 +70,7 @@ const TopMenu = ({
           router.push("/");
         }}
       >
-        Beranda
+        Kultur Bumi
       </Menu.Item>
       <Menu.Item
         key="1"
@@ -78,7 +78,7 @@ const TopMenu = ({
           router.push("/tentang-kami");
         }}
       >
-        Tentang Kami
+        Kultur Gaya
       </Menu.Item>
       <Menu.Item
         key="2"
@@ -94,7 +94,7 @@ const TopMenu = ({
           router.push("/kelas");
         }}
       >
-        Kelas
+        Shop
       </Menu.Item>
       <Menu.Item
         key="4"
@@ -299,22 +299,22 @@ const TopMenu = ({
   } else {
     return (
       <>
-        <div className="w-full flex flex-row items-center justify-between px-5 py-5 bgW drop-shadow z-10">
+        <div className="w-full flex flex-row items-center justify-between px-5 py-3 bgW drop-shadow z-10">
           <div className="flex flex-row items-center gap-8 w-full">
             <Link href="/">
               <a>
-                <img src="/assets/icons/logo.svg" alt="logo" />
+                <img src="/assets/icons/logo_ruang_kultur.gif" alt="logo" height={100} width={180} />
               </a>
             </Link>
             <div className="hidden lg:flex flex-row items-center justify-start gap-8">
               <Link className={pathname === "/" ? `cCnBlue` : `cLg`} href="/">
-                Beranda
+                Kultur Bumi
               </Link>
               <a
                 className={pathname === "/tentang-kami" ? `cCnBlue` : `cLg`}
                 href="/tentang-kami"
               >
-                Tentang Kami
+                Kultur Gaya
               </a>
               <a
                 className={
@@ -328,19 +328,7 @@ const TopMenu = ({
                 className={pathname.includes("/kelas") ? `cCnBlue` : `cLg`}
                 href="/kelas"
               >
-                Kelas
-              </a>
-              <a
-                className={pathname === "/cek-sertifikat" ? `cCnBlue` : `cLg`}
-                href="/cek-sertifikat"
-              >
-                Sertifikat
-              </a>
-              <a
-                className={pathname === "/kontak" ? `cCnBlue` : `cLg`}
-                href="/kontak"
-              >
-                Kontak
+                Shop
               </a>
             </div>
             <div className="w-full flex lg:hidden flex-row justify-start items-center pr-10">
@@ -349,13 +337,13 @@ const TopMenu = ({
                   <Space align="start" size="large">
                     <div className="pt-0.5">
                       {pathname === "/"
-                        ? "Beranda"
+                        ? "Kultur Bumi"
                         : pathname === "/tentang-kami"
-                        ? "Tentang Kami"
+                        ? "Kultur Gaya"
                         : pathname === "/rilis-media"
                         ? "Rilis Media"
                         : pathname === "/kelas"
-                        ? "Kelas"
+                        ? "Shop"
                         : pathname === "/cek-sertifikat"
                         ? "Sertifikat"
                         : pathname === "/kontak"
@@ -383,7 +371,7 @@ const TopMenu = ({
         >
           <BellOutlined className="text-lg" />
         </div> */}
-          {role ? (
+          {/* {role ? (
             <div className="flex-row items-center justify-end gap-5 hidden md:flex">
               <button
                 className="btnCnBlueBorder"
@@ -415,7 +403,7 @@ const TopMenu = ({
                 Daftar
               </button>
             </div>
-          )}
+          )} */}
         </div>
       </>
     );
