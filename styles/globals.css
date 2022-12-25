@@ -278,6 +278,22 @@ img {
   padding: 0px 15px;
 }
 
+.btnLightCnBlue {
+  color: #ffffff;
+  background-color: #000000;
+  border: 2px solid #000000;
+  border-radius: 5px;
+  padding: 0px 15px;
+}
+
+.btnLightCnBlue:hover {
+  color: #000000;
+  background-color: #ffffff;
+  border: 2px solid #000000;
+  border-radius: 5px;
+  padding: 0px 15px;
+}
+
 .btnCnBlueNoBorder {
   color: #BAFF4A;
   border-radius: 29px;

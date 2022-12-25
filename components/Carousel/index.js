@@ -10,14 +10,15 @@ const Index = () => {
 
   const fetchCarouselData = async () => {
     setLoading(true);
-    let res = await requestGet(`v1/slider`, {});
-    if (res?.meta?.code === 200) {
-      setLoading(false);
-      setCarouselData(res?.data);
-    } else {
-      setLoading(false);
-      setCarouselData([]);
-    }
+    // let res = await requestGet(`v1/slider`, {});
+    // if (res?.meta?.code === 200) {
+    //   setLoading(false);
+    //   setCarouselData(res?.data);
+    // } else {
+    //   setLoading(false);
+    //   setCarouselData([]);
+    // }
+    setLoading(false);
   };
   // console.log("console log nya data", carouselData);
 
@@ -33,7 +34,7 @@ const Index = () => {
     height: "536px",
     color: "#fff",
     lineHeight: "160px",
-    background: "#364d79",
+    background: "linear-gradient(180deg, #BAFF4A 0%, rgba(64, 87, 28, 0.742708) 67.71%, rgba(6, 6, 6, 0.62) 100%)",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
@@ -48,6 +49,20 @@ const Index = () => {
       ) : (
         <>
           <Carousel afterChange={onChange} autoplay arrows={true}>
+            <div>
+              <h3 style={contentStyle}>Jumbo Tron 1</h3>
+            </div>
+            <div>
+              <h3 style={contentStyle}>Jumbo Tron 2</h3>
+            </div>
+            <div>
+              <h3 style={contentStyle}>Jumbo Tron 3</h3>
+            </div>
+            <div>
+              <h3 style={contentStyle}>Jumbo Tron 4</h3>
+            </div>
+          </Carousel>
+          {/* <Carousel afterChange={onChange} autoplay arrows={true}>
             {carouselData?.map((item, index) => (
               <div style={contentStyle} key={index}>
                 <img
@@ -63,7 +78,7 @@ const Index = () => {
                 />
               </div>
             ))}
-          </Carousel>
+          </Carousel> */}
         </>
       )}
     </>

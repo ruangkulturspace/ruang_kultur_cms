@@ -331,9 +331,9 @@ const TopMenu = ({
                 Shop
               </a>
             </div>
-            <div className="w-full flex lg:hidden flex-row justify-start items-center pr-10">
+            <div className="w-full flex lg:hidden flex-row justify-end md:justify-start items-center">
               <Dropdown overlay={smallMenu} trigger={["click"]}>
-                <a onClick={(e) => e.preventDefault()} className="cCnBlue">
+                <a onClick={(e) => e.preventDefault()} className="text-dark">
                   <Space align="start" size="large">
                     <div className="pt-0.5">
                       {pathname === "/"

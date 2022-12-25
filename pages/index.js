@@ -45,13 +45,13 @@ const Home = () => {
     <>
       {/* <Progress isAnimating={isAnimating} /> */}
       <LandingPage title="Beranda">
-        {/* <Carousel />
-        <CardMenuSlider
+        <Carousel />
+        {/* <CardMenuSlider
           titles={["Multimedia", "Programming", "Network", "Wirausaha"]}
           currentCard={currentCard}
           setCurrentCard={setCurrentCard}
-        />
-        <CardList
+        /> */}
+        {/* <CardList
           title="List Kelas"
           cta="Temukan Kelas Berdasarkan"
           cta2="Kategori yang Kami Sediakan"
@@ -78,8 +78,8 @@ const Home = () => {
               imageName: "design3",
             },
           ]}
-        />
-        <CardSteps
+        /> */}
+        {/* <CardSteps
           // title="Gabung Sekarang"
           cta="Tahapan Pendaftaran Kelas"
           cta2="Yang Disediakan Career Network"
@@ -105,13 +105,13 @@ const Home = () => {
               imageName: "ikut-pelatihan",
             },
           ]}
-        />
-        <CardMediaList
+        /> */}
+        {/* <CardMediaList
           title="Info Terbaru"
           cta="Rilis Media & Informasi"
           cta2="Terbaru dari Career Network"
-        />
-        <CardTestimonials
+        /> */}
+        {/* <CardTestimonials
           title="Testimonials"
           cta="Berbagi Pengalaman & Karya"
           cta2="di Career Network"

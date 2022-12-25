@@ -1,3 +1,4 @@
+import { Button, Input } from "antd";
 import Link from "next/link";
 import React from "react";
 
@@ -15,14 +16,14 @@ const Footer = () => {
           </p>
         </div>
         <div className="border border-inherit inline md:hidden"></div>
-        <div className="w-full md:w-1/2 lg:w-1/4">
+        <div className="w-full md:w-1/2 lg:w-1/5">
           <p className="text-lg font-bold">About Us</p>
           <div className="flex flex-col">
             <div className="py-2">
               <Link href="/" className="text-xs">Blog</Link>
             </div>
             <div className="py-2">
-              <Link href="/" className="text-xs">Blog</Link>
+              <Link href="/" className="text-xs">Karir</Link>
             </div>
           </div>
         </div>
@@ -44,29 +45,18 @@ const Footer = () => {
           </div>
         </div>
         <div className="border border-inherit inline md:hidden"></div>
-        <div className="w-full md:w-1/2 lg:w-1/4 flex flex-col justify-center">
-          <p className="text-lg font-bold text-center">Subcribe for Get Hot News!</p>
-          <div className="flex flex-row gap-2 justify-center">
-            <img
-              src="/assets/icons/youtube.png"
-              alt="youtube"
-              className="cursor-pointer hover:drop-shadow-lg"
-            />
-            <img
-              src="/assets/icons/facebook.png"
-              alt="facebook"
-              className="cursor-pointer hover:drop-shadow-lg"
-            />
-            <img
-              src="/assets/icons/twitter.png"
-              alt="twitter"
-              className="cursor-pointer hover:drop-shadow-lg"
-            />
-            <img
-              src="/assets/icons/instagram.png"
-              alt="instagram"
-              className="cursor-pointer hover:drop-shadow-lg"
-            />
+        <div className="w-full md:w-1/2 lg:w-1/4 flex flex-col">
+          <p className="text-lg font-bold">Subcribe for Get Hot News!</p>
+          <div className="flex flex-col gap-2 justify-center">
+            <div className="flex flex-row">
+              <Input placeholder="Basic usage" />
+              <Button className="btnLightCnBlue ml-1">
+                Submit
+              </Button>
+            </div>
+            <p className="text-xs">
+              By clicking “SUBSCRIBE” you agree to get email from Ruang Kultur and accept our web term of use, privacy and cookies policy.
+            </p>
           </div>
         </div>
       </div>
