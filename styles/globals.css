@@ -308,7 +308,7 @@ img {
 }
 
 .btnCnBlueBorder:hover {
-  color: white;
+  color: #000000;
   border: 2px solid #BAFF4A;
   background-color: #BAFF4A;
   border-radius: 29px;

@@ -7,10 +7,10 @@ const CardClass = ({ title, category, date, kuota, imageName, width }) => {
     <div
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
-      className="rounded-2xl mt-5 drop-shadow bgW flex flex-col justify-start"
+      className="flex flex-col justify-start mt-5 rounded-2xl drop-shadow bgW"
       style={{
         height: "100%",
-        aspectRatio: "2",
+        // aspectRatio: "2",
         // minWidth: "428px",
         width: width === "full" ? "100%" : "33.3%",
       }}
@@ -18,12 +18,12 @@ const CardClass = ({ title, category, date, kuota, imageName, width }) => {
       <img
         src={`/images/${imageName}.png`}
         alt="img"
-        className="rounded-t-2xl w-full"
+        className="w-full rounded-t-2xl"
         style={{ height: "172px" }}
       />
       <div className="flex flex-col">
-        <div
-          className="flex justify-center items-center"
+        {/* <div
+          className="flex items-center justify-center"
           style={{
             height: "50px",
             width: "50px",
@@ -37,23 +37,20 @@ const CardClass = ({ title, category, date, kuota, imageName, width }) => {
             alt="icon"
             style={{ height: "45px", width: "45px", objectFit: "cover" }}
           />
-        </div>
+        </div> */}
         <div
-          style={{
-            transform: "translate(0px, -20px)",
-          }}
-          className="px-5"
+          className="px-5 pt-4"
         >
           <p className="mb-1 font-semibold">{title}</p>
-          <p className="font-light text-sm cDarkGrey">{category}</p>
+          <p className="text-sm font-light cDarkGrey">{category}</p>
           <div style={{ borderBottom: "1px solid lightgrey" }} />
           {hovered ? (
-            <div className="flex px-5 justify-center items-center mt-6">
-              <button className="btnCnBlueBorder w-full">Lihat</button>
+            <div className="flex items-center justify-center px-5 mt-6">
+              <button className="w-full btnCnBlueBorder">Lihat</button>
             </div>
           ) : (
             <>
-              <div className="flex flex-col items-start justify-center text-xs font-normal mt-2 cMedgrey">
+              <div className="flex flex-col items-start justify-center mt-2 text-xs font-normal cMedgrey">
                 <div className="flex flex-row items-center gap-2">
                   <ClockCircleOutlined
                     style={{ fontSize: "10px", color: "var(--cnblue)" }}
@@ -67,7 +64,7 @@ const CardClass = ({ title, category, date, kuota, imageName, width }) => {
                   Kuota: {kuota}
                 </div>
               </div>
-              <button className="float-right btnLightCnBlue text-xs font-semibold">
+              <button className="float-right text-xs font-semibold btnLightCnBlue">
                 DIBUKA
               </button>
             </>

@@ -51,10 +51,10 @@ const Home = () => {
           currentCard={currentCard}
           setCurrentCard={setCurrentCard}
         /> */}
-        {/* <CardList
+        <CardList
           title="List Kelas"
-          cta="Temukan Kelas Berdasarkan"
-          cta2="Kategori yang Kami Sediakan"
+          cta="Lates"
+          cta2=""
           cardInfo={[
             {
               title: "Desain Grafis Menggunakan Figma",
@@ -77,8 +77,22 @@ const Home = () => {
               kuota: "1500 peserta",
               imageName: "design3",
             },
+            {
+              title: "Video Editing Menggunakan Adobe Premiere",
+              category: "Multimedia",
+              date: "25 Mei 2022 - 25 Juli 2022",
+              kuota: "1500 peserta",
+              imageName: "design3",
+            },
+            {
+              title: "Video Editing Menggunakan Adobe Premiere",
+              category: "Multimedia",
+              date: "25 Mei 2022 - 25 Juli 2022",
+              kuota: "1500 peserta",
+              imageName: "design3",
+            },
           ]}
-        /> */}
+        />
         {/* <CardSteps
           // title="Gabung Sekarang"
           cta="Tahapan Pendaftaran Kelas"
