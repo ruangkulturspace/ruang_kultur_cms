@@ -332,14 +332,6 @@ const TopMenu = ({
               >
                 Kulturgaya
               </a>
-              <a
-                className={
-                  pathname.includes("/rilis-media") ? `cCnBlue` : `cLg`
-                }
-                href="/rilis-media"
-              >
-                Rilis Media
-              </a>
               <div className="flex flex-row items-center justify-end md:justify-start">
                 <Dropdown overlay={smallMenu} trigger={["click"]}>
                   <a onClick={(e) => e.preventDefault()} className="text-dark">

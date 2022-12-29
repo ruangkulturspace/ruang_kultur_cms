@@ -16,7 +16,7 @@ const Footer = () => {
             Ruang Kultur  is a digital creative and communicative talk about Art, Entertainment, Lifestyle and things currently happening.{" "}
           </p>
         </div>
-        <div className="inline border border-inherit md:hidden"></div>
+        {/* <div className="inline border border-inherit md:hidden"></div> */}
         <div className="w-full md:w-1/2 lg:w-1/5">
           <p className="text-lg font-bold">About Us</p>
           <div className="flex flex-row">
@@ -67,9 +67,9 @@ const Footer = () => {
             </div>
           </div>
         </div>
-        <div className="inline border border-inherit md:hidden"></div>
+        {/* <div className="inline border border-inherit md:hidden"></div> */}
         <div className="flex flex-col w-full md:w-1/2 lg:w-1/4">
-          <p className="text-lg font-bold">Subcribe for Get Hot News!</p>
+          <p className="mb-3 text-lg font-bold">Subcribe for Get Hot News!</p>
           <div className="flex flex-col justify-center gap-2">
             <div className="flex flex-row">
               <Input placeholder="Basic usage" />
@@ -77,7 +77,7 @@ const Footer = () => {
                 Submit
               </Button>
             </div>
-            <p className="text-xs">
+            <p className="mt-3 text-xs">
               By clicking “SUBSCRIBE” you agree to get email from Ruang Kultur and accept our web term of use, privacy and cookies policy.
             </p>
           </div>

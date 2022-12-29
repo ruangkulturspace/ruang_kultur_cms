@@ -15,7 +15,7 @@ const AdsSection = () => {
             Content Tap makes it easy to centrally manage, create, distribute and track documents, images and videos.gives client easy access to relevant content or mobile or web{" "}
           </p>
         </div>
-        <div className="inline border border-inherit md:hidden"></div>
+        {/* <div className="inline border border-inherit md:hidden"></div> */}
         <div className="w-full md:w-1/2 lg:w-1/5">
           <p className="text-lg font-bold"><u>MEDIA PARTNER</u></p>
           <p className="text-xs">
@@ -28,7 +28,7 @@ const AdsSection = () => {
             Ads placement include all advertising spaces, mostly paid, offered by online publishers, websites, and social networks to advertisers to display their advertisements.{" "}
           </p>
         </div>
-        <div className="inline border border-inherit md:hidden"></div>
+        {/* <div className="inline border border-inherit md:hidden"></div> */}
       </div>
     </div>
   );
