@@ -70,7 +70,7 @@ const TopMenu = ({
           router.push("/");
         }}
       >
-        Kultur Bumi
+        Kulturbumi
       </Menu.Item>
       <Menu.Item
         key="1"
@@ -78,7 +78,7 @@ const TopMenu = ({
           router.push("/tentang-kami");
         }}
       >
-        Kultur Gaya
+        Kulturgaya
       </Menu.Item>
       <Menu.Item
         key="2"
@@ -86,7 +86,7 @@ const TopMenu = ({
           router.push("/rilis-media");
         }}
       >
-        Rilis Media
+        Kulturnema
       </Menu.Item>
       <Menu.Item
         key="3"
@@ -94,7 +94,7 @@ const TopMenu = ({
           router.push("/kelas");
         }}
       >
-        Shop
+        Kulturmain
       </Menu.Item>
       <Menu.Item
         key="4"
@@ -102,7 +102,7 @@ const TopMenu = ({
           router.push("/cek-sertifikat");
         }}
       >
-        Sertifikat
+        Kulturaga
       </Menu.Item>
       <Menu.Item
         key="5"
@@ -110,7 +110,23 @@ const TopMenu = ({
           router.push("/kontak");
         }}
       >
-        Kontak
+        Kulturgaya
+      </Menu.Item>
+      <Menu.Item
+        key="6"
+        onClick={() => {
+          router.push("/kontak");
+        }}
+      >
+        Kulturbisnis
+      </Menu.Item>
+      <Menu.Item
+        key="7"
+        onClick={() => {
+          router.push("/kontak");
+        }}
+      >
+        Shop
       </Menu.Item>
       {/* {role ? (
         <>
@@ -174,7 +190,7 @@ const TopMenu = ({
             router.push("/");
           }}
         >
-          <p className="text-center mb-0">Anda memiliki 4 notifikasi baru</p>
+          <p className="mb-0 text-center">Anda memiliki 4 notifikasi baru</p>
         </Menu.Item>
         {notiflist?.map((e, index) => {
           return (
@@ -226,7 +242,7 @@ const TopMenu = ({
   if (dashboardLayout) {
     return (
       <div
-        className="w-full flex flex-row items-center justify-start gap-8 px-10 py-5 bgW drop-shadow z-10"
+        className="z-10 flex flex-row items-center justify-start w-full gap-8 px-10 py-5 bgW drop-shadow"
         style={style}
       >
         <MenuOutlined
@@ -235,7 +251,7 @@ const TopMenu = ({
             toggleSidebarVisibility();
           }}
         />
-        <div className="flex justify-between w-full items-center">
+        <div className="flex items-center justify-between w-full">
           <Breadcrumb separator="\">
             {items?.map((e, index) => {
               if (index !== items.length - 1) {
@@ -276,7 +292,7 @@ const TopMenu = ({
             </Dropdown>
             <Dropdown overlay={menu} placement="bottomCenter">
               <a
-                className="ant-dropdown-link cB flex flex-row items-center gap-5"
+                className="flex flex-row items-center gap-5 ant-dropdown-link cB"
                 onClick={(e) => e.preventDefault()}
               >
                 <Image
@@ -299,22 +315,22 @@ const TopMenu = ({
   } else {
     return (
       <>
-        <div className="w-full flex flex-row items-center justify-between px-5 py-3 bgW drop-shadow z-10">
-          <div className="flex flex-row items-center gap-8 w-full">
+        <div className="z-10 flex flex-row items-center justify-between w-full px-5 py-3 bgW drop-shadow">
+          <div className="flex flex-row items-center w-full gap-8">
             <Link href="/">
               <a>
                 <img src="/assets/icons/logo_ruang_kultur.gif" alt="logo" height={100} width={180} />
               </a>
             </Link>
-            <div className="hidden lg:flex flex-row items-center justify-start gap-8">
+            <div className="flex-row items-center justify-start hidden gap-8 lg:flex">
               <Link className={pathname === "/" ? `cCnBlue` : `cLg`} href="/">
-                Kultur Bumi
+                Kulturbumi
               </Link>
               <a
                 className={pathname === "/tentang-kami" ? `cCnBlue` : `cLg`}
                 href="/tentang-kami"
               >
-                Kultur Gaya
+                Kulturgaya
               </a>
               <a
                 className={
@@ -324,6 +340,35 @@ const TopMenu = ({
               >
                 Rilis Media
               </a>
+              <div className="flex flex-row items-center justify-end md:justify-start">
+                <Dropdown overlay={smallMenu} trigger={["click"]}>
+                  <a onClick={(e) => e.preventDefault()} className="text-dark">
+                    <Space align="start" size="large">
+                      <div className="pt-0.5">
+                        {pathname === "/"
+                          ? "More"
+                          : pathname === "/tentang-kami"
+                          ? "Kulturgaya"
+                          : pathname === "/rilis-media"
+                          ? "Kulturnema"
+                          : pathname === "/kelas"
+                          ? "Kulturmain"
+                          : pathname === "/cek-sertifikat"
+                          ? "Kulturaga"
+                          : pathname === "/kontak"
+                          ? "Kulturgaya"
+                          : pathname === "/kontak"
+                          ? "Kulturbisnis"
+                          : pathname === "/kontak"
+                          ? "Shop"
+                          : pathname === "/kontak"
+                        }
+                      </div>
+                      <DownOutlined />
+                    </Space>
+                  </a>
+                </Dropdown>
+              </div>
               <a
                 className={pathname.includes("/kelas") ? `cCnBlue` : `cLg`}
                 href="/kelas"
@@ -331,24 +376,29 @@ const TopMenu = ({
                 Shop
               </a>
             </div>
-            <div className="w-full flex lg:hidden flex-row justify-end md:justify-start items-center">
+            <div className="flex flex-row items-center justify-end w-full lg:hidden md:justify-start">
               <Dropdown overlay={smallMenu} trigger={["click"]}>
                 <a onClick={(e) => e.preventDefault()} className="text-dark">
                   <Space align="start" size="large">
                     <div className="pt-0.5">
                       {pathname === "/"
-                        ? "Kultur Bumi"
+                        ? "More"
                         : pathname === "/tentang-kami"
-                        ? "Kultur Gaya"
+                        ? "Kulturgaya"
                         : pathname === "/rilis-media"
-                        ? "Rilis Media"
+                        ? "Kulturnema"
                         : pathname === "/kelas"
-                        ? "Shop"
+                        ? "Kulturmain"
                         : pathname === "/cek-sertifikat"
-                        ? "Sertifikat"
+                        ? "Kulturaga"
                         : pathname === "/kontak"
-                        ? "Kontak"
-                        : ""}
+                        ? "Kulturgaya"
+                        : pathname === "/kontak"
+                        ? "Kulturbisnis"
+                        : pathname === "/kontak"
+                        ? "Shop"
+                        : pathname === "/kontak"
+                      }
                     </div>
                     <DownOutlined />
                   </Space>
@@ -372,7 +422,7 @@ const TopMenu = ({
           <BellOutlined className="text-lg" />
         </div> */}
           {/* {role ? (
-            <div className="flex-row items-center justify-end gap-5 hidden md:flex">
+            <div className="flex-row items-center justify-end hidden gap-5 md:flex">
               <button
                 className="btnCnBlueBorder"
                 onClick={() => router.push("/dashboard")}
@@ -389,7 +439,7 @@ const TopMenu = ({
               </button>
             </div>
           ) : (
-            <div className="flex-row items-center justify-end gap-5 hidden md:flex">
+            <div className="flex-row items-center justify-end hidden gap-5 md:flex">
               <button
                 className="btnCnBlueBorder"
                 onClick={() => router.push("/login")}

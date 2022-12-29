@@ -3,7 +3,7 @@ import React from "react";
 import CardClass from "./CardClass";
 import { useRouter } from "next/router";
 
-const CardList = ({ title, cta, cta2, cardInfo }) => {
+const CardLates = ({ title, cta, cta2, cardInfo }) => {
   const router = useRouter();
   return (
     <div className="flex flex-col p-10 font-semibold bgW md:p-20">
@@ -20,12 +20,12 @@ const CardList = ({ title, cta, cta2, cardInfo }) => {
           Lihat Semua <RightOutlined />
         </button> */}
       </div>
-      <div className="grid grid-rows-3 gap-10 md:grid-cols-2 lg:grid-cols-3">
+      <div className="grid gap-10 mb-11 grid-rows md:grid-cols-2 lg:grid-cols-3">
         {cardInfo?.map((e, index) => {
           return (
             <div
               key={index}
-              className="w-full cursor-pointer hover:drop-shadow-lg"
+              className="w-full cursor-pointer hovered-card hover:drop-shadow-lg"
               onClick={() =>
                 router.push(
                   {
@@ -52,4 +52,4 @@ const CardList = ({ title, cta, cta2, cardInfo }) => {
   );
 };
 
-export default CardList;
+export default CardLates;

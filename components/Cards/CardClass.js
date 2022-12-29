@@ -9,17 +9,15 @@ const CardClass = ({ title, category, date, kuota, imageName, width }) => {
       onMouseLeave={() => setHovered(false)}
       className="flex flex-col justify-start mt-5 rounded-2xl drop-shadow bgW"
       style={{
-        height: "100%",
-        // aspectRatio: "2",
-        // minWidth: "428px",
-        width: width === "full" ? "100%" : "33.3%",
+        height: "90%",
+        width: "100%",
       }}
     >
       <img
         src={`/images/${imageName}.png`}
         alt="img"
         className="w-full rounded-t-2xl"
-        style={{ height: "172px" }}
+        style={{ height: "200px" }}
       />
       <div className="flex flex-col">
         {/* <div
@@ -44,31 +42,21 @@ const CardClass = ({ title, category, date, kuota, imageName, width }) => {
           <p className="mb-1 font-semibold">{title}</p>
           <p className="text-sm font-light cDarkGrey">{category}</p>
           <div style={{ borderBottom: "1px solid lightgrey" }} />
-          {hovered ? (
-            <div className="flex items-center justify-center px-5 mt-6">
-              <button className="w-full btnCnBlueBorder">Lihat</button>
+
+          <div className="flex flex-col items-start justify-center mt-2 mb-5 text-xs font-normal cMedgrey">
+            <div className="flex flex-row items-center gap-2">
+              <ClockCircleOutlined
+                style={{ fontSize: "10px", color: "var(--cnblue)" }}
+              />{" "}
+              Pendaftaran: {date}
             </div>
-          ) : (
-            <>
-              <div className="flex flex-col items-start justify-center mt-2 text-xs font-normal cMedgrey">
-                <div className="flex flex-row items-center gap-2">
-                  <ClockCircleOutlined
-                    style={{ fontSize: "10px", color: "var(--cnblue)" }}
-                  />{" "}
-                  Pendaftaran: {date}
-                </div>
-                <div className="flex flex-row items-center gap-2">
-                  <ClockCircleOutlined
-                    style={{ fontSize: "10px", color: "var(--cnblue)" }}
-                  />{" "}
-                  Kuota: {kuota}
-                </div>
-              </div>
-              <button className="float-right text-xs font-semibold btnLightCnBlue">
-                DIBUKA
-              </button>
-            </>
-          )}
+            {/* <div className="flex flex-row items-center gap-2">
+              <ClockCircleOutlined
+                style={{ fontSize: "10px", color: "var(--cnblue)" }}
+              />{" "}
+              Kuota: {kuota}
+            </div> */}
+          </div>
         </div>
       </div>
     </div>

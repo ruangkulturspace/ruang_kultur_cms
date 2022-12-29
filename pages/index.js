@@ -2,18 +2,20 @@ import "antd/dist/antd.css";
 import Head from "next/head";
 import { useState, useEffect } from "react";
 import LandingPage from "../components/Layouts/LandingPageLayout";
-import CardList from "../components/Cards/CardList";
+import CardLates from "../components/Cards/CardLates";
 import CardMediaList from "../components/Cards/CardMediaList";
 import CardSteps from "../components/Cards/CardSteps";
 import CardTestimonials from "../components/Cards/CardTestimonials";
 import CardMenuSlider from "../components/Cards/CardMenuSlider";
 import Carousel from "../components/Carousel";
+import AdsSection from "../components/AdsSection";
 
 import { useRouter } from "next/router";
 
 import Progress from "../components/Progress/Progress";
 import { useSelector, useDispatch } from "react-redux";
 import { setIsAnimating } from "../slices/progress";
+import Link from "next/link";
 
 const Home = () => {
   const [currentCard, setCurrentCard] = useState(0);
@@ -51,48 +53,36 @@ const Home = () => {
           currentCard={currentCard}
           setCurrentCard={setCurrentCard}
         /> */}
-        <CardList
+        <CardLates
           title="List Kelas"
           cta="Lates"
           cta2=""
           cardInfo={[
             {
               title: "Desain Grafis Menggunakan Figma",
-              category: "Multimedia",
+              category: "Kulturama",
               date: "25 Mei 2022 - 25 Juli 2022",
               kuota: "1500 peserta",
               imageName: "design",
             },
             {
               title: "Membuat Website dengan Laravel",
-              category: "Multimedia",
+              category: "Kulturaga",
               date: "25 Mei 2022 - 25 Juli 2022",
               kuota: "1500 peserta",
               imageName: "design2",
             },
             {
               title: "Video Editing Menggunakan Adobe Premiere",
-              category: "Multimedia",
-              date: "25 Mei 2022 - 25 Juli 2022",
-              kuota: "1500 peserta",
-              imageName: "design3",
-            },
-            {
-              title: "Video Editing Menggunakan Adobe Premiere",
-              category: "Multimedia",
-              date: "25 Mei 2022 - 25 Juli 2022",
-              kuota: "1500 peserta",
-              imageName: "design3",
-            },
-            {
-              title: "Video Editing Menggunakan Adobe Premiere",
-              category: "Multimedia",
+              category: "Kulturaga",
               date: "25 Mei 2022 - 25 Juli 2022",
               kuota: "1500 peserta",
               imageName: "design3",
             },
           ]}
         />
+        <AdsSection />
+
         {/* <CardSteps
           // title="Gabung Sekarang"
           cta="Tahapan Pendaftaran Kelas"
