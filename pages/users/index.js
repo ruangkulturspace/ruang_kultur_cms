@@ -6,6 +6,7 @@ import { Button, Row, Col, notification, Table } from "antd";
 import { getRandomUser } from "../../utils/services/getRandomUser";
 import withAuth from "../../utils/withAuth";
 import { showError } from "../../utils/helpersBrowser";
+import { handleSessions } from "../../utils/helpers";
 
 const OverviewPage = ({ auth }) => {
     // console.log(session)
@@ -212,10 +213,9 @@ const OverviewPage = ({ auth }) => {
     );
 };
 
-export const getServerSideProps = withAuth(async ({ auth }) => {
-    return {
-        props: { auth },
-    };
-});
+export async function getServerSideProps(context) {
+  let checkSessions = await handleSessions(context);
+  return checkSessions;
+}
 
 export default OverviewPage;

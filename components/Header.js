@@ -32,17 +32,17 @@ const MainHeader = ({ auth }) => {
 
   const menuDesktop = (
     <>
-      <Menu>
+      <Menu className="text-dark">
         <Menu.Item>Settings</Menu.Item>
       </Menu>
-      <Menu onClick={redirectProfile}>
+      <Menu className="text-dark" onClick={redirectProfile}>
         <Menu.Item>Profile</Menu.Item>
       </Menu>
-      <Menu>
+      <Menu className="text-dark">
         <Menu.Item>Notification</Menu.Item>
       </Menu>
       <Menu.Divider />
-      <Menu onClick={doLogout}>
+      <Menu className="text-dark" onClick={doLogout}>
         <Menu.Item>Signout</Menu.Item>
       </Menu>
     </>
@@ -91,7 +91,7 @@ const MainHeader = ({ auth }) => {
               onClick={() => {
                 dispatch({ type: "collapse" });
               }}
-              className="pointer mx-4"
+              className="mx-4 pointer"
             >
               <img alt="bar" src="/images/icon/bars.svg" />
             </div>

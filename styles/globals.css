@@ -569,6 +569,10 @@ video {
 .hide {
   display: none !important;
 }
+
+.ant-menu-item-active.ant-menu-item-selected.ant-menu-item-only-child{
+  color: #0072b1;
+}
 /* =================== delete later if not needed (for video player) =================== */
 
 /* custome antd styling:  */

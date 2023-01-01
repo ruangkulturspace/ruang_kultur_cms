@@ -6,7 +6,7 @@ import {
   notification,
   Spin,
   Col,
-  message,
+  Message,
 } from "antd";
 
 import styled from "styled-components";
@@ -21,8 +21,8 @@ import {
   showError,
   showSuccess,
 } from "../utils/helpersBrowser";
-import { doLogin } from "../utils/services/doLogin";
-import withAuth from "../utils/withAuth";
+import { requestPost } from "../utils/baseService";
+import { handleSessions } from "../utils/helpers";
 
 const FormItem = Form.Item;
 
@@ -32,41 +32,78 @@ const Content = styled.div`
   min-width: 300px;
 `;
 
-const Signin = ({ auth }) => {
-  const [state] = useAppState();
+const Signin = ({ form, session }) => {
+  // const [state] = useAppState();
+  const [state, dispatch] = useAppState();
   const [loading, setLoading] = useState(false);
   const router = useRouter();
   const { code, redirect } = router.query;
 
+  // useEffect(() => {
+  //   if (code == "2") {
+  //     showError("Error", "Harap Login terlebih dahulu.");
+  //   }
+  //   if (code == "1") {
+  //     showSuccess("Success", "Berhasil logout.");
+  //   }
+  // }, [code]);
+
   useEffect(() => {
-    if (code == "2") {
-      showError("Error", "Harap Login terlebih dahulu.");
-    }
-    if (code == "1") {
-      showSuccess("Success", "Berhasil logout.");
+    if (session?.data?.user?.role ?? false) {
+      // ReplaceNavigateTo(redirect ?? "/")
+      // console.log("asd", session);
+      const role = session?.data?.user?.role;
+      switch (role) {
+        case 'admin':
+          PushNavigateTo('/admin');
+          break;
+        case 'superadmin':
+          PushNavigateTo('/');
+          break;
+        case 'user':
+          PushNavigateTo('/dashboardopsel');
+          break;
+        default:
+          break;
+      }
+    } else {
+      if (code == '3') {
+        showError('Sesi login telah habis, silahkan login kembali.');
+      }
+      if (code == '2') {
+        showError('Harap Login terlebih dahulu.');
+      }
+      if (code == '1') {
+        showSukses('Berhasil logout.');
+      }
     }
   }, [code]);
 
+  function showSukses(msg) {
+    notification['success']({
+      message: 'Sukses!',
+      description: msg,
+    });
+  }
+
   const handleLogin = async (values) => {
     setLoading(true);
-    if (values.email == "") {
-      showError("Error", "Email tidak boleh kosong!!");
+    if (values.username == '') {
+      showError('Username tidak boleh kosong!!');
     }
 
-    if (values.password == "") {
-      showError("Error", "Password tidak boleh kosong!!");
+    if (values.password == '') {
+      showError('Password tidak boleh kosong!!');
     }
 
-    try {
-      await doLogin(values.email, values.password);
-      message
-        .success("Sign complete. Taking you to your dashboard!")
-        .then(() => ReplaceNavigateTo(redirect ?? "/"));
-    } catch (e) {
-      //alert("gagal nih");
-      showError(e.status, e.message);
-    } finally {
-      setLoading(false);
+    var response = await requestPost('', '/api/login', values);
+    setLoading(false);
+    if (response?.data?.statusCode == 200) {
+      Message.success('Sign complete. Taking you to your dashboard!', 0.1).then(
+        () =>
+          ReplaceNavigateTo(redirect ?? "/")
+        ,
+      );
     }
   };
 
@@ -88,31 +125,13 @@ const Signin = ({ auth }) => {
           style={{ minHeight: "100vh" }}
         >
           <Content>
-            <div className="text-center mb-5">
-              {/* <Link href="/signin">
-                                <a className="brand mr-0">
-                                    <CloudServerOutlined style={{ fontSize: '32px', color: "#fff" }} />
-                                </a>
-                            </Link>
-                            <h5 className="mb-0 mt-3 colorWhite">Sign in</h5>
-
-                            <p className="colorWhite">get started with our service</p> */}
+            <div className="mb-5 text-center">
               <img src="/images/logo/dtn.png" height="60px" alt="Dtn Logo" />
             </div>
 
             <Form layout="vertical" onFinish={handleLogin}>
               <FormItem
-                name="email"
-                rules={[
-                  {
-                    type: "email",
-                    message: "Format email salah!",
-                  },
-                  {
-                    required: true,
-                    message: "Email tidak boleh kosong!",
-                  },
-                ]}
+                name="username"
               >
                 <Input
                   prefix={<img src="/images/icon/login/mail.svg" alt="mail" />}
@@ -203,18 +222,10 @@ const Signin = ({ auth }) => {
   );
 };
 
-export const getServerSideProps = withAuth(async ({ auth }) => {
-  if (auth)
-    return {
-      redirect: {
-        destination: "/",
-        permanent: false,
-      },
-    };
+export async function getServerSideProps(context) {
+  let checkSessions = await handleSessions(context, false);
+  return checkSessions;
+}
 
-  return {
-    props: { auth },
-  };
-}, false);
 
 export default Signin;
