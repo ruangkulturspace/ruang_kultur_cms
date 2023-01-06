@@ -97,8 +97,8 @@ const SidebarContent = ({
           <center>
             {
               !state.collapsed ?
-                <img src="/images/logo/bakti.svg" alt="Bakti Logo" /> :
-                <img height="35px" src="/images/logo/mini-bakti.svg" alt="Bakti Logo" />
+                <img width="50%" src="/assets/icons/Asset_7.png" alt="Logo" /> :
+                <img height="35px" src="/assets/icons/LOGO_DEVELOPE_rK-12.png" alt="Bakti Logo" />
             }
           </center>
         </div>
@@ -205,9 +205,9 @@ const SidebarContent = ({
                 {/* <DashHeader>
                   <Header>
                     <Link href="/">
-                      <a className="brand mx-3">
+                      <a className="mx-3 brand">
                         <PlaySquareTwoTone style={{ fontSize: '20px' }} />
-                        <strong className="text-black pl-2">{state.name}</strong>
+                        <strong className="pl-2 text-black">{state.name}</strong>
                       </a>
                     </Link>
                   </Header>

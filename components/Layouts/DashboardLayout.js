@@ -70,7 +70,7 @@ const DashboardLayout = ({ auth, items, title, children }) => {
         />
 
         <Layout className="site-layout">
-          <Content className="h-90vh overflow-scroll no-scrollbar">
+          <Content className="overflow-scroll h-90vh no-scrollbar">
             <TopMenu
               auth={auth}
               showDrawer={showDrawer}

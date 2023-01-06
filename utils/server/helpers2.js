@@ -10,7 +10,7 @@ if (!isServer) {
 var client = null
 
 //this function made cookies, in browser
-export function setSession(req, res, input_session, key_session = "nms") {
+export function setSession(req, res, input_session, key_session = "ruang_kultur") {
     if (!isJson(input_session)) {
         return { code: "101", info: "Please Use JSON for Input Format.", data: {} }
     }
@@ -21,6 +21,16 @@ export function setSession(req, res, input_session, key_session = "nms") {
         info: "Set Session Berhasil",
         token: cookies_data.token
     }
+}
+
+export function setGrantPermisson(req, res, grant_permission, key_session = "ruang_kultur_grant_permission") {
+  let grant_permission_data = grant_permission;
+  document.cookie = `Grant Permission=${grant_permission_data.permissionToken}`;
+  return {
+      code: "0",
+      info: "Set Grant Permission Berhasil",
+      grant_permission_data: grant_permission_data.permissionToken
+  }
 }
 
 const buildCookiesWithJWT = (key, val, rememberLogin) => {
@@ -73,6 +83,8 @@ const getCookieFromServer = (key, req) => {
     const rawCookie = req.headers.cookie
         .split(';')
         .find(c => c.trim().startsWith(`${key}=`));
+
+    console.log("asdasdasda", req.headers)
     if (!rawCookie) {
         return undefined;
     }
@@ -200,5 +212,57 @@ export async function getSessionFromHeader(req) {
             'info': 'Please log in to get access.',
         };
     }
+
+}
+
+export async function getGrantAccessFromHeader(req) {
+  try {
+      let token = req.headers.authorization ?? "";
+      let getTokenFromHeader = true;
+
+      let tokenfromcookie = getCookie(process.env.GRANTACCESS, req)
+      if (token == "") {
+          token = tokenfromcookie;
+          getTokenFromHeader = false;
+      }
+
+      if (token != "") {
+          if (token?.length > 7 ?? false) {
+              let bearer = token;
+              if (getTokenFromHeader) {
+                  bearer = token.substring(7);
+              }
+
+              try {
+                  return {
+                      'code': 0,
+                      'info': 'ok',
+                      'data': bearer
+                  };
+              } catch (error) {
+                  return {
+                      'code': 1,
+                      'info': 'Please log in to get access.',
+                  };
+              }
+          } else {
+              return {
+                  'code': 2,
+                  'info': 'Please log in to get access.',
+              };
+          }
+      } else {
+          return {
+              'code': 3,
+              'info': 'Please log in to get access.',
+          };
+      }
+  } catch (error) {
+      // console.log(error)
+      return {
+          'code': 4,
+          'info': 'Please log in to get access.',
+      };
+  }
 
 }

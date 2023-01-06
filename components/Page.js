@@ -21,7 +21,7 @@ const NonDashboardRoutes = [
   "/"
 ];
 
-const Page = ({ router, children, auth }) => {
+const Page = ({ router, children, auth, session }) => {
   const [loading, setLoading] = useState(false);
   const [state, dispatch] = useAppState();
   const isNotDashboard = NonDashboardRoutes.includes(router.pathname);
@@ -46,7 +46,7 @@ const Page = ({ router, children, auth }) => {
 
             <Layout>
               <Content>
-                {!isNotDashboard && <Header auth={auth} />}
+                {!isNotDashboard && <Header session={children?.props?.session}/>}
                 {!isNotDashboard ? <Inner>{children}</Inner> : children}
                 {!isNotDashboard && (
                   <center
@@ -67,5 +67,10 @@ const Page = ({ router, children, auth }) => {
     </Spin>
   );
 };
+
+export async function getServerSideProps(context) {
+  let checkSessions = await handleSessions(context);
+  return checkSessions;
+}
 
 export default withRouter(Page);

@@ -48,7 +48,7 @@ const CardClass = ({ title, category, date, kuota, imageName, width }) => {
               <ClockCircleOutlined
                 style={{ fontSize: "10px", color: "var(--cnblue)" }}
               />{" "}
-              Pendaftaran: {date}
+              {date}
             </div>
             {/* <div className="flex flex-row items-center gap-2">
               <ClockCircleOutlined

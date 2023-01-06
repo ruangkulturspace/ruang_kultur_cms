@@ -1,33 +1,52 @@
 import { Avatar, Badge, Layout, List, Menu, Dropdown } from "antd";
 import {
   BellTwoTone,
-  InteractionTwoTone,
-  PlaySquareTwoTone,
-  SettingTwoTone,
 } from "@ant-design/icons";
 import DashHeader, { Notification } from "./styles/Header";
 
 import Link from "next/link";
 import MockNotifications from "../demos/mock/notifications";
 import { useAppState } from "./shared/AppProvider";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import Router from "next/router";
 import { PushNavigateTo, ReplaceNavigateTo } from "../utils/helpersBrowser";
+import { requestGet } from "../utils/baseService";
 
 const { SubMenu } = Menu;
 const { Header } = Layout;
 
-const MainHeader = ({ auth }) => {
+const MainHeader = ({ session, fromDashboard = false }) => {
   const [state, dispatch] = useAppState();
   const [notifications] = useState(MockNotifications);
+  const [dataUser, setDataUser] = useState([]);
 
   const doLogout = async () => {
-    ReplaceNavigateTo("/api/logout");
+    // tinggal logout aj
+    var logout = await axios.get("/api/logout");
+    if (logout?.data?.code == 0) {
+        ReplaceNavigateTo('/login?code=1')
+    }
   };
 
   const redirectProfile = async () => {
     PushNavigateTo("/profile");
+  };
+
+  useEffect(() => {
+    FetchUserProfile({ });
+    return () => { };
+  }, [state]);
+
+  const FetchUserProfile = async ({}) => {
+      // setLoading(true);
+
+      const datar = await requestGet(
+          session,
+          process.env.NEXT_PUBLIC_API_URL + '/api/v1/user/profile',
+      );
+      setDataUser(datar?.data?.data ?? null);
+      // setLoading(false);
   };
 
   const menuDesktop = (
@@ -155,8 +174,8 @@ const MainHeader = ({ auth }) => {
                 className="mr-1"
                 style={{ fontWeight: "bold", color: "#33539E" }}
               >
-                {auth?.userData?.name
-                  ? auth?.userData?.name?.toUpperCase()
+                {dataUser?.firstName
+                  ? "Hi, " + dataUser?.firstName.toUpperCase()
                   : "-"}
               </span>
               <img src="/images/icon/arrow-down-blue.svg" alt="ardown" />

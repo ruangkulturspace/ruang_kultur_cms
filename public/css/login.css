@@ -1,19 +1,25 @@
 .withbg-jon-mobile {
-    background: url(/images/bg.webp) no-repeat;
+    background: url(https://preview.keenthemes.com/metronic/theme/html/demo1/dist/assets/media/bg/bg-1.jpg) no-repeat;
     background-size: cover;
 }
 
 .withbg-jon {
-    background: url(/images/bg.webp) no-repeat center center fixed;
+    background: url(https://preview.keenthemes.com/metronic/theme/html/demo1/dist/assets/media/bg/bg-1.jpg) no-repeat center center fixed;
     background-size: cover;
 }
 
+.bg-login{
+  background: url(/images/pola_login.png) no-repeat center;
+  background-size: cover;
+  min-height: 100vh;
+}
+
 .ant-input-affix-wrapper {
-    border-radius: 20px !important;
+    border-radius: 5px !important;
 }
 
 .ant-input {
-    border-radius: 20px !important;
+    border-radius: 5px !important;
     padding: 0px 20px;
 }
 

@@ -1,11 +1,12 @@
 import axios from "axios";
-import { getSessionFromHeader } from "./server/helpers2";
+import { getSessionFromHeader, getGrantAccessFromHeader } from "./server/helpers2";
 
 export const handleSessions = async (ctx, needLogin = true, dontRedirect = false) => {
     let sessionUser = await getSessionFromHeader(ctx.req);
+    let grantPermission = await getGrantAccessFromHeader(ctx.req);
     if (sessionUser.code === 0) {
         try {
-            const { data } = await axios.get(process.env.NEXT_PUBLIC_API_URL + '/user/profile', {
+            const { data } = await axios.get(process.env.NEXT_PUBLIC_API_URL + '/api/v1/user/info', {
                 headers: {
                     Authorization: "Bearer " + sessionUser?.data?.accessToken,
                 }
@@ -17,6 +18,7 @@ export const handleSessions = async (ctx, needLogin = true, dontRedirect = false
                         data: {
                             user: data.data,
                             accessToken: sessionUser?.data?.accessToken,
+                            grantAccess: grantPermission
                         }
                     }
                 }

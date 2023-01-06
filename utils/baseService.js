@@ -24,7 +24,7 @@ export async function requestPost(sessions, url, data, settings = {}) {
 
 		const response = await axios.post(url, data, {
 			headers: {
-				Authorization: "Bearer " + sessions?.data?.access_token ?? "",
+				Authorization: "Bearer " + sessions?.data?.accessToken ?? "",
 			},
 		});
 
@@ -83,27 +83,46 @@ const errorHandler = async (status, message, needLogin = true) => {
   });
 };
 
-export const requestGet = async (
-  url,
-  { params, token, needLogin = true, getErrorMessage }
-) => {
-  try {
-    const { data } = await axios.get(url, {
-      params,
-      headers: {
-        ...(token && {
-          Authorization: `Bearer ${token}`,
-        }),
-      },
-    });
-    return data;
-  } catch (e) {
-    return errorHandler(
-      e?.response?.status,
-      getErrorMessage
-        ? getErrorMessage(e)
-        : e?.response?.data?.message ?? e?.message,
-      needLogin
-    );
-  }
-};
+export async function requestGet(
+	sessions,
+	url,
+	{ params, headers, silent = false } = {}
+) {
+	try {
+		console.log("%c FetcherGet: " + url, "background: #222; color: #bada55");
+		console.log(
+			"%c withParam: " + JSON.stringify(params),
+			"background: #222; color: #bada55"
+		);
+
+    console.log("asd2", sessions);
+
+		const response = await axios.get(url, {
+			params,
+			headers: {
+				Authorization: "Bearer " + sessions?.data?.accessToken ?? "",
+        'x-permission-token': sessions?.data?.accessToken
+			}
+		});
+
+		return response;
+	} catch (error) {
+		if (!silent) {
+			if (error?.response?.data?.message === "report not found") {
+				showErrorCustom(
+					"Gagal mengenerate report",
+					"Berita Acara penagihan yang anda pilih belum memiliki data pada periode penagihan yang dipilih"
+				);
+			} else {
+				showError(
+					error?.response?.data?.message ?? "Terjadi Kesalahan pada server!"
+				);
+			}
+			if (error?.response?.data?.statusCode == "401") {
+				doLogout();
+			}
+		}
+		// console.error(error);
+		return error;
+	}
+}

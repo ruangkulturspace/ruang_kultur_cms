@@ -25,10 +25,13 @@ const TopMenu = ({
   items,
   toggleSidebarVisibility,
   style,
+  session
 }) => {
   // console.log("console log nya auth", auth);
   const [username, setUsername] = useState("");
   const [role, setRole] = useState(auth?.userData?.role);
+
+  console.log("topmenu", session);
 
   const router = useRouter();
   const pathname = router.pathname;

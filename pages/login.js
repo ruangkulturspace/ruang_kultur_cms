@@ -49,9 +49,9 @@ const Signin = ({ form, session }) => {
   // }, [code]);
 
   useEffect(() => {
+    // console.log("asd", session);
     if (session?.data?.user?.role ?? false) {
       // ReplaceNavigateTo(redirect ?? "/")
-      // console.log("asd", session);
       const role = session?.data?.user?.role;
       switch (role) {
         case 'admin':
@@ -98,10 +98,10 @@ const Signin = ({ form, session }) => {
 
     var response = await requestPost('', '/api/login', values);
     setLoading(false);
-    if (response?.data?.statusCode == 200) {
+    if (response?.status == 200) {
       Message.success('Sign complete. Taking you to your dashboard!', 0.1).then(
         () =>
-          ReplaceNavigateTo(redirect ?? "/")
+          ReplaceNavigateTo(redirect ?? "/dashboard")
         ,
       );
     }
@@ -126,7 +126,7 @@ const Signin = ({ form, session }) => {
         >
           <Content>
             <div className="mb-5 text-center">
-              <img src="/images/logo/dtn.png" height="60px" alt="Dtn Logo" />
+              <img src="/assets/icons/Asset_6.png" height="60px" alt="Logo" />
             </div>
 
             <Form layout="vertical" onFinish={handleLogin}>
@@ -186,7 +186,6 @@ const Signin = ({ form, session }) => {
                       htmlType="button"
                       block
                       style={{
-                        color: "#33539E",
                         background: "transparent",
                         border: "none",
                         boxShadow: "none",

@@ -18,7 +18,7 @@ async function handler(req, res) {
             if (session_result?.code == 0) {
                 return res.status(200).json({
                     code: 0,
-                    info: 'Login Suceed',
+                    info: 'Login Succeed',
                     data: datar?.data?.data,
                     token: session_result
                 })
