@@ -13,6 +13,8 @@ const DashboardAdmin = ({ session }) => {
     const [state, dispatch] = useAppState();
     const getUser = session?.data?.user?.firstName ?? null
 
+    // console.log("asd", session);
+
     const FetchGrantPermisson = async ({req, res}) => {
         var params = {}
 
@@ -53,7 +55,7 @@ const DashboardAdmin = ({ session }) => {
 
     return (
         <>
-            <h3>Hello {getUser}</h3>
+            <h3>Helloooooo, {getUser}</h3>
         </>
     );
 };

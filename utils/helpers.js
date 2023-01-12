@@ -18,7 +18,8 @@ export const handleSessions = async (ctx, needLogin = true, dontRedirect = false
                         data: {
                             user: data.data,
                             accessToken: sessionUser?.data?.accessToken,
-                            grantAccess: grantPermission
+                            grantAccess: grantPermission,
+                            refreshToken: sessionUser?.data?.refreshToken,
                         }
                     }
                 }

@@ -1,11 +1,10 @@
 import jwt from 'jsonwebtoken';
 import cookie from 'js-cookie';
-// import Md5 from 'md5'
-// import jwt from 'jsonwebtoken';
+
 let isServer = (typeof window === 'undefined') ? false : true;
-if (!isServer) {
-    global.crypto = require('crypto')
-}
+// if (!isServer) {
+//     global.crypto = require('crypto')
+// }
 
 var client = null
 
@@ -21,6 +20,20 @@ export function setSession(req, res, input_session, key_session = "ruang_kultur"
         info: "Set Session Berhasil",
         token: cookies_data.token
     }
+}
+
+export function setRefreshSession(req, res, input_session, key_session = "ruang_kultur") {
+  if (!isJson(input_session)) {
+      return { code: "101", info: "Please Use JSON for Input Format.", data: {} }
+  }
+  let cookies_data = buildCookiesWithJWT(key_session, input_session, true);
+  document.cookie = `Ruang Kultur - CMS=${cookies_data.token}`;
+
+  return {
+      code: "0",
+      info: "Set Refresh Berhasil",
+      token: cookies_data.token
+  }
 }
 
 export function setGrantPermisson(req, res, grant_permission, key_session = "ruang_kultur_grant_permission") {
@@ -57,7 +70,7 @@ const buildCookiesWithJWT = (key, val, rememberLogin) => {
     let path = "path=/" + ";";
     let httpOnly = "httpOnly" + ";";
     let SameSite = "SameSite=Strict" + ";";
-    let cookies = data + expires + path + httpOnly + SameSite;
+    let cookies = data + expires + path ;
 
     return {
         "token": token,
@@ -84,7 +97,6 @@ const getCookieFromServer = (key, req) => {
         .split(';')
         .find(c => c.trim().startsWith(`${key}=`));
 
-    console.log("asdasdasda", req.headers)
     if (!rawCookie) {
         return undefined;
     }
@@ -92,6 +104,7 @@ const getCookieFromServer = (key, req) => {
 };
 
 export const encryptBro = (key, val) => {
+    var crypto = require('crypto')
     var cipher = crypto.createCipher('aes-256-cbc', key);
     var crypted = cipher.update(val, 'utf8', 'hex');
     crypted += cipher.final('hex');
@@ -99,6 +112,7 @@ export const encryptBro = (key, val) => {
 }
 
 export const decryptBro = (key, val) => {
+    var crypto = require('crypto')
     var decipher = crypto.createDecipher('aes-256-cbc', key);
     var dec = decipher.update(val, 'hex', 'utf8');
     dec += decipher.final('utf8');

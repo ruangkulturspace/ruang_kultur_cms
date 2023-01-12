@@ -10,7 +10,7 @@ const OverviewPage = ({ session }) => {
     const [state, dispatch] = useAppState();
     const [pagination, setPagination] = useState({
         current: 1,
-        pageSize: 10,
+        pageSize: 20,
         total: 0,
         position: ["none", "bottomCenter"],
     });
@@ -57,7 +57,7 @@ const OverviewPage = ({ session }) => {
             setPageData(datar?.data?.data ?? []);
             setPagination({
               current: datar?.data?.currentPage ?? 1,
-              pageSize: limit,
+              pageSize: datar?.data?.perPage,
               total: datar?.data?.totalData ?? 0,
               position: ["none", "bottomCenter"],
             });
