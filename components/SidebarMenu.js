@@ -103,8 +103,6 @@ const SidebarContent = ({
           </center>
         </div>
         {appRoutes.map((route, index) => {
-          // const hasChildren = route.children ? true : false;
-          // const isCurrentPath = pathname.indexOf(lowercase(route.name)) > -1;
           const hasChildren = route.children ? true : false;
           const split = pathname.split("/");
           const isCurrentPath = route.path.split("/")[1] === split[1];
@@ -136,7 +134,7 @@ const SidebarContent = ({
                 key={getKey(route.name, index)}
                 icon={sidebarIcons && route.icon}
                 title={<>
-                  <span>{capitalize(route.name)}</span>
+                  <span className='text-dark'>{capitalize(route.name)}</span>
                   {route.badge && badgeTemplate(route.badge)}
                 </>
                 }
@@ -217,158 +215,6 @@ const SidebarContent = ({
             </Inner>
           </Drawer>)}
 
-        <Drawer
-          title="Settings"
-          placement={`${state.direction === 'rtl' ? 'left' : 'right'}`}
-          closable={true}
-          width={300}
-          onClose={() => dispatch({ type: 'options' })}
-          visible={state.optionDrawer}
-        >
-          <List.Item
-            actions={[
-              <Switch
-                size="small"
-                checked={!!state.boxed}
-                onChange={checked => dispatch({ type: 'boxed' })}
-              />
-            ]}
-          >
-            <span
-              css={`
-                -webkit-box-flex: 1;
-                -webkit-flex: 1 0;
-                -ms-flex: 1 0;
-                flex: 1 0;
-              `}
-            >
-              Boxed view
-            </span>
-          </List.Item>
-          <List.Item
-            actions={[
-              <Switch
-                size="small"
-                checked={!!state.darkSidebar}
-                disabled={state.weakColor}
-                onChange={checked => dispatch({ type: 'sidebarTheme' })}
-              />
-            ]}
-          >
-            <span
-              css={`
-                -webkit-box-flex: 1;
-                -webkit-flex: 1 0;
-                -ms-flex: 1 0;
-                flex: 1 0;
-              `}
-            >
-              Dark sidebar menu
-            </span>
-          </List.Item>
-          <List.Item
-            actions={[
-              <Switch
-                size="small"
-                checked={!!state.sidebarPopup}
-                disabled={state.collapsed}
-                onChange={checked => dispatch({ type: 'sidebarPopup' })}
-              />
-            ]}
-          >
-            <span
-              css={`
-                -webkit-box-flex: 1;
-                -webkit-flex: 1 0;
-                -ms-flex: 1 0;
-                flex: 1 0;
-              `}
-            >
-              Popup sub menus
-            </span>
-          </List.Item>
-          <List.Item
-            actions={[
-              <Switch
-                size="small"
-                checked={!!state.sidebarIcons}
-                disabled={state.collapsed}
-                onChange={checked => dispatch({ type: 'sidebarIcons' })}
-              />
-            ]}
-          >
-            <span
-              css={`
-                -webkit-box-flex: 1;
-                -webkit-flex: 1 0;
-                -ms-flex: 1 0;
-                flex: 1 0;
-              `}
-            >
-              Sidebar menu icons
-            </span>
-          </List.Item>
-          <List.Item
-            actions={[
-              <Switch
-                size="small"
-                checked={!!state.collapsed}
-                onChange={checked => dispatch({ type: 'collapse' })}
-              />
-            ]}
-          >
-            <span
-              css={`
-                -webkit-box-flex: 1;
-                -webkit-flex: 1 0;
-                -ms-flex: 1 0;
-                flex: 1 0;
-              `}
-            >
-              Collapsed sidebar menu
-            </span>
-          </List.Item>
-          <List.Item
-            actions={[
-              <Switch
-                size="small"
-                checked={!!state.weakColor}
-                onChange={checked => dispatch({ type: 'weak', value: checked })}
-              />
-            ]}
-          >
-            <span
-              css={`
-                -webkit-box-flex: 1;
-                -webkit-flex: 1 0;
-                -ms-flex: 1 0;
-                flex: 1 0;
-              `}
-            >
-              Weak colors
-            </span>
-          </List.Item>
-          <List.Item
-            actions={[
-              <Switch
-                size="small"
-                checked={!!state.direction === 'rtl'}
-                onChange={checked => dispatch({ type: 'direction', value: checked })}
-              />
-            ]}
-          >
-            <span
-              css={`
-                -webkit-box-flex: 1;
-                -webkit-flex: 1 0;
-                -ms-flex: 1 0;
-                flex: 1 0;
-              `}
-            >
-              RTL/LTR Toggle
-            </span>
-          </List.Item>
-        </Drawer>
       </Inner>
     </>
   );

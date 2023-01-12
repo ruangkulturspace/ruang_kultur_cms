@@ -57,15 +57,13 @@ const MainHeader = ({ session, fromDashboard = false }) => {
       <Menu className="text-dark" onClick={redirectProfile}>
         <Menu.Item>Profile</Menu.Item>
       </Menu>
-      <Menu className="text-dark">
-        <Menu.Item>Notification</Menu.Item>
-      </Menu>
       <Menu.Divider />
       <Menu className="text-dark" onClick={doLogout}>
         <Menu.Item>Signout</Menu.Item>
       </Menu>
     </>
   );
+
   return (
     <DashHeader>
       <Header>
@@ -118,58 +116,9 @@ const MainHeader = ({ session, fromDashboard = false }) => {
 
           <span className="mr-auto" />
 
-          <SubMenu
-            title={
-              <Badge count={5}>
-                <span className="submenu-title-wrapper">
-                  <BellTwoTone style={{ fontSize: "20px" }} />
-                </span>
-              </Badge>
-            }
-          >
-            <Menu.Item
-              className="p-0 bg-transparent"
-              style={{ height: "auto" }}
-            >
-              <List
-                className="header-notifications"
-                itemLayout="horizontal"
-                dataSource={notifications}
-                footer={<div>5 Notifications</div>}
-                renderItem={(item) => (
-                  <Notification>
-                    <List.Item>
-                      <List.Item.Meta
-                        avatar={item.avatar}
-                        // eslint-disable-next-line @next/next/no-html-link-for-pages
-                        title={<a href="/">{item.title}</a>}
-                        description={<small>{item.description}</small>}
-                      />
-                    </List.Item>
-                  </Notification>
-                )}
-              />
-            </Menu.Item>
-          </SubMenu>
-
-          {/* <SubMenu title={<Avatar src="/images/avatar.jpg" />}>
-            <Menu.Item>Settings</Menu.Item>
-            <Menu.Item>Profile</Menu.Item>
-            <Menu.Item>Notifications</Menu.Item>
-            <Menu.Divider />
-            <Menu.Item>
-              <Link href="//one-readme.fusepx.com">
-                <a>Help?</a>
-              </Link>
-            </Menu.Item>
-            <Menu.Item>Signout</Menu.Item>
-          </SubMenu> */}
           <Dropdown overlay={menuDesktop}>
             <div className="mr-3" style={{ cursor: "pointer" }}>
-              <Avatar
-                className="mx-4 my-auto pointer"
-                src="/images/cecep.jpg"
-              />
+              <Avatar className="mx-4 my-auto pointer" src={session?.data?.user?.avatar ? `${process.env.NEXT_PUBLIC_API_URL}/public/${session?.data?.user?.avatar}` : "/images/avatar.jpg"} />
               <span
                 className="mr-1"
                 style={{ fontWeight: "bold", color: "#33539E" }}

@@ -12,6 +12,13 @@ export function showError(msg) {
 	});
 }
 
+export function showSuksesCustom(msg, desc) {
+	notification["success"]({
+		message: msg,
+		description: desc,
+	});
+}
+
 async function doRefreshToken(req, res) {
   try {
     var params = {}
@@ -111,6 +118,16 @@ async function doRefreshPermission(req, res) {
   }
 }
 
+const errorHandler = async (status, message, needLogin = true) => {
+  if (status === 401 && needLogin) {
+    ReplaceNavigateTo("/api/logout");
+  }
+  return Promise.reject({
+    message: message ?? "Something went wrong",
+    status,
+  });
+};
+
 export async function requestPost(sessions, url, data, settings = {}) {
 	try {
 		console.log("%c FetcherPost: " + url, "background: #222; color: #bada55");
@@ -131,14 +148,35 @@ export async function requestPost(sessions, url, data, settings = {}) {
 
 		return response;
 	} catch (error) {
-		showError(
-			error?.response?.data?.message ??
-			error?.response?.data?.info ??
-			"Terjadi Kesalahan pada server!"
-		);
-		if (error?.response?.data?.statusCode == "401") {
-			doLogout();
-		}
+		if (error?.response?.status == "401") {
+			await doRefreshToken(sessions);
+      await doRefreshPermission(sessions);
+
+      let updateCookie = document?.cookie?.split("; ")[1]?.split("=")[1]
+
+      let bearer = updateCookie;
+
+      let decrypted = decryptBro(process.env.APPKEY, bearer);
+      let verifiedjwt = await jwt.verify(decrypted, process.env.APPKEY);
+      let newCookie = JSON.parse(verifiedjwt.sess)
+
+      const header = {
+        Authorization: "Bearer " + newCookie.accessToken,
+        'x-permission-token': newCookie.accessToken
+      }
+
+      const retryResponse = axios.post(url, data, {
+        headers: header
+      });
+
+      return retryResponse;
+		}else{
+      showError(
+        error?.response?.data?.message ??
+        error?.response?.data?.info ??
+        "Terjadi Kesalahan pada server!"
+      );
+    }
 		console.error(error);
 		return {
 			code: -1,
@@ -150,39 +188,59 @@ export async function requestPost(sessions, url, data, settings = {}) {
 	}
 }
 
-export const requestPut = async (
-  url,
-  { data: requestBody, token, needLogin = true, getErrorMessage }
-) => {
-  try {
-    const { data } = await axios.put(url, requestBody, {
-      headers: {
-        ...(token && {
-          Authorization: `Bearer ${token}`,
-        }),
-      },
-    });
-    return data;
-  } catch (e) {
-    return errorHandler(
-      e?.response?.status,
-      getErrorMessage
-        ? getErrorMessage(e)
-        : e?.response?.data?.message ?? e?.message,
-      needLogin
-    );
-  }
-};
+export async function requestPut(sessions, url, data) {
+	try {
+		console.log("%c FetcherPut: " + url, "background: #222; color: #bada55");
+		console.log(
+			"%c withParam: " + JSON.stringify(data),
+			"background: #222; color: #bada55"
+		);
 
-const errorHandler = async (status, message, needLogin = true) => {
-  if (status === 401 && needLogin) {
-    ReplaceNavigateTo("/api/logout");
-  }
-  return Promise.reject({
-    message: message ?? "Something went wrong",
-    status,
-  });
-};
+		const response = await axios.put(url, data, {
+			headers: {
+				Authorization: "Bearer " + sessions?.data?.accessToken ?? "",
+			},
+		});
+
+		return response;
+	} catch (error) {
+		showError(
+			error?.response?.data?.message ??
+			error?.response?.data?.info ??
+			"Terjadi Kesalahan pada server!"
+		);
+		if (error?.response?.status == "401") {
+      await doRefreshToken(sessions);
+      await doRefreshPermission(sessions);
+
+      let updateCookie = document?.cookie?.split("; ")[1]?.split("=")[1]
+
+      let bearer = updateCookie;
+
+      let decrypted = decryptBro(process.env.APPKEY, bearer);
+      let verifiedjwt = await jwt.verify(decrypted, process.env.APPKEY);
+      let newCookie = JSON.parse(verifiedjwt.sess)
+
+      const header = {
+        Authorization: "Bearer " + newCookie.accessToken,
+        'x-permission-token': newCookie.accessToken
+      }
+
+      const retryResponse = axios.get(url, {
+        headers: header
+      });
+      return retryResponse;
+    }
+		console.error(error);
+		return {
+			code: -1,
+			info:
+				error?.response?.data?.message ??
+				error?.response?.data?.info ??
+				"Terjadi Kesalahan pada server!",
+		};
+	}
+}
 
 export async function requestGet(
 	sessions,
@@ -238,5 +296,73 @@ export async function requestGet(
     }
 		// console.error(error);
 		// return error;
+	}
+}
+
+
+export async function requestDelete(
+	sessions,
+	url,
+	{ params, headers, silent = false } = {}
+) {
+	try {
+		console.log("%c FetcherDelete: " + url, "background: #222; color: #bada55");
+		console.log(
+			"%c withParam: " + JSON.stringify(params),
+			"background: #222; color: #bada55"
+		);
+
+		const response = await axios.delete(url, {
+			params,
+			headers: {
+				...headers,
+				Authorization: "Bearer " + sessions?.data?.accessToken ?? "",
+			},
+		});
+
+		return response;
+	} catch (error) {
+		// showError(
+		// 	error?.response?.data?.message ??
+		// 	error?.response?.data?.info ??
+		// 	"Terjadi Kesalahan pada server!"
+		// );
+		if (error?.response?.status == "401") {
+      await doRefreshToken(sessions);
+      await doRefreshPermission(sessions);
+
+      let updateCookie = document?.cookie?.split("; ")[1]?.split("=")[1]
+
+      let bearer = updateCookie;
+
+      let decrypted = decryptBro(process.env.APPKEY, bearer);
+      let verifiedjwt = await jwt.verify(decrypted, process.env.APPKEY);
+      let newCookie = JSON.parse(verifiedjwt.sess)
+
+      const header = {
+        Authorization: "Bearer " + newCookie.accessToken,
+        'x-permission-token': newCookie.accessToken
+      }
+
+      const retryResponse = axios.delete(url, {
+        params,
+        headers: header
+      });
+      return retryResponse;
+    }else{
+      showError(
+        error?.response?.data?.message ??
+        error?.response?.data?.info ??
+        "Terjadi Kesalahan pada server!"
+      );
+    }
+		// console.error(error);
+		return {
+			code: -1,
+			info:
+				error?.response?.data?.message ??
+				error?.response?.data?.info ??
+				"Terjadi Kesalahan pada server!",
+		};
 	}
 }
