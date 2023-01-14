@@ -19,6 +19,16 @@ export function showSuksesCustom(msg, desc) {
 	});
 }
 
+const errorHandler = async (status, message, needLogin = true) => {
+  if (status === 401 && needLogin) {
+    ReplaceNavigateTo("/api/logout");
+  }
+  return Promise.reject({
+    message: message ?? "Something went wrong",
+    status,
+  });
+};
+
 async function doRefreshToken(req, res) {
   try {
     var params = {}
@@ -118,16 +128,6 @@ async function doRefreshPermission(req, res) {
   }
 }
 
-const errorHandler = async (status, message, needLogin = true) => {
-  if (status === 401 && needLogin) {
-    ReplaceNavigateTo("/api/logout");
-  }
-  return Promise.reject({
-    message: message ?? "Something went wrong",
-    status,
-  });
-};
-
 export async function requestPost(sessions, url, data, settings = {}) {
 	try {
 		console.log("%c FetcherPost: " + url, "background: #222; color: #bada55");
@@ -143,6 +143,7 @@ export async function requestPost(sessions, url, data, settings = {}) {
 		const response = await axios.post(url, data, {
 			headers: {
 				Authorization: "Bearer " + sessions?.data?.accessToken ?? "",
+        'x-permission-token': sessions?.data?.grantAccess?.data ?? ""
 			},
 		});
 
@@ -199,6 +200,7 @@ export async function requestPut(sessions, url, data) {
 		const response = await axios.put(url, data, {
 			headers: {
 				Authorization: "Bearer " + sessions?.data?.accessToken ?? "",
+        'x-permission-token': sessions?.data?.grantAccess?.data ?? ""
 			},
 		});
 
@@ -294,8 +296,6 @@ export async function requestGet(
         "Terjadi Kesalahan pada server!"
       );
     }
-		// console.error(error);
-		// return error;
 	}
 }
 
@@ -317,16 +317,12 @@ export async function requestDelete(
 			headers: {
 				...headers,
 				Authorization: "Bearer " + sessions?.data?.accessToken ?? "",
+        'x-permission-token': sessions?.data?.grantAccess?.data ?? ""
 			},
 		});
 
 		return response;
 	} catch (error) {
-		// showError(
-		// 	error?.response?.data?.message ??
-		// 	error?.response?.data?.info ??
-		// 	"Terjadi Kesalahan pada server!"
-		// );
 		if (error?.response?.status == "401") {
       await doRefreshToken(sessions);
       await doRefreshPermission(sessions);
@@ -356,7 +352,6 @@ export async function requestDelete(
         "Terjadi Kesalahan pada server!"
       );
     }
-		// console.error(error);
 		return {
 			code: -1,
 			info:
