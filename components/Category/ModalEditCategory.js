@@ -9,6 +9,7 @@ import { requestPut, showSuksesCustom } from "../../utils/baseService";
 const ModalEditCategory = ({ session, dataEdit, modalEdit, setModalEdit, onFinish = () => { } }) => {
     const [state, dispatch] = useAppState();
     const [loading, setLoading] = useState(false);
+    const [status, setStatus] = useState()
 
     const [formEdit] = Form.useForm();
 
@@ -17,6 +18,7 @@ const ModalEditCategory = ({ session, dataEdit, modalEdit, setModalEdit, onFinis
         formEdit.setFieldsValue({
             name: dataEdit.name,
             description: dataEdit.description,
+            isActive: dataEdit.isActive
         });
 
     }, [dataEdit])
@@ -27,6 +29,7 @@ const ModalEditCategory = ({ session, dataEdit, modalEdit, setModalEdit, onFinis
             const param = {
                 name: values.name,
                 description: values.description,
+                isActive: status ?? dataEdit.status
             };
 
             var datar = await requestPut(
@@ -100,7 +103,7 @@ const ModalEditCategory = ({ session, dataEdit, modalEdit, setModalEdit, onFinis
             >
                 <Row gutter={[10, 10]} justify="center" align="middle">
                     <Col xs={24} sm={24} md={24} lg={24}>
-                        <h1 className="text-center headerPage">Edit Pengguna</h1>
+                        <h1 className="text-center headerPage">Edit Category</h1>
                     </Col>
                 </Row>
 
@@ -130,6 +133,28 @@ const ModalEditCategory = ({ session, dataEdit, modalEdit, setModalEdit, onFinis
                                     style={{ marginBottom: '12px' }}
                                 >
                                     <TextArea type="text" placeholder="Username" />
+                                </Form.Item>
+                            </>
+
+                            <>
+                                <p style={StyleHeaderInput}>
+                                    Status
+                                </p>
+                                <Form.Item
+                                    name="isActive"
+                                    style={{ marginBottom: '12px' }}
+                                >
+                                    <Radio.Group
+                                        options={[
+                                            { label: 'Active', value: true },
+                                            { label: 'Inactive', value: false },
+                                        ]}
+                                        onChange={(e) => {
+                                            setStatus(e.target.value)
+                                        }}
+                                        value={status}
+                                    />
+
                                 </Form.Item>
                             </>
                         </Form>

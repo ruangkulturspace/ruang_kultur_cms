@@ -34,7 +34,7 @@ const UsersAction = ({
                   </Tooltip>
               </Col> */}
               <Col xs={12} sm={12} md={12} lg={6}>
-                  <Tooltip placement="top" title={"Edit User"}>
+                  <Tooltip placement="top" title={"Edit"}>
                       <img
                           onClick={() => {
                               onEdit(id, allData);
@@ -46,7 +46,7 @@ const UsersAction = ({
                   </Tooltip>
               </Col>
               <Col xs={12} sm={12} md={12} lg={6}>
-                  <Tooltip placement="top" title={"Delete User"}>
+                  <Tooltip placement="top" title={"Delete"}>
                       <img
                           onClick={() => {
                               onDelete(id, allData);
@@ -302,6 +302,41 @@ const Type = ({ session }) => {
                                   />
                                 </>
                               );
+                            }}
+                        />
+                        <Table.Column
+                            title="Status"
+                            dataIndex="isActive"
+                            render={(value, item, index) => {
+                              if (value === true) {
+                                return (
+                                  <p
+                                    style={{
+                                      margin: '0px',
+                                      fontWeight: '600',
+                                      fontSize: '14px',
+                                      color: '#03C4A9',
+                                    }}
+                                  >
+                                    Active
+                                  </p>
+                                )
+                              }
+                              if (value === false) {
+                                return (
+                                  <p
+                                    style={{
+                                      margin: '0px',
+                                      fontWeight: '600',
+                                      fontSize: '14px',
+                                      color: '#D05C77',
+                                    }}
+                                  >
+                                    In Active
+                                  </p>
+                                )
+                              }
+                              return '-'
                             }}
                         />
                         <Table.Column

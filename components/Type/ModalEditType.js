@@ -9,14 +9,16 @@ import { requestPut, showSuksesCustom } from "../../utils/baseService";
 const ModalEditType = ({ session, dataEdit, modalEdit, setModalEdit, onFinish = () => { } }) => {
     const [state, dispatch] = useAppState();
     const [loading, setLoading] = useState(false);
+    const [status, setStatus] = useState()
 
     const [formEdit] = Form.useForm();
 
     useEffect(() => {
-        // console.log(dataEdit)
+        // console.log("asd", dataEdit)
         formEdit.setFieldsValue({
             name: dataEdit.name,
             description: dataEdit.description,
+            isActive: dataEdit.isActive
         });
 
     }, [dataEdit])
@@ -27,6 +29,7 @@ const ModalEditType = ({ session, dataEdit, modalEdit, setModalEdit, onFinish = 
             const param = {
                 name: values.name,
                 description: values.description,
+                isActive: status ?? dataEdit.status
             };
 
             var datar = await requestPut(
@@ -130,6 +133,28 @@ const ModalEditType = ({ session, dataEdit, modalEdit, setModalEdit, onFinish = 
                                     style={{ marginBottom: '12px' }}
                                 >
                                     <TextArea type="text" placeholder="Username" />
+                                </Form.Item>
+                            </>
+
+                            <>
+                                <p style={StyleHeaderInput}>
+                                    Status
+                                </p>
+                                <Form.Item
+                                    name="isActive"
+                                    style={{ marginBottom: '12px' }}
+                                >
+                                    <Radio.Group
+                                        options={[
+                                            { label: 'Active', value: true },
+                                            { label: 'Inactive', value: false },
+                                        ]}
+                                        onChange={(e) => {
+                                            setStatus(e.target.value)
+                                        }}
+                                        value={status}
+                                    />
+
                                 </Form.Item>
                             </>
                         </Form>
