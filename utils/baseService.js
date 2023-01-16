@@ -189,6 +189,65 @@ export async function requestPost(sessions, url, data, settings = {}) {
 	}
 }
 
+export async function requestPostFormData(sessions, url, data, settings = {}) {
+	try {
+		console.log(
+			"%c requestPostFormData: " + url,
+			"background: #222; color: #bada55"
+		);
+
+		const response = await axios.post(url, data, {
+			headers: {
+				"Content-Type": "multipart/form-data",
+				"Access-Control-Allow-Origin": "*",
+				Authorization: "Bearer " + sessions?.data?.accessToken ?? "",
+        'x-permission-token': sessions?.data?.grantAccess?.data ?? ""
+			},
+		});
+
+		return response;
+	} catch (error) {
+		if (error?.response?.status == "401") {
+			await doRefreshToken(sessions);
+      await doRefreshPermission(sessions);
+
+      let updateCookie = document?.cookie?.split("; ")[1]?.split("=")[1]
+
+      let bearer = updateCookie;
+
+      let decrypted = decryptBro(process.env.APPKEY, bearer);
+      let verifiedjwt = await jwt.verify(decrypted, process.env.APPKEY);
+      let newCookie = JSON.parse(verifiedjwt.sess)
+
+      const header = {
+        Authorization: "Bearer " + newCookie.accessToken,
+        'x-permission-token': newCookie.accessToken
+      }
+
+      const retryResponse = axios.post(url, data, {
+        headers: header
+      });
+
+      return retryResponse;
+		}else{
+      showError(
+        error?.response?.data?.message ??
+        error?.response?.data?.info ??
+        "Terjadi Kesalahan pada server!"
+      );
+    }
+		console.error(error);
+		return {
+			code: -1,
+			info:
+				error?.response?.data?.message ??
+				error?.response?.data?.info ??
+				"Terjadi Kesalahan pada server!",
+			res: error?.response?.data?.data ?? null
+		};
+	}
+}
+
 export async function requestPut(sessions, url, data) {
 	try {
 		console.log("%c FetcherPut: " + url, "background: #222; color: #bada55");

@@ -636,12 +636,12 @@ video {
   font-size: 12px;
 }
 
-.ant-form-vertical .ant-form-item-label > label,
+/* .ant-form-vertical .ant-form-item-label > label,
 .ant-col-24.ant-form-item-label > label,
 .ant-col-xl-24.ant-form-item-label > label {
   color: var(--lightGrey) !important;
   font-weight: 600;
-}
+} */
 
 /* Screen vh vw */
 
