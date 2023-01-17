@@ -265,11 +265,6 @@ export async function requestPut(sessions, url, data) {
 
 		return response;
 	} catch (error) {
-		showError(
-			error?.response?.data?.message ??
-			error?.response?.data?.info ??
-			"Terjadi Kesalahan pada server!"
-		);
 		if (error?.response?.status == "401") {
       await doRefreshToken(sessions);
       await doRefreshPermission(sessions);
@@ -286,20 +281,23 @@ export async function requestPut(sessions, url, data) {
         Authorization: "Bearer " + newCookie.accessToken,
         'x-permission-token': newCookie.accessToken
       }
+      console.log(
+        "%c withParam ke dua: " + JSON.stringify(data),
+        "background: #222; color: #bada55"
+      );
 
-      const retryResponse = axios.get(url, {
+      const retryResponse = axios.put(url, data, {
         headers: header
       });
       return retryResponse;
     }
-		console.error(error);
-		return {
-			code: -1,
-			info:
-				error?.response?.data?.message ??
-				error?.response?.data?.info ??
-				"Terjadi Kesalahan pada server!",
-		};
+		else{
+      showError(
+        error?.response?.data?.message ??
+        error?.response?.data?.info ??
+        "Terjadi Kesalahan pada server!"
+      );
+    }
 	}
 }
 
