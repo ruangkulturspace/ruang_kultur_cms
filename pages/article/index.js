@@ -9,6 +9,7 @@ import { requestGet } from "../../utils/baseService";
 import ModalDeleteArticle from "../../components/Article/ModalDeleteArticle";
 import ModalEditArticle from "../../components/Article/ModalEditArticle";
 import Link from "next/link";
+import { PushNavigateTo } from "../../utils/helpersBrowser";
 
 const UsersAction = ({
   session,
@@ -21,18 +22,18 @@ const UsersAction = ({
   return (
       <>
           <Row gutter={[8, 8]} type="flex" align="middle" justify="start">
-              {/* <Col xs={12} sm={12} md={12} lg={6}>
-                  <Tooltip placement="top" title={"Detail User"}>
+              <Col xs={12} sm={12} md={12} lg={6}>
+                  <Tooltip placement="top" title={"Detail Article"}>
                       <img
                           onClick={() => {
-                              onView(id, allData);
+                              PushNavigateTo(`/article-detail?id=${id}`)
                           }}
                           className="pointer"
                           src="/images/icon/login/eye.svg"
                           alt="edit"
                       />
                   </Tooltip>
-              </Col> */}
+              </Col>
               <Col xs={12} sm={12} md={12} lg={6}>
                   <Tooltip placement="top" title={"Edit"}>
                       <img
@@ -327,10 +328,9 @@ const Article = ({ session }) => {
                                       id={id}
                                       session={session}
                                       allData={item}
-                                      // onView={(id, allData) => {
-                                      //     setDataView(allData);
-                                      //     setModalView(true);
-                                      // }}
+                                      onView={(id) => {
+                                          PushNavigateTo(`/article-detail?id=${id}`)
+                                      }}
                                       onEdit={(id, allData) => {
                                           setDataEdit(allData);
                                           setModalEdit(true);

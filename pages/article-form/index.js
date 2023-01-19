@@ -248,7 +248,7 @@ const ArticleForm = ({ session }) => {
                       style={{ marginBottom: '12px' }}
                   >
                       <Upload
-                          fileList={fileList}
+                          // fileList={fileList}
                           {...uploadSettings}
                       >
                           <Button style={{
@@ -266,59 +266,65 @@ const ArticleForm = ({ session }) => {
                   </Form.Item>
                 </div>
 
-                <Row>
-                  <div className="w-1/2 px-0">
-                    <Form.Item
-                      name="isActive"
-                      label="Active"
-                      rules={[
-                          { required: true, message: 'Harap Lengkapi Data!' },
-                      ]}
-                    >
-                      <Radio.Group
-                          onChange={(e) => {
-                            setActive(e.target.value)
-                          }}
-                          options={[
-                              { label: 'Yes', value: true },
-                              { label: 'No', value: false }
-                          ]}
-                          value={active}
-                      />
-                    </Form.Item>
-                  </div>
+                <div className="w-full pr-0 lg:pr-1">
+                  <Row>
+                    <div className="w-1/2 px-0">
+                      <Form.Item
+                        name="isActive"
+                        label="Active"
+                        rules={[
+                            { required: true, message: 'Harap Lengkapi Data!' },
+                        ]}
+                      >
+                        <Radio.Group
+                            onChange={(e) => {
+                              setActive(e.target.value)
+                            }}
+                            options={[
+                                { label: 'Yes', value: true },
+                                { label: 'No', value: false }
+                            ]}
+                            value={active}
+                        />
+                      </Form.Item>
+                    </div>
 
-                  <div className="w-1/2 px-0">
-                    <Form.Item
-                      name="isOnLandingPage"
-                      label="Onlanding Page"
-                      rules={[
-                          { required: true, message: 'Harap Lengkapi Data!' },
-                      ]}
-                    >
-                      <Radio.Group
-                          onChange={(e) => {
-                            setIsOnLandingPage(e.target.value)
-                          }}
-                          options={[
-                              { label: 'Yes', value: true },
-                              { label: 'No', value: false }
-                          ]}
-                          value={isOnLandingPage}
-                      />
-                    </Form.Item>
-                  </div>
-                </Row>
-
-                <Form.Item label="Deskripsi">
-                  {/* WYSWYG here */}
-                  <div className="rounded-lg bgW">
-                    {/* <Editor raw={""} caller="tambahArticle" /> */}
-                  </div>
-                </Form.Item>
-
-
+                    <div className="w-1/2 px-0">
+                      <Form.Item
+                        name="isOnLandingPage"
+                        label="Onlanding Page"
+                        rules={[
+                            { required: true, message: 'Harap Lengkapi Data!' },
+                        ]}
+                      >
+                        <Radio.Group
+                            onChange={(e) => {
+                              setIsOnLandingPage(e.target.value)
+                            }}
+                            options={[
+                                { label: 'Yes', value: true },
+                                { label: 'No', value: false }
+                            ]}
+                            value={isOnLandingPage}
+                        />
+                      </Form.Item>
+                    </div>
+                  </Row>
+                </div>
               </div>
+
+              <Form.Item
+                label="Deskripsi"
+                rules={[
+                    { required: true, message: 'Harap Lengkapi Data!' },
+                ]}
+              >
+                {/* WYSWYG here */}
+                <div className="rounded-lg bgW">
+                  {/* <Editor raw={""} caller="tambahArticle" /> */}
+                </div>
+              </Form.Item>
+
               <div style={{ display: 'flex', justifyContent: 'end' }}>
                 <Button
                   style={{
