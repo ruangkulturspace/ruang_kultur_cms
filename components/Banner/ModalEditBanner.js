@@ -62,7 +62,7 @@ const ModalEditBanner = ({ session, dataEdit, modalEdit, setModalEdit, onFinish 
       formEdit.setFieldsValue({
           owner: dataEdit?.owner,
           type: dataEdit?.type?.name,
-          placement: dataEdit?.placements?.map((k,v) => k.name),
+          placement: dataEdit?.placements?.map((k,v) => k._id),
           date: [moment(dataEdit.startDate), moment(dataEdit.endDate)]
       });
     }, [dataEdit])
