@@ -54,7 +54,7 @@ const MainHeader = ({ session, fromDashboard = false }) => {
       <Menu className="text-dark">
         <Menu.Item>Settings</Menu.Item>
       </Menu>
-      <Menu className="text-dark" onClick={redirectProfile}>
+      <Menu className="text-dark">
         <Menu.Item>Profile</Menu.Item>
       </Menu>
       <Menu.Divider />

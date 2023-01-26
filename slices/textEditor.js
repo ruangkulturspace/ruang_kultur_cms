@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   rawTextTentangKami: "",
   rawTextRilisMedia: "",
-  rawTextTambahKelas: "",
+  rawTextTambahArticle: "",
   rawTextTambahPengumuman: "",
 };
 
@@ -19,9 +19,9 @@ export const textEditorSlice = createSlice({
       ...state,
       rawTextRilisMedia: action.payload,
     }),
-    setRawTextTambahKelas: (state, action) => ({
+    setRawTextTambahArticle: (state, action) => ({
       ...state,
-      rawTextTambahKelas: action.payload,
+      rawTextTambahArticle: action.payload,
     }),
     setRawTextTambahPengumuman: (state, action) => ({
       ...state,
@@ -33,7 +33,7 @@ export const textEditorSlice = createSlice({
 export const {
   setRawTextTentangKami,
   setRawTextRilisMedia,
-  setRawTextTambahKelas,
+  setRawTextTambahArticle,
   setRawTextTambahPengumuman,
 } = textEditorSlice.actions;
 export default textEditorSlice.reducer;

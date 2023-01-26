@@ -2,13 +2,14 @@ import Head from "next/head";
 import { useAppState } from "../../components/shared/AppProvider";
 import { useEffect, useState } from "react";
 import moment from 'moment';
-import { Button, Row, Col, notification, Table, Input, Tooltip } from "antd";
+import { Button, Row, Col, notification, Table, Input, Tooltip, Form, Switch } from "antd";
 import { handleSessions } from "../../utils/helpers";
-import { requestGet } from "../../utils/baseService";
-// import ModalViewArticle from "../../components/Article/ModalViewArticle";
-import ModalDeleteArticle from "../../components/Article/ModalDeleteArticle";
-import Link from "next/link";
+import { requestGet, requestPatch } from "../../utils/baseService";
+import ModalEditArticle from "../../components/Article/ModalEditArticle";
 import { PushNavigateTo } from "../../utils/helpersBrowser";
+import ModalAddBanner from "../../components/Banner/ModalAddBanner";
+import ModalDeleteBanner from "../../components/Banner/ModalDeleteBanner";
+import ModalEditBanner from "../../components/Banner/ModalEditBanner";
 
 const UsersAction = ({
   session,
@@ -22,10 +23,10 @@ const UsersAction = ({
       <>
           <Row gutter={[8, 8]} type="flex" align="middle" justify="start">
               <Col xs={12} sm={12} md={12} lg={6}>
-                  <Tooltip placement="top" title={"Detail Article"}>
+                  <Tooltip placement="top" title={"Detail Banner"}>
                       <img
                           onClick={() => {
-                              PushNavigateTo(`/article-detail?id=${id}`)
+                              PushNavigateTo(`/banner-detail?id=${id}`)
                           }}
                           className="pointer"
                           src="/images/icon/login/eye.svg"
@@ -37,11 +38,8 @@ const UsersAction = ({
                   <Tooltip placement="top" title={"Edit"}>
                       <img
                           onClick={() => {
-                              PushNavigateTo(`/article-form-update?id=${id}`)
+                              onEdit(id, allData);
                           }}
-                          // onClick={() => {
-                          //     onEdit(id, allData);
-                          // }}
                           className="pointer"
                           src="/images/icon/prtg/edit.svg"
                           alt="edit"
@@ -65,7 +63,7 @@ const UsersAction = ({
   );
 };
 
-const Article = ({ session }) => {
+const Banner = ({ session }) => {
     const [state, dispatch] = useAppState();
     const [pagination, setPagination] = useState({
         current: 1,
@@ -80,13 +78,36 @@ const Article = ({ session }) => {
     const [filtering, setFiltering] = useState('');
     const [sortering, setSorter] = useState({});
 
+    const [modalAdd, setModalAdd] = useState(false);
+
     const [modalDelete, setModalDelete] = useState(false);
     const [dataDelete, setDataDelete] = useState({});
+
+    const [modalEdit, setModalEdit] = useState(false);
+    const [dataEdit, setDataEdit] = useState({});
+    const [status, setIsActive] = useState()
+    const [getId, setGetId] = useState()
 
     useEffect(() => {
         fetchData();
         return () => { };
     }, [state]);
+
+    const [formIsActive] = Form.useForm();
+
+    const submitForm = async (values) => {
+        setLoading(true);
+        const data = await requestPatch(
+            session,
+            process.env.NEXT_PUBLIC_API_URL + `/api/v1/admin/banner/update/${values.id}/inactive`,
+            {}
+        );
+        setLoading(false);
+        if ((data?.code !== -1) ?? true) {
+            showSuksesCustom("Berhasil", "Data berhasil di update");
+            fetchData({ page: pagination.current, limit: pagination.pageSize });
+        }
+    }
 
     const handleTableChangeTable1 = (paginationA, filtersA, sorterA) => {
       const pager = { ...pagination };
@@ -116,7 +137,7 @@ const Article = ({ session }) => {
 
         const datar = await requestGet(
           session,
-          process.env.NEXT_PUBLIC_API_URL + "/api/v1/admin/article/list",
+          process.env.NEXT_PUBLIC_API_URL + "/api/v1/admin/banner/list",
           {
             params: params,
           }
@@ -140,7 +161,38 @@ const Article = ({ session }) => {
 
     return (
         <>
-            <ModalDeleteArticle
+            <ModalAddBanner
+                modalAdd={modalAdd}
+                setModalAdd={setModalAdd}
+                session={session}
+                onFinish={() => {
+                    fetchData({
+                        page: 1, limit: pagination.pageSize,
+                        filters: filtering, sorter: sortering
+                    });
+                }}
+            />
+
+            {/* <ModalViewArticle
+                modalView={modalView}
+                setModalView={setModalView}
+                dataView={dataView}
+            /> */}
+
+            <ModalEditBanner
+                modalEdit={modalEdit}
+                setModalEdit={setModalEdit}
+                dataEdit={dataEdit}
+                session={session}
+                onFinish={() => {
+                  fetchData({
+                        page: 1, limit: pagination.pageSize,
+                        filters: filtering, sorter: sortering
+                    });
+                }}
+            />
+
+            <ModalDeleteBanner
                 modalDelete={modalDelete}
                 setModalDelete={setModalDelete}
                 dataDelete={dataDelete}
@@ -165,7 +217,7 @@ const Article = ({ session }) => {
                 <Col xs={24} sm={24} md={24} lg={6}>
                     <Input
                         style={{ borderRadius: '4px', width: '100%', float: 'right' }}
-                        placeholder="Search by name"
+                        placeholder="Search by banner owner"
                         allowClear
                         enterButton="Search"
                         size="medium"
@@ -210,12 +262,13 @@ const Article = ({ session }) => {
 
                             <Col xs={24} sm={24} md={24} lg={14}>
                                 <Button
+                                    onClick={() => {
+                                        setModalAdd(!modalAdd);
+                                    }}
                                     className="btn btnBlue"
                                     style={{ borderRadius: "4px" }}
                                 >
-                                    <Link href="/article-form">
-                                      Tambah Article
-                                    </Link>
+                                    <p style={{ margin: '0' }}>Tambah Banner </p>
                                 </Button>
                             </Col>
                         </Row>
@@ -249,13 +302,44 @@ const Article = ({ session }) => {
                         />
                         <Table.Column
                             title="Post Date"
-                            dataIndex="createdAt"
+                            dataIndex="startDate"
                             render={(value, item, index) => moment(value).format("DD-MMM-YYYY") ?? "-"}
                         />
                         <Table.Column
-                            title="Article Title"
-                            dataIndex="title"
+                            title="End Date"
+                            dataIndex="endDate"
+                            render={(value, item, index) => moment(value).format("DD-MMM-YYYY") ?? "-"}
+                        />
+                        <Table.Column
+                            title="Banner Owner"
+                            dataIndex="owner"
                             render={(value, item, index) => value ?? "-"}
+                        />
+                        <Table.Column
+                            title="Placement"
+                            dataIndex="placement"
+                            render={(value, item, index) => {
+                              if( value !== 0){
+                                let loopData = []
+                                if (item?.placements?.length > 0){
+                                  for (let index = 0; index < item?.placements?.length; index++) {
+                                    let filearr = item?.placements?.[index];
+                                    loopData.push(filearr)
+                                  }
+                                  if (loopData.length > 0){
+                                    return (
+                                      <ul>
+                                        {loopData.map((data, index) => (
+                                          <li key={index}>{data.name}</li>
+                                        ))}
+                                      </ul>
+                                    )
+                                  }
+                                }
+                              }else{
+                                return "-"
+                              }
+                            }}
                         />
                         <Table.Column
                             title="Status"
@@ -307,9 +391,8 @@ const Article = ({ session }) => {
                                           PushNavigateTo(`/article-detail?id=${id}`)
                                       }}
                                       onEdit={(id, allData) => {
-                                          PushNavigateTo(`/article-form-update?id=${id}`)
-                                          // setDataEdit(allData);
-                                          // setModalEdit(true);
+                                          setDataEdit(allData);
+                                          setModalEdit(true);
                                       }}
                                       onDelete={(id, allData) => {
                                           setDataDelete(allData);
@@ -331,4 +414,4 @@ export async function getServerSideProps(context) {
   return checkSessions;
 }
 
-export default Article;
+export default Banner;

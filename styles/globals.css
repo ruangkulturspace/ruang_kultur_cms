@@ -636,6 +636,10 @@ video {
   font-size: 12px;
 }
 
+.ant-switch-checked {
+  background-color: #1890ff;
+}
+
 /* .ant-form-vertical .ant-form-item-label > label,
 .ant-col-24.ant-form-item-label > label,
 .ant-col-xl-24.ant-form-item-label > label {

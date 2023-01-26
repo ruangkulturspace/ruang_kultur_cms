@@ -3,51 +3,45 @@ import { useEffect, useState } from "react";
 import moment from 'moment';
 import { Button, Input, Form, Card, Select, DatePicker, Checkbox, Radio, Upload, Spin, Row, message } from "antd";
 import { handleSessions } from "../../utils/helpers";
-import { requestGet, requestPostFormData, showSuksesCustom } from "../../utils/baseService";
-import { ReloadOutlined, SaveFilled, UploadOutlined } from "@ant-design/icons";
+import { requestGet, requestPostFormData, requestPut, showSuksesCustom } from "../../utils/baseService";
+import { ReloadOutlined, SaveFilled } from "@ant-design/icons";
 import { PushNavigateTo } from "../../utils/helpersBrowser";
+import { useRouter } from "next/router";
 import dynamic from "next/dynamic";
 
 const Editor = dynamic(() => import("../../components/WSIWYG"), {
   ssr: false,
 });
 
-const ArticleForm = ({ session }) => {
+const ArticleFormUpdate = ({ session }) => {
     const { Option } = Select;
+    const router = useRouter()
+    const { id } = router.query
     const [state, dispatch] = useAppState();
     const [loading, setLoading] = useState(false);
 
-    const [formArticle] = Form.useForm();
+    const [formArticleUpdate] = Form.useForm();
 
     const [dataType, setDataType] = useState()
     const [dataCategory, setDataCategory] = useState()
     const [type, setType] = useState()
-    const [active, setActive] = useState()
     const [isOnLandingPage, setIsOnLandingPage] = useState()
     const [category, setCategory] = useState()
     const [content, setContent] = useState()
+    const [dataUpdate, setDataUpdate] = useState({})
 
-    const [fileList, setFileList] = useState([]);
+    const fetchDataDetailArticle = async (idArticle) => {
+        setLoading(true);
 
-    const uploadSettings = {
-        name: "file",
-        multiple: true,
-        headers: {
-            "Access-Control-Allow-Origin": "*",
-        },
-        method: "POST",
-        beforeUpload: function (file) {
-            setFileList([...fileList, file]);
-            return false;
-        },
-        fileList: fileList,
-        onRemove: (file) => {
-            const index = fileList.indexOf(file);
-            const newFileList = fileList.slice();
-            newFileList.splice(index, 1);
-            setFileList(newFileList);
-        },
-    };
+        const datar = await requestGet(
+          session,
+          process.env.NEXT_PUBLIC_API_URL + `/api/v1/admin/article/get/${idArticle}`,
+        );
+        setLoading(false);
+        if (datar?.data?.statusCode == 200 ?? false) {
+          setDataUpdate(datar?.data?.data);
+        }
+    }
 
     const fetchDataType = async () => {
         setLoading(true);
@@ -91,44 +85,61 @@ const ArticleForm = ({ session }) => {
         return () => { };
     }, [state]);
 
+    useEffect(() => {
+        if (id) {
+          fetchDataDetailArticle(id);
+        }
+    }, [id])
+
+    useEffect(() => {
+        formArticleUpdate.setFieldsValue({
+            title: dataUpdate?.title,
+            type: dataUpdate?.type?._id,
+            category: dataUpdate?.category?.name,
+            editor: dataUpdate?.editor,
+            reporter: dataUpdate?.reporter,
+            isOnLandingPage: dataUpdate?.isOnLandingPage,
+            date: moment(dataUpdate?.date),
+        });
+        setContent(dataUpdate?.content)
+    }, [dataUpdate])
+    // console.log("asd", dataUpdate);
+
     const submitForm = async (values) => {
-        const formData = new FormData();
-        formData.append('title', values.title ?? "-");
-        formData.append('type', values.type ?? "-");
-        formData.append('category', values.category ?? "-");
-        formData.append('editor', values.editor ?? "-");
-        formData.append('reporter', values.reporter ?? "-");
-        formData.append('isActive', active);
-        formData.append('isOnLandingPage', isOnLandingPage);
-        formData.append('content', content);
+        formArticleUpdate.validateFields().then(async values => {
+            setLoading(true);
+            const param = {
+                title: values?.title,
+                type: values?.type,
+                category: category ?? values?.category,
+                editor: values?.editor,
+                reporter: values?.reporter,
+                isOnLandingPage: values?.isOnLandingPage,
+                content: content,
+                date: moment(values.date)
+            };
 
-        let formatted1 = moment(values.date)
+            var datar = await requestPut(
+                session,
+                process.env.NEXT_PUBLIC_API_URL + '/api/v1/admin/article/update/' + dataUpdate._id,
+                param
+            );
+            setLoading(false);
 
-        formData.append('date', formatted1);
-
-        if (fileList.length > 0) {
-            fileList.forEach((file) => {
-                formData.append('image', file);
-            });
-        }
-
-        setLoading(true);
-        var datar = await requestPostFormData(session, process.env.NEXT_PUBLIC_API_URL + "/api/v1/admin/article/create", formData);
-        setLoading(false)
-        if (datar?.data?.statusCode == 201) {
-          showSuksesCustom("Success!", datar?.message);
-          // resetAll();
-          PushNavigateTo("/article");
-        }
+            if (datar?.data?.statusCode < 400) {
+                showSuksesCustom("Success!", datar?.message);
+                PushNavigateTo("/article");
+            }
+        });
     }
 
     return (
       <div className="p-6 rounded-lg bgW">
         <div className="items-center justify-between w-full">
-          <h1 className="text-3xl font-bold">Tambah Article</h1>
+          <h1 className="text-3xl font-bold">Edit Article</h1>
           <hr className="mb-3" />
           <Spin tip="Memuat..." size="large" spinning={state.loading || loading}>
-            <Form layout="vertical" form={formArticle}>
+            <Form layout="vertical" form={formArticleUpdate}>
               <div className="flex flex-col flex-wrap md:flex-row">
                 <div className="w-full px-0">
                   <Form.Item
@@ -151,32 +162,32 @@ const ArticleForm = ({ session }) => {
                   </Form.Item>
                 </div>
                 <div className="w-full px-0">
-                    <Form.Item
-                      name="category"
-                      label="Kanal"
-                      rules={[
-                          { required: true, message: 'Harap Lengkapi Data!' },
-                      ]}
+                  <Form.Item
+                    name="category"
+                    label="Kanal"
+                    rules={[
+                        { required: true, message: 'Harap Lengkapi Data!' },
+                    ]}
+                  >
+                    <Select
+                      showSearch
+                      placeholder="Pilih Kanal"
+                      optionFilterProp="children"
+                      onChange={(value, option) => {
+                          setCategory(value, option)
+                      }}
+                      filterOption={(input, option) =>
+                        option.children
+                          .toLowerCase()
+                          .includes(input.toLowerCase())
+                      }
                     >
-                      <Select
-                        showSearch
-                        placeholder="Pilih Kanal"
-                        optionFilterProp="children"
-                        onChange={(value, option) => {
-                            setCategory(value, option)
-                        }}
-                        filterOption={(input, option) =>
-                          option.children
-                            .toLowerCase()
-                            .includes(input.toLowerCase())
-                        }
-                      >
-                        {dataCategory?.map((k,v) => {
-                          return <Option key={v} value={k._id}>{k.name}</Option>
-                        })}
-                      </Select>
-                    </Form.Item>
-                  </div>
+                      {dataCategory?.map((k,v) => {
+                        return <Option key={v} value={k._id}>{k.name}</Option>
+                      })}
+                    </Select>
+                  </Form.Item>
+                </div>
                 <div className="w-full px-0">
                   <Form.Item
                     name="title"
@@ -236,53 +247,7 @@ const ArticleForm = ({ session }) => {
                 </div>
 
                 <div className="w-full pr-0 lg:pr-1">
-                  <Form.Item
-                      name="dokumen"
-                      label="Image"
-                      rules={[
-                          { required: true, message: 'Harap Lengkapi Data!' },
-                      ]}
-                      style={{ marginBottom: '12px' }}
-                  >
-                      <Upload {...uploadSettings}>
-                          <Button style={{
-                              borderRadius: '4px',
-                              color: '#ffffff',
-                              background: "#33539E",
-                              boxShadow: '0px 2px 5px rgba(51, 83, 158, 0.2)',
-                              float: 'right',
-                              margin: "0",
-                          }}
-                              icon={<UploadOutlined />}>
-                              Click to Upload
-                          </Button>
-                      </Upload>
-                  </Form.Item>
-                </div>
-
-                <div className="w-full pr-0 lg:pr-1">
                   <Row>
-                    <div className="w-1/2 px-0">
-                      <Form.Item
-                        name="isActive"
-                        label="Active"
-                        rules={[
-                            { required: true, message: 'Harap Lengkapi Data!' },
-                        ]}
-                      >
-                        <Radio.Group
-                            onChange={(e) => {
-                              setActive(e.target.value)
-                            }}
-                            options={[
-                                { label: 'Yes', value: true },
-                                { label: 'No', value: false }
-                            ]}
-                            value={active}
-                        />
-                      </Form.Item>
-                    </div>
-
                     <div className="w-1/2 px-0">
                       <Form.Item
                         name="isOnLandingPage"
@@ -309,19 +274,36 @@ const ArticleForm = ({ session }) => {
 
               <Form.Item
                 label="Content"
+                name="content"
                 rules={[
                     { required: true, message: 'Harap Lengkapi Data!' },
                 ]}
               >
                 {/* WYSWYG here */}
                 <div className="rounded-lg bgW">
-                  <Editor
-                    // raw={rawTextTambahArticle}
-                    caller="tambahArticle"
-                    onChangeRaw={(value)=>{
-                      setContent(value)
-                    }}
-                  />
+                  {content ? (
+                    <>
+                      <Editor
+                        raw={content}
+                        caller="tambahArticle"
+                        onChangeRaw={(value)=>{
+                          setContent(value)
+                        }}
+                      />
+                    </>
+                  ):(
+                    <>
+                      <>
+                        <Editor
+                          // raw={content}
+                          caller="tambahArticle"
+                          onChangeRaw={(value)=>{
+                            setContent(value)
+                          }}
+                        />
+                      </>
+                    </>
+                  )}
                 </div>
               </Form.Item>
 
@@ -334,7 +316,7 @@ const ArticleForm = ({ session }) => {
                     marginRight: '10px',
                   }}
                   onClick={() => {
-                    formArticle.validateFields().then((values) => {
+                    formArticleUpdate.validateFields().then((values) => {
                       submitForm(values);
                     });
                   }}
@@ -350,7 +332,7 @@ const ArticleForm = ({ session }) => {
                   }}
                   icon={<ReloadOutlined style={{ marginTop: '-3px' }} />}
                   onClick={() => {
-                    formArticle.resetFields();
+                    formArticleUpdate.resetFields();
                     setFileList([]);
                   }}
                 >
@@ -369,4 +351,4 @@ export async function getServerSideProps(context) {
   return checkSessions;
 }
 
-export default ArticleForm;
+export default ArticleFormUpdate;

@@ -13,7 +13,7 @@ import NProgress from "nprogress";
 import Page from "../components/Page";
 import Router from "next/router";
 import moment from "moment";
-import withAuth from "../utils/withAuth";
+
 moment.locale("id");
 
 Router.events.on("routeChangeStart", () => NProgress.start());
