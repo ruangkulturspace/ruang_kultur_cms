@@ -22,7 +22,7 @@ const UsersAction = ({
   return (
       <>
           <Row gutter={[8, 8]} type="flex" align="middle" justify="start">
-              <Col xs={12} sm={12} md={12} lg={6}>
+              <Col xs={24} sm={24} md={24} lg={8}>
                   <Tooltip placement="top" title={"Detail Banner"}>
                       <img
                           onClick={() => {
@@ -34,7 +34,7 @@ const UsersAction = ({
                       />
                   </Tooltip>
               </Col>
-              <Col xs={12} sm={12} md={12} lg={6}>
+              <Col xs={24} sm={24} md={24} lg={8}>
                   <Tooltip placement="top" title={"Edit"}>
                       <img
                           onClick={() => {
@@ -46,7 +46,7 @@ const UsersAction = ({
                       />
                   </Tooltip>
               </Col>
-              <Col xs={12} sm={12} md={12} lg={6}>
+              <Col xs={24} sm={24} md={24} lg={8}>
                   <Tooltip placement="top" title={"Delete"}>
                       <img
                           onClick={() => {
@@ -67,7 +67,7 @@ const Banner = ({ session }) => {
     const [state, dispatch] = useAppState();
     const [pagination, setPagination] = useState({
         current: 1,
-        pageSize: 20,
+        pageSize: 10,
         total: 0,
         position: ["none", "bottomCenter"],
     });
@@ -89,7 +89,7 @@ const Banner = ({ session }) => {
     const [getId, setGetId] = useState()
 
     useEffect(() => {
-        fetchData();
+        fetchData({ page: pagination.current, limit: pagination.pageSize });
         return () => { };
     }, [state]);
 
@@ -116,19 +116,19 @@ const Banner = ({ session }) => {
       fetchData({ page: paginationA.current, limit: paginationA.pageSize, filters: filtersA, sorter: sorterA });
     };
 
-    const fetchData = async (
+    const fetchData = async ({
       page = pagination.current,
       limit = pagination.pageSize,
       isExport = false,
       filters = filtering,
       sorter = sortering
-    ) => {
+    }) => {
         setLoading(true);
         var params = {};
 
         if (!isExport) {
           params.page = page;
-          params.limit = limit;
+          params.perPage = limit;
         }
 
         if (searchWord != '') {
@@ -343,38 +343,40 @@ const Banner = ({ session }) => {
                         />
                         <Table.Column
                             title="Status"
-                            dataIndex="isActive"
-                            render={(value, item, index) => {
-                              if (value === true) {
-                                return (
-                                  <p
-                                    style={{
-                                      margin: '0px',
-                                      fontWeight: '600',
-                                      fontSize: '14px',
-                                      color: '#03C4A9',
-                                    }}
+                            dataIndex="_id"
+                            render={(id, item, index) => (
+                              <>
+                                <Form layout="vertical" form={formIsActive} className="formDaftar">
+                                  <Form.Item
+                                      name="id"
+                                      style={{display: "none"}}
                                   >
-                                    Active
-                                  </p>
-                                )
-                              }
-                              if (value === false) {
-                                return (
-                                  <p
-                                    style={{
-                                      margin: '0px',
-                                      fontWeight: '600',
-                                      fontSize: '14px',
-                                      color: '#D05C77',
-                                    }}
+                                    <Input defaultValue={id}/>
+                                  </Form.Item>
+                                  <Form.Item
+                                      name="isActive"
+                                      style={{ marginBottom: '12px' }}
                                   >
-                                    In Active
-                                  </p>
-                                )
-                              }
-                              return '-'
-                            }}
+                                      <Switch
+                                        onChange={(value) => {
+                                            formIsActive.setFieldsValue({
+                                                isActive: value,
+                                                id: id
+                                            })
+                                            setGetId(id)
+                                            setIsActive(value)
+                                        }}
+                                        onClick={() => {
+                                            formIsActive.validateFields().then(values => {
+                                              submitForm(values);
+                                            });
+                                        }}
+                                        checked={item.isActive === true ? true : false}
+                                      />
+                                  </Form.Item>
+                                </Form>
+                              </>
+                          )}
                         />
                         <Table.Column
                           title="Actions"

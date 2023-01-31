@@ -10,67 +10,59 @@ const Footer = () => {
         <img src="/assets/icons/LOGO_DEVELOPE_rK-12.png" alt="logo" className="mb-4" height={80} width={80}/>
       </div>
       <div className="flex flex-col justify-center gap-5 px-10 pb-10 bgLightRkGreen md:flex-row md:gap-10 lg:gap-32 md:px-20">
-        <div className="w-full md:w-1/2 lg:w-1/4">
+        <div className="w-full md:w-1/2 lg:w-2/5">
           <p className="text-lg font-bold">Ruang Kultur</p>
           <p className="text-xs">
             Ruang Kultur  is a digital creative and communicative talk about Art, Entertainment, Lifestyle and things currently happening.{" "}
           </p>
         </div>
-        {/* <div className="inline border border-inherit md:hidden"></div> */}
-        <div className="w-full md:w-1/2 lg:w-1/5">
+        <div className="w-full md:w-1/2 lg:w-2/5">
           <p className="text-lg font-bold">About Us</p>
           <div className="flex flex-row">
             <div className="w-1/2">
               <div className="py-2">
-                <Link href="/" className="text-xs">Kulturatif</Link>
+                <Link href="/kanal?type=KULTURATIF" className="text-xs">Kulturatif</Link>
               </div>
               <div className="py-2">
-                <Link href="/" className="text-xs">Kulturama</Link>
+                <Link href="/kanal?type=KULTURAMA" className="text-xs">Kulturama</Link>
               </div>
               <div className="py-2">
-                <Link href="/" className="text-xs">Kulturaga</Link>
+                <Link href="/kanal?type=KULTUR RAGA" className="text-xs">Kulturaga</Link>
               </div>
               <div className="py-2">
-                <Link href="/" className="text-xs">Kulturnema</Link>
+                <Link href="/kanal?type=KULTURNEMA" className="text-xs">Kulturnema</Link>
               </div>
             </div>
             <div className="w-1/2">
               <div className="py-2">
-                <Link href="/" className="text-xs">Kulturaga</Link>
+                <Link href="/kanal?type=KULTURAGA" className="text-xs">Kulturaga</Link>
               </div>
               <div className="py-2">
-                <Link href="/" className="text-xs">Kulturmain</Link>
+                <Link href="/kanal?type=KULTUR MAIN" className="text-xs">Kulturmain</Link>
               </div>
               <div className="py-2">
-                <Link href="/" className="text-xs">Kulturbisnis</Link>
-              </div>
-              <div className="py-2">
-                <Link href="/" className="text-xs">Shop</Link>
+                <Link href="/kanal?type=KULTURBISNIS" className="text-xs">Kulturbisnis</Link>
               </div>
             </div>
           </div>
         </div>
-        <div className="w-full md:w-1/2 lg:w-1/4">
-          <p className="text-lg font-bold">Lainnya</p>
-          <div className="flex flex-col">
-            <div className="py-2">
-              <Link href="/" className="text-xs">FAQ</Link>
-            </div>
-            <div className="py-2">
-              <Link href="/" className="text-xs">Kebijakan Privasi</Link>
-            </div>
-            <div className="py-2">
-              <Link href="/" className="text-xs">Syarat dan Ketentuan</Link>
-            </div>
-            <div className="py-2">
-              <Link href="/" className="text-xs">About Us</Link>
-            </div>
-          </div>
-        </div>
-        {/* <div className="inline border border-inherit md:hidden"></div> */}
-        <div className="flex flex-col w-full md:w-1/2 lg:w-1/4">
-          <p className="mb-3 text-lg font-bold">Subcribe for Get Hot News!</p>
+        <div className="flex flex-col w-full md:w-1/2 lg:w-2/5">
+          <p className="mb-3 text-lg font-bold">Network</p>
           <div className="flex flex-col justify-center gap-2">
+            <a className="mt-3 text-lg font-bold" href="https://dewatacollectivestudio.com/">
+              DEWATA COLLECTIVE
+            </a>
+          </div>
+        </div>
+        <div className="flex flex-col w-full md:w-1/2 lg:w-2/5">
+          <div className="mapouter">
+            <div className="gmap_canvas">
+              <iframe width="100%" height="100%" id="gmap_canvas" src="https://maps.google.com/maps?q=dewata collective&t=&z=10&ie=UTF8&iwloc=&output=embed" frameBorder="0" scrolling="no" marginHeight="0" marginWidth="0">
+              </iframe>
+            </div>
+          </div>
+          <p className="mt-3 text-sm">Sudirman Park, Jl K.H Mas Mansyur blok B8, RT.12/RW.11, Karet Tengsin, Kecamatan Tanah Abang, Kota Jakarta Pusat, Daerah Khusus Ibukota Jakarta 10250</p>
+          {/* <div className="flex flex-col justify-center gap-2">
             <div className="flex flex-row">
               <Input placeholder="Basic usage" />
               <Button className="ml-1 btnLightCnBlue">
@@ -80,7 +72,7 @@ const Footer = () => {
             <p className="mt-3 text-xs">
               By clicking “SUBSCRIBE” you agree to get email from Ruang Kultur and accept our web term of use, privacy and cookies policy.
             </p>
-          </div>
+          </div> */}
         </div>
       </div>
       <div className="flex flex-row justify-between align-middle">

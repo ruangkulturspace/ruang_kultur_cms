@@ -77,7 +77,7 @@ const ArticleDetail = ({ session }) => {
                 <div className="w-full px-0 mt-3">
                   <Row>
                     <Col span={8}>Date</Col>
-                    <Col span={16}>: {moment(dataDetail?.date).format("DD-MMMM-YYYY ?? "-"")}</Col>
+                    <Col span={16}>: {moment(dataDetail?.date).format("DD-MMMM-YYYY")}</Col>
                   </Row>
                 </div>
                 <div className="w-full px-0 mt-3">

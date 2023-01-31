@@ -14,28 +14,12 @@ const CardClass = ({ title, category, date, kuota, imageName, width }) => {
       }}
     >
       <img
-        src={`/images/${imageName}.png`}
+        src={`${imageName}`}
         alt="img"
         className="w-full rounded-t-2xl"
         style={{ height: "200px" }}
       />
       <div className="flex flex-col">
-        {/* <div
-          className="flex items-center justify-center"
-          style={{
-            height: "50px",
-            width: "50px",
-            transform: "translate(20px, -22.5px)",
-            backgroundColor: "white",
-            borderRadius: "100px",
-          }}
-        >
-          <img
-            src="/assets/icons/icon.svg"
-            alt="icon"
-            style={{ height: "45px", width: "45px", objectFit: "cover" }}
-          />
-        </div> */}
         <div
           className="px-5 pt-4"
         >
@@ -50,12 +34,6 @@ const CardClass = ({ title, category, date, kuota, imageName, width }) => {
               />{" "}
               {date}
             </div>
-            {/* <div className="flex flex-row items-center gap-2">
-              <ClockCircleOutlined
-                style={{ fontSize: "10px", color: "var(--cnblue)" }}
-              />{" "}
-              Kuota: {kuota}
-            </div> */}
           </div>
         </div>
       </div>

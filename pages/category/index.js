@@ -66,7 +66,7 @@ const Category = ({ session }) => {
     const [state, dispatch] = useAppState();
     const [pagination, setPagination] = useState({
         current: 1,
-        pageSize: 20,
+        pageSize: 10,
         total: 0,
         position: ["none", "bottomCenter"],
     });
@@ -112,7 +112,7 @@ const Category = ({ session }) => {
 
         if (!isExport) {
           params.page = page;
-          params.limit = limit;
+          params.perPage = limit;
         }
 
         if (searchWord != '') {

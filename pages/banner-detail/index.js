@@ -57,10 +57,10 @@ const ArticleDetail = ({ session }) => {
                 </div>
                 <div className="w-full px-0 mt-3">
                   <Row>
-                    <Col span={7}>Placement</Col>
-                    <Col span={17}>
+                    <Col span={8}>Placement</Col>
+                    <Col span={16}>
                       <>
-                        <ul>
+                        <ul style={{ paddingLeft: '1.1rem' }}>
                           {dataDetail?.placements?.map((k,v) => {
                             return (
                               <li key={v}>

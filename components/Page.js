@@ -18,6 +18,8 @@ const NonDashboardRoutes = [
   "/lockscreen",
   "/_error",
   "/reports/documentpdf",
+  "/kanal",
+  "/kanal-detail",
   "/"
 ];
 

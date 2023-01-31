@@ -529,3 +529,32 @@ export async function requestDelete(
 		};
 	}
 }
+
+export async function requestGetWithoutSession(
+	sessions,
+	url,
+	{ params, headers } = {},
+) {
+	try {
+		console.log("%c FetcherGet: " + url, "background: #222; color: #bada55");
+		console.log(
+			"%c withParam: " + JSON.stringify(params),
+			"background: #222; color: #bada55"
+		);
+
+		const response = await axios.get(url, {
+			params,
+      headers: {
+        'x-api-key': "PRODUCTION_RNQJHNTEBYMCGM:e422b4153fe3d287ef25cf3cafa03f4e7919a3cb13e5debcb2def30c498486e0"
+			}
+		});
+
+		return response;
+	} catch (error) {
+    showError(
+      error?.response?.data?.message ??
+      error?.response?.data?.info ??
+      "Terjadi Kesalahan pada server!"
+    );
+	}
+}
