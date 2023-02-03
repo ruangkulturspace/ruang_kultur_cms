@@ -95,7 +95,7 @@ const ArticleFormUpdate = ({ session }) => {
         formArticleUpdate.setFieldsValue({
             title: dataUpdate?.title,
             type: dataUpdate?.type?._id,
-            category: dataUpdate?.category?.name,
+            category: dataUpdate?.category?._id,
             editor: dataUpdate?.editor,
             reporter: dataUpdate?.reporter,
             isOnLandingPage: dataUpdate?.isOnLandingPage,
@@ -275,9 +275,6 @@ const ArticleFormUpdate = ({ session }) => {
               <Form.Item
                 label="Content"
                 name="content"
-                rules={[
-                    { required: true, message: 'Harap Lengkapi Data!' },
-                ]}
               >
                 {/* WYSWYG here */}
                 <div className="rounded-lg bgW">
@@ -333,7 +330,7 @@ const ArticleFormUpdate = ({ session }) => {
                   icon={<ReloadOutlined style={{ marginTop: '-3px' }} />}
                   onClick={() => {
                     formArticleUpdate.resetFields();
-                    setFileList([]);
+                    // setFileList([]);
                   }}
                 >
                   Reset

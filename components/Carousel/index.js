@@ -1,21 +1,20 @@
 import React, { useState, useEffect } from "react";
 import { Carousel, Spin } from "antd";
 import { requestGetWithoutSession } from "../../utils/baseService";
+import { useRouter } from "next/router";
 
 const Index = () => {
+  const router = useRouter();
   const [pageDataJumboTron, setPageDataJumboTron] = useState([]);
   const [loading, setLoading] = useState(false);
 
   const fetchDataJumboTron = async (
-    // limit = 10,
     isExport = false,
   ) => {
       setLoading(true);
       var params = {};
 
       if (!isExport) {
-        // params.page = page;
-        // params.perPage = limit;
         params.isOnLandingPage = true
       }
 
@@ -59,7 +58,19 @@ const Index = () => {
         <>
           <Carousel autoplay arrows={true}>
             {pageDataJumboTron?.map((item, index) => (
-              <div style={contentStyle} key={index}>
+              <div
+                style={contentStyle}
+                key={index}
+                onClick={() =>
+                  router.push(
+                    {
+                      pathname: `/kanal-detail?id=${item?._id}`,
+                      query: item,
+                    },
+                    `/kanal-detail?id=${item?._id}`
+                  )
+                }
+              >
                 <img
                   src={item?.image?.completedUrl}
                   alt={item.title}

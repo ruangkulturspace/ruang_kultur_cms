@@ -2,7 +2,7 @@ import React from "react";
 
 const AdsSection = () => {
   return (
-    <div className="flex flex-col p-10 bgImgRk md:p-20">
+    <div className="flex flex-col p-10 bgImgRk md:p-28">
       <div className="flex flex-col items-start justify-between md:flex-row md:items-center">
         <div className="flex flex-col justify-between">
           <p className="my-0 text-3xl font-bold">Our Service</p>

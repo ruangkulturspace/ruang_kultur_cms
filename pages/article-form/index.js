@@ -309,9 +309,6 @@ const ArticleForm = ({ session }) => {
 
               <Form.Item
                 label="Content"
-                rules={[
-                    { required: true, message: 'Harap Lengkapi Data!' },
-                ]}
               >
                 {/* WYSWYG here */}
                 <div className="rounded-lg bgW">

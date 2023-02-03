@@ -85,8 +85,7 @@ const Article = ({ session }) => {
 
     useEffect(() => {
         fetchData({ page: pagination.current, limit: pagination.pageSize });
-        return () => { };
-    }, [state]);
+    }, []);
 
     const handleTableChangeTable1 = (paginationA, filtersA, sorterA) => {
       const pager = { ...pagination };

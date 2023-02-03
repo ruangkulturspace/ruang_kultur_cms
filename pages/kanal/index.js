@@ -76,7 +76,7 @@ const Kanal = ({}) => {
   return (
     <>
       <LandingPage title="Kanal">
-        <div className="flex flex-col p-10 font-semibold bgW md:p-20">
+        <div className="flex flex-col p-10 font-semibold bgW md:p-28">
           <div className="flex flex-col items-start justify-between md:flex-row md:items-center">
             <div className="flex flex-col justify-between">
               <p className="my-0 text-3xl font-bold">{type}</p>

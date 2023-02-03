@@ -29,6 +29,7 @@ const ModalAddBanner = ({ session, modalAdd, setModalAdd, onFinish = () => { } }
             setLoading(true);
             const formData = new FormData();
             formData.append('owner', values.owner ?? "-");
+            formData.append('url', values.url ?? "-");
             formData.append('type', typeBanner ?? "-");
             formData.append('isActive', active);
             if (placementBanner.length > 0) {
@@ -299,6 +300,18 @@ const ModalAddBanner = ({ session, modalAdd, setModalAdd, onFinish = () => { } }
                                     setPeriode(value);
                                 }}
                             />
+                            </Form.Item>
+                          </>
+                          <>
+                            <p style={StyleHeaderInput}>
+                                Url
+                            </p>
+                            <Form.Item
+                                name="url"
+                                style={{ marginBottom: '12px' }}
+                                rules={[{ required: true, message: 'Harap Lengkapi Url!' }]}
+                            >
+                                <Input type="text" placeholder="url" />
                             </Form.Item>
                           </>
                           <>

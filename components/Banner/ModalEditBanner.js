@@ -61,6 +61,7 @@ const ModalEditBanner = ({ session, dataEdit, modalEdit, setModalEdit, onFinish 
       setIdPlacement(dataEdit?.type?._id)
       formEdit.setFieldsValue({
           owner: dataEdit?.owner,
+          url: dataEdit?.url,
           type: dataEdit?.type?.name,
           placement: dataEdit?.placements?.map((k,v) => k._id),
           date: [moment(dataEdit.startDate), moment(dataEdit.endDate)]
@@ -78,6 +79,7 @@ const ModalEditBanner = ({ session, dataEdit, modalEdit, setModalEdit, onFinish 
             setLoading(true);
             const param = {
                 owner: values?.owner,
+                url: values?.url,
                 type: typeBanner ?? dataEdit?.type?._id,
                 placements: placementBanner ?? dataEdit?.placements?.map((k,v) => k._id),
             };
@@ -267,6 +269,18 @@ const ModalEditBanner = ({ session, dataEdit, modalEdit, setModalEdit, onFinish 
                                 }}
                                 // defaultValue={periode}
                             />
+                            </Form.Item>
+                          </>
+                          <>
+                            <p style={StyleHeaderInput}>
+                                Url
+                            </p>
+                            <Form.Item
+                                name="url"
+                                style={{ marginBottom: '12px' }}
+                                rules={[{ required: true, message: 'Harap Lengkapi Url!' }]}
+                            >
+                                <Input type="text" placeholder="url" />
                             </Form.Item>
                           </>
                           {/* <>

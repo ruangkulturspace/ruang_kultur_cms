@@ -8,8 +8,8 @@ const CardLates = ({ cardInfo }) => {
   const router = useRouter();
 
   return (
-    <div className="flex flex-col p-10 font-semibold bgW md:p-20">
-      <div className="flex flex-col items-start justify-between md:flex-row md:items-center">
+    <div className="flex flex-col p-10 font-semibold bgW md:p-28">
+      <div className="flex flex-col items-start justify-between mb-5 md:flex-row md:items-center">
         <div className="flex flex-col justify-between">
           <p className="my-0 text-3xl font-bold">Lates</p>
         </div>
@@ -23,10 +23,10 @@ const CardLates = ({ cardInfo }) => {
               onClick={() =>
                 router.push(
                   {
-                    pathname: `/kelas/${index}`,
+                    pathname: `/kanal-detail?id=${e?._id}`,
                     query: e,
                   },
-                  `/kelas/${index}`
+                  `/kanal-detail?id=${e?._id}`
                 )
               }
             >

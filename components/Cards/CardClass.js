@@ -7,7 +7,7 @@ const CardClass = ({ title, category, date, kuota, imageName, width }) => {
     <div
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
-      className="flex flex-col justify-start mt-5 rounded-2xl drop-shadow bgW"
+      className="flex flex-col justify-start rounded-2xl drop-shadow bgW"
       style={{
         height: "90%",
         width: "100%",

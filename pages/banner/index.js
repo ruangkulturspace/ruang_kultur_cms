@@ -90,8 +90,7 @@ const Banner = ({ session }) => {
 
     useEffect(() => {
         fetchData({ page: pagination.current, limit: pagination.pageSize });
-        return () => { };
-    }, [state]);
+    }, []);
 
     const [formIsActive] = Form.useForm();
 

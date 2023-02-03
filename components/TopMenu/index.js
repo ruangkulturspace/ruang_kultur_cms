@@ -40,8 +40,7 @@ const TopMenu = ({session}) => {
 
   useEffect(() => {
       fetchData();
-      return () => { };
-  }, [state]);
+  }, []);
 
   const smallMenu = (
     <Menu>
