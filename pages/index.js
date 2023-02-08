@@ -6,49 +6,35 @@ import Carousel from "../components/Carousel";
 import AdsSection from "../components/AdsSection";
 
 import { useRouter } from "next/router";
+import BillboardBanner from "../components/Advertise/BillboardBanner";
+import LeaderBoardBanner from "../components/Advertise/LeaderBoardBanner";
+import SuperLeaderBoardBanner from "../components/Advertise/SuperLeaderBoardBanner";
+import SkinAds from "../components/Advertise/SkinAds";
 import { requestGetWithoutSession } from "../utils/baseService";
-import { useAppState } from "../components/shared/AppProvider";
-
+import FixHangingBottom from "../components/Advertise/FixHangingBottom";
 
 const Home = ({session}) => {
-  const [currentCard, setCurrentCard] = useState(0);
   const router = useRouter();
 
-  const [state, dispatch] = useAppState();
-  const [pagination, setPagination] = useState({
-      current: 1,
-      pageSize: 6,
-      total: 0,
-      position: ["none", "bottomCenter"],
-  });
+  const [dataBanner, setDataBanner] = useState([])
 
-  const [pageData, setPageData] = useState([]);
-  const [sorter, setSorter] = useState();
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-      fetchDataArticle();
-      return () => { };
-  }, [state]);
+    fetchDataBanner({})
+  }, [])
 
-  const fetchDataArticle = async (
-    page = pagination.current,
-    limit = pagination.pageSize,
-    isExport = false,
-  ) => {
+  const fetchDataBanner = async ({}) => {
       setLoading(true);
       var params = {};
 
-      if (!isExport) {
-        params.page = page;
-        params.perPage = limit;
-        params.sort = "date@desc"
-        params.isActive = true
-      }
+      params.page = 1;
+      params.isActive = true;
+      params.placement = "HOMEPAGE"
 
       const datar = await requestGetWithoutSession(
         "",
-        process.env.NEXT_PUBLIC_API_URL + `/api/v1/article/list`,
+        process.env.NEXT_PUBLIC_API_URL + `/api/v1/banner/list`,
         {
           params: params,
         }
@@ -57,27 +43,66 @@ const Home = ({session}) => {
       setLoading(false);
 
       if (datar?.data?.statusCode == 200) {
-        setPageData(datar?.data?.data ?? []);
-        // setPagination({
-        //   current: datar?.data?.currentPage ?? 1,
-        //   pageSize: datar?.data?.perPage,
-        //   total: datar?.data?.totalData ?? 0,
-        //   position: ["none", "bottomCenter"],
-        // });
+        setDataBanner(datar?.data?.data ?? []);
       }
   }
+
+  const retangelBanner1 = dataBanner?.filter(element => element?.type?.name === "MEDIUM RECTANGLE 1");
+  const retangelBanner2 = dataBanner?.filter(element => element?.type?.name === "MEDIUM RECTANGLE 2");
+  const billboardBanner = dataBanner?.filter(element => element?.type?.name === "BILLBOARD");
+  const skinAdsBanner = dataBanner?.filter(element => element?.type?.name === "SKIN AD");
+  const fixHangingBottomBanner = dataBanner?.filter(element => element?.type?.name === "FIX HANGING BOTTOM");
+  const leaderBoardBanner = dataBanner?.filter(element => element?.type?.name === "LEADERBOARD");
+  const superLeaderBoardBanner = dataBanner?.filter(element => element?.type?.name === "SUPER LEADERBOARD");
 
   return (
     <>
       <LandingPage title="Beranda">
+      {billboardBanner?.map((e, index) => {
+          return (
+            <BillboardBanner
+              key={index}
+              data={e}
+            />
+          )
+        })}
+        {leaderBoardBanner?.map((e, index) => {
+          return (
+            <LeaderBoardBanner
+              key={index}
+              data={e}
+            />
+          )
+        })}
+        {superLeaderBoardBanner?.map((e, index) => {
+          return (
+            <SuperLeaderBoardBanner
+              key={index}
+              data={e}
+            />
+          )
+        })}
+        {skinAdsBanner?.map((e, index) => {
+          return (
+            <SkinAds
+              key={index}
+              data={e}
+            />
+          )
+        })}
         <Carousel />
         <CardLates
           title="List Kelas"
-          cta="Lates"
-          cta2=""
-          cardInfo={pageData}
         />
         <AdsSection />
+        {fixHangingBottomBanner?.map((e, index) => {
+          return (
+            <FixHangingBottom
+              key={index}
+              data={e}
+            />
+          )
+        })}
       </LandingPage>
     </>
   );

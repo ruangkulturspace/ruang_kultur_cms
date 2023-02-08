@@ -281,28 +281,29 @@ img {
   padding: 5px 30px;
 }
 
-.btnLightCnBlue {
+/* .btnLightCnBlue {
   color: #BAFF4A;
   background-color: #40571C;
   border: 2px solid #40571C;
   border-radius: 29px;
   padding: 0px 15px;
-}
+} */
 
-.btnLightCnBlue:hover {
+/* .btnLightCnBlue:hover {
   color: #40571C;
   background-color: #BAFF4A;
   border: 2px solid #BAFF4A;
   border-radius: 29px;
   padding: 0px 15px;
-}
+} */
 
 .btnLightCnBlue {
-  color: #ffffff;
-  background-color: #000000;
-  border: 2px solid #000000;
+  color: #000000;
+  background-color: #BAFF4A;
+  border: 2px solid #BAFF4A;
   border-radius: 5px;
   padding: 0px 15px;
+  transition-duration: 0.2s;
 }
 
 .btnLightCnBlue:hover {
@@ -586,14 +587,28 @@ video {
   display: none;
 }
 
-.slick-arrow.slick-prev {
-  background-color: red;
+.ant-carousel .slick-prev,
+.ant-carousel .slick-next,
+.ant-carousel .slick-prev:hover,
+.ant-carousel .slick-next:hover {
+  font-size: inherit;
   color: red;
 }
-.slick-arrow.slick-next {
-  background-color: red;
-  color: red;
+
+.ant-carousel .slick-prev,
+.ant-carousel .slick-prev:hover {
+  left: 10px;
+  z-index: 2;
+  color: white;
 }
+
+.ant-carousel .slick-next,
+.ant-carousel .slick-next:hover {
+  right: 10px;
+  z-index: 2;
+  color: white;
+}
+
 
 .ant-menu {
   color: white !important;

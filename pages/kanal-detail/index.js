@@ -8,6 +8,13 @@ import { useRouter } from "next/router";
 import LandingPage from "../../components/Layouts/LandingPageLayout";
 import CardLates from "../../components/Cards/CardLates";
 import CardClass from "../../components/Cards/CardClass";
+import { RightOutlined } from "@ant-design/icons";
+import Link from "next/link";
+import BillboardBanner from "../../components/Advertise/BillboardBanner";
+import SkinAds from "../../components/Advertise/SkinAds";
+import FixHangingBottom from "../../components/Advertise/FixHangingBottom";
+import LeaderBoardBanner from "../../components/Advertise/LeaderBoardBanner";
+import SuperLeaderBoardBanner from "../../components/Advertise/SuperLeaderBoardBanner";
 
 const KanalDetail = ({}) => {
     const router = useRouter()
@@ -16,8 +23,9 @@ const KanalDetail = ({}) => {
     const [loading, setLoading] = useState(false);
 
     const [dataDetail, setDataDetail] = useState({})
-    const [dataBanner, setDataBanner] = useState([])
     const [pageData, setPageData] = useState([]);
+    const [topArticle, setTopArticle] = useState([]);
+    const [dataBanner, setDataBanner] = useState([])
 
     const fetchDataDetailArticle = async (idArticle) => {
         setLoading(true);
@@ -40,21 +48,20 @@ const KanalDetail = ({}) => {
 
     useEffect(() => {
         fetchDataArticle();
-        fetchDataBanner();
-    }, []);
+        fetchDataTopArticle();
+        if(dataDetail?.type?.name === "ADVETORIAL"){
+          fetchDataBanner({dataDetail});
+        }
+    }, [dataDetail]);
 
-    const fetchDataArticle = async (
-      isExport = false,
-    ) => {
+    const fetchDataArticle = async () => {
         setLoading(true);
         var params = {};
 
-        if (!isExport) {
-          params.page = 1;
-          params.perPage = 3;
-          params.sort = "date@desc"
-          params.isActive = true
-        }
+        params.page = 1;
+        params.perPage = 3;
+        params.sort = "date@desc"
+        params.isActive = true
 
         const datar = await requestGetWithoutSession(
           "",
@@ -71,18 +78,39 @@ const KanalDetail = ({}) => {
         }
     }
 
-    const fetchDataBanner = async (
-      isExport = false,
-    ) => {
+    const fetchDataTopArticle = async () => {
         setLoading(true);
         var params = {};
 
-        if (!isExport) {
-          params.page = 1;
-          params.isActive = true;
-          params.placement = "ARTIKEL KANAL " + dataDetail?.category?.name
-          // params.type = "MEDIUM RECTANGLE 1, MEDIUM RECTANGLE 2"
+        params.page = 1;
+        params.perPage = 3;
+        params.sort = "count@desc"
+        params.isActive = true
+
+        const datar = await requestGetWithoutSession(
+          "",
+          process.env.NEXT_PUBLIC_API_URL + `/api/v1/article/list`,
+          {
+            params: params,
+          }
+        );
+
+        setLoading(false);
+
+        if (datar?.data?.statusCode == 200) {
+          setTopArticle(datar?.data?.data ?? []);
         }
+    }
+
+    const fetchDataBanner = async ({
+      placement = dataDetail
+    }) => {
+        setLoading(true);
+        var params = {};
+
+        params.page = 1;
+        params.isActive = true;
+        params.placement = "ARTIKEL KANAL " + placement?.category?.name
 
         const datar = await requestGetWithoutSession(
           "",
@@ -99,13 +127,53 @@ const KanalDetail = ({}) => {
         }
     }
 
+    const retangelBanner1 = dataBanner?.filter(element => element?.type?.name === "MEDIUM RECTANGLE 1");
+    const retangelBanner2 = dataBanner?.filter(element => element?.type?.name === "MEDIUM RECTANGLE 2");
+    const billboardBanner = dataBanner?.filter(element => element?.type?.name === "BILLBOARD");
+    const skinAdsBanner = dataBanner?.filter(element => element?.type?.name === "SKIN AD");
+    const fixHangingBottomBanner = dataBanner?.filter(element => element?.type?.name === "FIX HANGING BOTTOM");
+    const leaderBoardBanner = dataBanner?.filter(element => element?.type?.name === "LEADERBOARD");
+    const superLeaderBoardBanner = dataBanner?.filter(element => element?.type?.name === "SUPER LEADERBOARD");
+
     return (
       <LandingPage title="Kanal-Detail">
+        {billboardBanner?.map((e, index) => {
+          return (
+            <BillboardBanner
+              key={index}
+              data={e}
+            />
+          )
+        })}
+        {leaderBoardBanner?.map((e, index) => {
+          return (
+            <LeaderBoardBanner
+              key={index}
+              data={e}
+            />
+          )
+        })}
+        {superLeaderBoardBanner?.map((e, index) => {
+          return (
+            <SuperLeaderBoardBanner
+              key={index}
+              data={e}
+            />
+          )
+        })}
+        {skinAdsBanner?.map((e, index) => {
+          return (
+            <SkinAds
+              key={index}
+              data={e}
+            />
+          )
+        })}
         <Row
           gutter={[16, 24]}
           className="px-10 pt-5 font-semibold bgW md:px-28"
         >
-          <Col xs={24} sm={24} md={19} lg={19}>
+          <Col xs={24} sm={24} md={18} lg={18}>
             <Tag color="#BAFF4A">
               <p style={{color: "black"}} className="p-1.5">{dataDetail?.category?.name}</p>
             </Tag>
@@ -119,6 +187,7 @@ const KanalDetail = ({}) => {
               {moment(dataDetail?.date).format("DD-MMMM-YYYY HH:mm:ss")} - {dataDetail.editor}
             </p>
             <Image
+              preview={false}
               style={{
                 backgroundSize: "cover",
                 backgroundPosition: "center",
@@ -169,21 +238,80 @@ const KanalDetail = ({}) => {
             </div>
             <br />
           </Col>
-          <Col xs={24} sm={24} md={5} lg={5}>
-            <Card
-              bordered={false}
-              // style={{
-              //   width: 300,
-              // }}
+          <Col xs={24} sm={24} md={6} lg={6}>
+            {retangelBanner1?.map((e, index) => {
+              return (
+                <Card
+                  bordered={false}
+                  key={index}
+                >
+                  <a href={e?.url}>
+                    <Image
+                      preview={false}
+                      width={300}
+                      height={250}
+                      alt={e?.image?.pathWithFilename}
+                      src={e?.image?.completedUrl}
+                    />
+                  </a>
+                </Card>
+              )
+            })}
+            {retangelBanner2?.map((e, index) => {
+              return (
+                <Card
+                  bordered={false}
+                  key={index}
+                >
+                  <a href={e?.url}>
+                    <Image
+                      preview={false}
+                      width={300}
+                      height={250}
+                      alt={e?.image?.pathWithFilename}
+                      src={e?.image?.completedUrl}
+                    />
+                  </a>
+                </Card>
+              )
+            })}
+            <p
+              className="my-3 text-lg"
+              style={{
+                textDecoration: "none",
+                borderBottom:"5px solid #BAFF4A",
+                width: "150px"
+              }}
             >
-              {/* <Image
-                // width={200}
-                alt={dataBanner?.image?.pathWithFilename}
-                src={dataBanner?.image?.completedUrl}
-              /> */}
-            </Card>
+              Berita Populer
+            </p>
+            <ol className="list-decimal list-inside">
+              {topArticle?.map((e, index) => {
+                return (
+                  <li key={index}>
+                    <Link href={`/kanal-detail?id=${e?._id}`}>
+                      {e?.title}
+                    </Link>
+                  </li>
+                )
+              })}
+            </ol>
+            <button
+              className="flex items-center gap-1 px-4 py-1 mt-3 mb-4 ml-20 font-semibold btnLightCnBlue md:my-0"
+              onClick={() => router.push("/")}
+            >
+              Lihat Semua <RightOutlined />
+            </button>
           </Col>
         </Row>
+        {fixHangingBottomBanner?.map((e, index) => {
+          return (
+            <FixHangingBottom
+              key={index}
+              data={e}
+            />
+          )
+        })}
       </LandingPage>
     );
 };

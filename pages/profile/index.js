@@ -51,10 +51,6 @@ const Profile = ({ form }) => {
 
 	return (
 		<>
-			<Head>
-				<title>Profile</title>
-			</Head>
-
 			<Row>
 				<Col lg="4">
 					<Avatar

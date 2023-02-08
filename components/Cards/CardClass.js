@@ -21,7 +21,7 @@ const CardClass = ({ title, category, date, kuota, imageName, width }) => {
       />
       <div className="flex flex-col">
         <div
-          className="px-5 pt-4"
+          className="px-5 py-4"
         >
           <p className="mb-1 font-semibold">{title}</p>
           <p className="text-sm font-light cDarkGrey">{category}</p>

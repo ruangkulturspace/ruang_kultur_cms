@@ -315,6 +315,11 @@ const Banner = ({ session }) => {
                             render={(value, item, index) => value ?? "-"}
                         />
                         <Table.Column
+                            title="Tipe"
+                            dataIndex="type"
+                            render={(value, item, index) => value?.name ?? "-"}
+                        />
+                        <Table.Column
                             title="Placement"
                             dataIndex="placement"
                             render={(value, item, index) => {
