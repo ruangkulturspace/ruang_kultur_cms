@@ -79,7 +79,37 @@ const TopMenu = ({session}) => {
             >
               KULTURAMA
             </Link>
-            <div className="flex flex-row items-center justify-end md:justify-start">
+            <Link
+              className={pathname === "/tentang-kami" ? `cCnBlue` : `cLg`}
+              href="/kanal?type=KULTURNEMA"
+            >
+              KULTURNEMA
+            </Link>
+            <Link
+              className={pathname === "/tentang-kami" ? `cCnBlue` : `cLg`}
+              href="/kanal?type=KULTURMAIN"
+            >
+              KULTURMAIN
+            </Link>
+            <Link
+              className={pathname === "/tentang-kami" ? `cCnBlue` : `cLg`}
+              href="/kanal?type=KULTURAGA"
+            >
+              KULTURAGA
+            </Link>
+            <Link
+              className={pathname === "/tentang-kami" ? `cCnBlue` : `cLg`}
+              href="/kanal?type=KULTURGAYA"
+            >
+              KULTURGAYA
+            </Link>
+            <Link
+              className={pathname === "/tentang-kami" ? `cCnBlue` : `cLg`}
+              href="/kanal?type=KULTURBISNIS"
+            >
+              KULTURBISNIS
+            </Link>
+            {/* <div className="flex flex-row items-center justify-end md:justify-start">
               <Dropdown overlay={smallMenu} trigger={["click"]}>
                 <a onClick={(e) => e.preventDefault()} className="text-dark">
                   <Space size="small">
@@ -103,7 +133,7 @@ const TopMenu = ({session}) => {
                   </Space>
                 </a>
               </Dropdown>
-            </div>
+            </div> */}
           </div>
           <div className="flex flex-row items-center justify-end w-full lg:hidden md:justify-start">
             <Dropdown overlay={smallMenu} trigger={["click"]}>

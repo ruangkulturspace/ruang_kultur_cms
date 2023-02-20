@@ -12,14 +12,15 @@ export default function BillboardBanner({data, key}) {
           <a href={data?.url}>
             <div
               className="fixed top-0 left-0 right-0 z-50 w-full p-2 banner_top"
-              key={key}
               style={{
-                background: `url("${data?.image?.completedUrl}") no-repeat`,
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+                backgroundRepeat: "no-repeat",
+                backgroundImage: `url(${data?.image?.completedUrl})`,
                 height: "150px",
                 width: "970px",
                 top: "8%",
                 left:"15%",
-                transform: "translate(-50%, -50%);",
               }}
             >
             </div>

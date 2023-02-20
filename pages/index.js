@@ -12,6 +12,8 @@ import SuperLeaderBoardBanner from "../components/Advertise/SuperLeaderBoardBann
 import SkinAds from "../components/Advertise/SkinAds";
 import { requestGetWithoutSession } from "../utils/baseService";
 import FixHangingBottom from "../components/Advertise/FixHangingBottom";
+import ExpandAble from "../components/Advertise/ExpandAble";
+import HalfPage from "../components/Advertise/HalfPage";
 
 const Home = ({session}) => {
   const router = useRouter();
@@ -54,6 +56,8 @@ const Home = ({session}) => {
   const fixHangingBottomBanner = dataBanner?.filter(element => element?.type?.name === "FIX HANGING BOTTOM");
   const leaderBoardBanner = dataBanner?.filter(element => element?.type?.name === "LEADERBOARD");
   const superLeaderBoardBanner = dataBanner?.filter(element => element?.type?.name === "SUPER LEADERBOARD");
+  const expandAble = dataBanner?.filter(element => element?.type?.name === "EXPANDABLE");
+  const halfPage = dataBanner?.filter(element => element?.type?.name === "HALF PAGE");
 
   return (
     <>
@@ -98,6 +102,22 @@ const Home = ({session}) => {
         {fixHangingBottomBanner?.map((e, index) => {
           return (
             <FixHangingBottom
+              key={index}
+              data={e}
+            />
+          )
+        })}
+        {expandAble?.map((e, index) => {
+          return (
+            <ExpandAble
+              key={index}
+              data={e}
+            />
+          )
+        })}
+        {halfPage?.map((e, index) => {
+          return (
+            <HalfPage
               key={index}
               data={e}
             />

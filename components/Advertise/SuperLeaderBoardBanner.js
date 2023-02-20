@@ -20,6 +20,9 @@ export default function SuperLeaderBoardBanner({data, key}) {
                 top: "20%",
                 left:"25%",
                 transform: "translate(-50%, -50%);",
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+                backgroundRepeat: "no-repeat",
               }}
             >
             </div>

@@ -104,7 +104,7 @@ async function doRefreshPermission(req, res) {
       let session_refresh = await setGrantPermisson(req, res, datar?.data?.data, process.env.APPNAME)
 
       if (session_refresh.code == 0) {
-          console.log("asd0", session_refresh);
+          // console.log("asd0", session_refresh);
           return res.status(200).json({
             code: 0,
             info: 'Refresh Succeed',

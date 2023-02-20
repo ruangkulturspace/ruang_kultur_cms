@@ -288,11 +288,37 @@ const KanalDetail = ({}) => {
             <ol className="list-decimal list-inside">
               {topArticle?.map((e, index) => {
                 return (
-                  <li key={index}>
-                    <Link href={`/kanal-detail?id=${e?._id}`}>
-                      {e?.title}
-                    </Link>
-                  </li>
+                  <Row
+                    key={index}
+                    gutter={[16, 24]}
+                    className="py-2"
+                  >
+                    <Col xs={10} sm={10} md={10} lg={10}>
+                      <Image
+                        preview={false}
+                        style={{
+                          backgroundSize: "cover",
+                          backgroundPosition: "center",
+                          height: "10vh",
+                          objectFit: "cover",
+                          objectPosition: "center"
+                        }}
+                        alt={e?.image?.pathWithFilename}
+                        src={e?.image?.completedUrl}
+                      />
+                    </Col>
+                    <Col xs={14} sm={14} md={14} lg={14}>
+                      <Link
+                        href={`/kanal-detail?id=${e?._id}`}
+                        className="text-lg underline font__tittle"
+                      >
+                        {e?.title}
+                      </Link>
+                      <p className="text-xs font-light text-muted">
+                        {e?.category?.name}
+                      </p>
+                    </Col>
+                  </Row>
                 )
               })}
             </ol>

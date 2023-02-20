@@ -16,6 +16,8 @@ import LeaderBoardBanner from "../../components/Advertise/LeaderBoardBanner";
 import SuperLeaderBoardBanner from "../../components/Advertise/SuperLeaderBoardBanner";
 import SkinAds from "../../components/Advertise/SkinAds";
 import FixHangingBottom from "../../components/Advertise/FixHangingBottom";
+import ExpandAble from "../../components/Advertise/ExpandAble";
+import HalfPage from "../../components/Advertise/HalfPage";
 
 const Kanal = ({}) => {
   const router = useRouter()
@@ -153,6 +155,8 @@ const Kanal = ({}) => {
   const fixHangingBottomBanner = dataBanner?.filter(element => element.type?.name === "FIX HANGING BOTTOM");
   const leaderBoardBanner = dataBanner?.filter(element => element.type?.name === "LEADERBOARD");
   const superLeaderBoardBanner = dataBanner?.filter(element => element.type?.name === "SUPER LEADERBOARD");
+  const expandAble = dataBanner?.filter(element => element?.type?.name === "EXPANDABLE");
+  const halfPage = dataBanner?.filter(element => element?.type?.name === "HALF PAGE");
 
   return (
     <>
@@ -348,6 +352,22 @@ const Kanal = ({}) => {
         {fixHangingBottomBanner?.map((e, index) => {
           return (
             <FixHangingBottom
+              key={index}
+              data={e}
+            />
+          )
+        })}
+        {expandAble?.map((e, index) => {
+          return (
+            <ExpandAble
+              key={index}
+              data={e}
+            />
+          )
+        })}
+        {halfPage?.map((e, index) => {
+          return (
+            <HalfPage
               key={index}
               data={e}
             />

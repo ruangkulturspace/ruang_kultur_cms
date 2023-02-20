@@ -19,6 +19,9 @@ export default function SkinAds({data, key}) {
                 top: "8%",
                 left:"3%",
                 transform: "translate(-50%, -50%);",
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+                backgroundRepeat: "no-repeat",
               }}
             >
             </div>

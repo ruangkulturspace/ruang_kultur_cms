@@ -114,7 +114,7 @@ const ArticleFormUpdate = ({ session }) => {
                 category: category ?? values?.category,
                 editor: values?.editor,
                 reporter: values?.reporter,
-                isOnLandingPage: values?.isOnLandingPage,
+                // isOnLandingPage: values?.isOnLandingPage,
                 content: content,
                 date: moment(values.date)
             };
@@ -249,7 +249,7 @@ const ArticleFormUpdate = ({ session }) => {
                 <div className="w-full pr-0 lg:pr-1">
                   <Row>
                     <div className="w-1/2 px-0">
-                      <Form.Item
+                      {/* <Form.Item
                         name="isOnLandingPage"
                         label="Onlanding Page"
                         rules={[
@@ -266,7 +266,7 @@ const ArticleFormUpdate = ({ session }) => {
                             ]}
                             value={isOnLandingPage}
                         />
-                      </Form.Item>
+                      </Form.Item> */}
                     </div>
                   </Row>
                 </div>

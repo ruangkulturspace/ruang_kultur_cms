@@ -31,7 +31,7 @@ const ArticleForm = ({ session }) => {
 
     const uploadSettings = {
         name: "file",
-        multiple: true,
+        multiple: false,
         headers: {
             "Access-Control-Allow-Origin": "*",
         },
@@ -99,7 +99,7 @@ const ArticleForm = ({ session }) => {
         formData.append('editor', values.editor ?? "-");
         formData.append('reporter', values.reporter ?? "-");
         formData.append('isActive', active);
-        formData.append('isOnLandingPage', isOnLandingPage);
+        formData.append('isOnLandingPage', false);
         formData.append('content', content);
 
         let formatted1 = moment(values.date)
@@ -284,7 +284,7 @@ const ArticleForm = ({ session }) => {
                     </div>
 
                     <div className="w-1/2 px-0">
-                      <Form.Item
+                      {/* <Form.Item
                         name="isOnLandingPage"
                         label="Onlanding Page"
                         rules={[
@@ -301,7 +301,7 @@ const ArticleForm = ({ session }) => {
                             ]}
                             value={isOnLandingPage}
                         />
-                      </Form.Item>
+                      </Form.Item> */}
                     </div>
                   </Row>
                 </div>
