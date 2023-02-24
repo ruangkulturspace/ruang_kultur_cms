@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import moment from 'moment';
 import CardClass from "./CardClass";
 import { useRouter } from "next/router";
-import { requestGetWithoutSession } from "../../utils/baseService";
+import { requestGetWithoutSession, requestPostWithoutSession } from "../../utils/baseService";
 import { useAppState } from "../shared/AppProvider";
 import { Button, Spin } from "antd";
 
@@ -20,8 +20,10 @@ const CardLates = ({ }) => {
   });
 
   const [pageData, setPageData] = useState([]);
+  const [idData, setIdData] = useState([])
   const [sorter, setSorter] = useState();
   const [loading, setLoading] = useState(false);
+  const [loadingCount, setLoadingCount] = useState(false);
 
   const fetchDataArticle = async ({
     page = pagination.current,
@@ -51,6 +53,7 @@ const CardLates = ({ }) => {
           listCard.push(element);
         });
         setPageData((pageData) => [...pageData, ...listCard]);
+        setIdData(datar?.data?.data?.map((k)=> k._id))
 
         setPagination({
           current: datar?.data?.currentPage ?? 1,
@@ -62,9 +65,49 @@ const CardLates = ({ }) => {
       }
   }
 
+  // const fetchCounterArticle = async (ids) => {
+  //     setLoadingCount(true);
+  //     const param = {
+  //       "articleIds": ids,
+  //       "tag": "view",
+  //     };
+
+  //     var counter = await requestPostWithoutSession(
+  //       "",
+  //       process.env.NEXT_PUBLIC_API_URL + '/api/v1/article-counter/bulk-create',
+  //       param
+  //     )
+  //     setLoadingCount(false);
+  //     if (counter?.data?.statusCode < 400) {
+  //       console.log("berhasil count");
+  //     }
+  // }
+
   useEffect(() => {
       fetchDataArticle({ page: pagination.current, limit: pagination.pageSize});
   }, []);
+
+  // useEffect(() => {
+  //     fetchCounterArticle(idData)
+  // }, [idData])
+
+  const handleClickCount = async (id) => {
+    setLoadingCount(true);
+    const param = {
+      "article": id,
+      "tag": "click",
+    };
+
+    var counter = await requestPostWithoutSession(
+      "",
+      process.env.NEXT_PUBLIC_API_URL + '/api/v1/article-counter/create',
+      param
+    )
+    setLoadingCount(false);
+    if (counter?.data?.statusCode < 400) {
+      console.log("berhasil count");
+    }
+  }
 
   const handleChangeTable1 = () => {
     const pager = { ...pagination };
@@ -86,7 +129,7 @@ const CardLates = ({ }) => {
             <div
               key={index}
               className="w-full cursor-pointer hovered-card hover:drop-shadow-lg"
-              onClick={() =>
+              onClick={() =>{
                 router.push(
                   {
                     pathname: `/kanal-detail?id=${e?._id}`,
@@ -94,7 +137,8 @@ const CardLates = ({ }) => {
                   },
                   `/kanal-detail?id=${e?._id}`
                 )
-              }
+                handleClickCount(e?._id)
+              }}
             >
               <CardClass
                 width="full"

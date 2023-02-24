@@ -149,6 +149,10 @@ const ModalAddBanner = ({ session, modalAdd, setModalAdd, onFinish = () => { } }
 
     const resetAll = () => {
         formAddBanner.resetFields();
+        formAddBanner.setFieldsValue({
+          attachments: "",
+        })
+        setFileList([])
     }
 
     return (

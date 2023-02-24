@@ -1,22 +1,28 @@
 import React, { useState, useEffect } from "react";
 import { Carousel, Spin } from "antd";
-import { requestGetWithoutSession } from "../../utils/baseService";
+import { requestGetWithoutSession, requestPostWithoutSession } from "../../utils/baseService";
 import { useRouter } from "next/router";
 import { LeftOutlined, RightOutlined } from "@ant-design/icons";
+import { useAppState } from "../shared/AppProvider";
 
 const Index = ({type, arrow, height}) => {
   const router = useRouter();
+  const [state, dispatch] = useAppState();
   const [pageDataJumboTron, setPageDataJumboTron] = useState([]);
+  const [idData, setIdData] = useState([])
   const [loading, setLoading] = useState(false);
+  const [loadingCount, setLoadingCount] = useState(false);
 
   const fetchDataJumboTron = async () => {
       setLoading(true);
       var params = {};
 
-      params.isOnLandingPage = true
-
       if(type !== undefined){
         params.category = type;
+        params.perPage = 10
+        // params.isOnLandingPage = false
+      }else{
+        params.isOnLandingPage = true
       }
 
       const datar = await requestGetWithoutSession(
@@ -30,13 +36,55 @@ const Index = ({type, arrow, height}) => {
       setLoading(false);
 
       if (datar?.data?.statusCode == 200) {
-        setPageDataJumboTron(datar?.data?.data ?? []);
+          setPageDataJumboTron(datar?.data?.data ?? []);
+          setIdData(datar?.data?.data?.map((k)=> k._id))
       }
   }
+
+  // const fetchCounterArticle = async (ids) => {
+  //     setLoadingCount(true);
+  //     const param = {
+  //       "articleIds": ids,
+  //       "tag": "view",
+  //     };
+
+  //     var counter = await requestPostWithoutSession(
+  //       "",
+  //       process.env.NEXT_PUBLIC_API_URL + '/api/v1/article-counter/bulk-create',
+  //       param
+  //     )
+  //     setLoadingCount(false);
+  //     if (counter?.data?.statusCode < 400) {
+  //       console.log("berhasil count");
+  //     }
+  // }
 
   useEffect(() => {
     fetchDataJumboTron();
   }, [type]);
+
+  // useEffect(() => {
+  //   fetchCounterArticle(idData)
+  // }, [idData])
+
+  const handleClickCount = async (id) => {
+    setLoadingCount(true);
+    const param = {
+      "article": id,
+      "tag": "click",
+    };
+
+    var counter = await requestPostWithoutSession(
+      "",
+      process.env.NEXT_PUBLIC_API_URL + '/api/v1/article-counter/create',
+      param
+    )
+    setLoadingCount(false);
+    if (counter?.data?.statusCode < 400) {
+      console.log("berhasil count");
+    }
+  }
+
 
   const contentStyle = {
     height: height || "80vh",
@@ -67,7 +115,8 @@ const Index = ({type, arrow, height}) => {
               <div
                 style={contentStyle}
                 key={index}
-                onClick={() =>
+                className="cursor-pointer"
+                onClick={() => {
                   router.push(
                     {
                       pathname: `/kanal-detail?id=${item?._id}`,
@@ -75,7 +124,8 @@ const Index = ({type, arrow, height}) => {
                     },
                     `/kanal-detail?id=${item?._id}`
                   )
-                }
+                  handleClickCount(item?._id)
+                }}
               >
                 <img
                   src={item?.image?.completedUrl}

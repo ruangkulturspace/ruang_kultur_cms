@@ -27,12 +27,19 @@ const CardClass = ({ title, category, date, kuota, imageName, width }) => {
           <p className="text-sm font-light cDarkGrey">{category}</p>
           <div style={{ borderBottom: "1px solid lightgrey" }} />
 
-          <div className="flex flex-col items-start justify-center mt-2 mb-5 text-xs font-normal cMedgrey">
+          <div className="flex flex-col items-start justify-center mt-2 text-xs font-normal cMedgrey">
             <div className="flex flex-row items-center gap-2">
               <ClockCircleOutlined
                 style={{ fontSize: "10px", color: "var(--cnblue)" }}
               />{" "}
               {date}
+            </div>
+          </div>
+          <div className="flex flex-col items-start justify-center mt-2 mb-5 text-xs font-normal cMedgrey">
+            <div className="flex flex-row items-center gap-2">
+              <button className="float-right btnLightCnBlue text-xs font-semibold">
+                {category}
+              </button>
             </div>
           </div>
         </div>

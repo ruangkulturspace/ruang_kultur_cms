@@ -7,7 +7,7 @@ import LandingPage from "../../components/Layouts/LandingPageLayout";
 import Carousel from "../../components/Carousel"
 
 import { useAppState } from "../../components/shared/AppProvider";
-import { requestGetWithoutSession } from "../../utils/baseService";
+import { requestGetWithoutSession, requestPostWithoutSession } from "../../utils/baseService";
 import { Button, Card, Col, Image, Pagination, Row, Spin } from "antd";
 import Link from "next/link";
 import { RightOutlined } from "@ant-design/icons";
@@ -35,10 +35,12 @@ const Kanal = ({}) => {
   const [pageData, setPageData] = useState([]);
   const [topArticle, setTopArticle] = useState([]);
   const [dataBanner, setDataBanner] = useState([])
+  const [idData, setIdData] = useState([])
 
   const [loading, setLoading] = useState(false);
   const [loadingBanner, setLoadingBanner] = useState(false);
   const [loadingTopArticle, setLoadingTopArticle] = useState()
+  const [loadingCount, setLoadingCount] = useState(false);
 
   const fetchData = async ({
     page = pagination.current,
@@ -92,7 +94,7 @@ const Kanal = ({}) => {
 
       params.page = 1;
       params.perPage = 3;
-      params.sort = "count@desc"
+      params.sort = "totalCounter@desc"
       params.isActive = true
 
       const datar = await requestGetWithoutSession(
@@ -123,6 +125,24 @@ const Kanal = ({}) => {
     fetchData({ page: pagination.current + 1, limit: pagination.pageSize, category: type});
   };
 
+  const handleClickCount = async (id) => {
+    setLoadingCount(true);
+    const param = {
+      "article": id,
+      "tag": "click",
+    };
+
+    var counter = await requestPostWithoutSession(
+      "",
+      process.env.NEXT_PUBLIC_API_URL + '/api/v1/article-counter/create',
+      param
+    )
+    setLoadingCount(false);
+    if (counter?.data?.statusCode < 400) {
+      console.log("berhasil count");
+    }
+  }
+
   const fetchDataBanner = async ({
     placement = type
   }) => {
@@ -145,8 +165,31 @@ const Kanal = ({}) => {
 
       if (datar?.data?.statusCode == 200) {
         setDataBanner(datar?.data?.data ?? []);
+        setIdData(datar?.data?.data?.map((k)=> k._id))
       }
   }
+
+  const fetchCounterBanner = async (ids) => {
+      setLoadingCount(true);
+      const param = {
+        "bannerIds": ids,
+        "tag": "view",
+      };
+
+      var counter = await requestPostWithoutSession(
+        "",
+        process.env.NEXT_PUBLIC_API_URL + '/api/v1/banner-counter/bulk-create',
+        param
+      )
+      setLoadingCount(false);
+      if (counter?.data?.statusCode < 400) {
+        console.log("berhasil count");
+      }
+  }
+
+  useEffect(() => {
+    fetchCounterBanner(idData)
+  }, [idData])
 
   const retangelBanner1 = dataBanner?.filter(element => element.type?.name === "MEDIUM RECTANGLE 1");
   const retangelBanner2 = dataBanner?.filter(element => element.type?.name === "MEDIUM RECTANGLE 2");
@@ -228,6 +271,7 @@ const Kanal = ({}) => {
                       key={index}
                       gutter={[16, 24]}
                       className="py-2"
+                      onClick={()=>{handleClickCount(e?._id)}}
                     >
                       <Col xs={10} sm={10} md={10} lg={10}>
                         <Image
@@ -285,7 +329,7 @@ const Kanal = ({}) => {
                     <div
                       key={index}
                       className="w-full cursor-pointer hovered-card hover:drop-shadow-lg"
-                      onClick={() =>
+                      onClick={() =>{
                         router.push(
                           {
                             pathname: `/kanal-detail?id=${e._id}`,
@@ -293,7 +337,8 @@ const Kanal = ({}) => {
                           },
                           `/kanal-detail?id=${e._id}`
                         )
-                      }
+                        handleClickCount(e?._id)
+                      }}
                     >
                       <CardClass
                         width="full"

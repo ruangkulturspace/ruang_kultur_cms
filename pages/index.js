@@ -10,7 +10,7 @@ import BillboardBanner from "../components/Advertise/BillboardBanner";
 import LeaderBoardBanner from "../components/Advertise/LeaderBoardBanner";
 import SuperLeaderBoardBanner from "../components/Advertise/SuperLeaderBoardBanner";
 import SkinAds from "../components/Advertise/SkinAds";
-import { requestGetWithoutSession } from "../utils/baseService";
+import { requestGetWithoutSession, requestPostWithoutSession } from "../utils/baseService";
 import FixHangingBottom from "../components/Advertise/FixHangingBottom";
 import ExpandAble from "../components/Advertise/ExpandAble";
 import HalfPage from "../components/Advertise/HalfPage";
@@ -19,8 +19,10 @@ const Home = ({session}) => {
   const router = useRouter();
 
   const [dataBanner, setDataBanner] = useState([])
+  const [idData, setIdData] = useState([])
 
   const [loading, setLoading] = useState(false);
+  const [loadingCount, setLoadingCount] = useState(false);
 
   useEffect(() => {
     fetchDataBanner({})
@@ -46,8 +48,31 @@ const Home = ({session}) => {
 
       if (datar?.data?.statusCode == 200) {
         setDataBanner(datar?.data?.data ?? []);
+        setIdData(datar?.data?.data?.map((k)=> k._id))
       }
   }
+
+  const fetchCounterBanner = async (ids) => {
+      setLoadingCount(true);
+      const param = {
+        "bannerIds": ids,
+        "tag": "view",
+      };
+
+      var counter = await requestPostWithoutSession(
+        "",
+        process.env.NEXT_PUBLIC_API_URL + '/api/v1/banner-counter/bulk-create',
+        param
+      )
+      setLoadingCount(false);
+      if (counter?.data?.statusCode < 400) {
+        console.log("berhasil count");
+      }
+  }
+
+  useEffect(() => {
+    fetchCounterBanner(idData)
+  }, [idData])
 
   const retangelBanner1 = dataBanner?.filter(element => element?.type?.name === "MEDIUM RECTANGLE 1");
   const retangelBanner2 = dataBanner?.filter(element => element?.type?.name === "MEDIUM RECTANGLE 2");
@@ -62,7 +87,7 @@ const Home = ({session}) => {
   return (
     <>
       <LandingPage title="Beranda">
-      {billboardBanner?.map((e, index) => {
+        {billboardBanner?.map((e, index) => {
           return (
             <BillboardBanner
               key={index}

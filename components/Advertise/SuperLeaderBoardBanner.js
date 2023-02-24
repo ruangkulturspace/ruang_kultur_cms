@@ -1,15 +1,39 @@
 import React, { useState } from 'react'
+import { requestPostWithoutSession } from '../../utils/baseService';
 
 export default function SuperLeaderBoardBanner({data, key}) {
   const [displaySuperLeaderBoard, setDisplaySuperLeaderBoard] = useState(true);
+  const [loadingCount, setLoadingCount] = useState(false);
 
   const closeButtonSuperLeaderBoard = () => {setDisplaySuperLeaderBoard(false)}
+
+  const handleClickCount = async (id) => {
+    setLoadingCount(true);
+
+    const param = {
+      "banner": id,
+      "tag": "click",
+    };
+
+    var counter = await requestPostWithoutSession(
+      "",
+      process.env.NEXT_PUBLIC_API_URL + '/api/v1/banner-counter/create',
+      param
+    )
+    setLoadingCount(false);
+    if (counter?.data?.statusCode < 400) {
+      console.log("berhasil count");
+    }
+  }
 
   return (
     <>
       {displaySuperLeaderBoard === true && (
         <>
-          <a href={data?.url}>
+          <a
+            href={data?.url}
+            onClick={() => handleClickCount(data?._id)}
+          >
             <div
               className="fixed left-0 right-0 z-50 w-full p-2 top-5 banner_top"
               key={key}

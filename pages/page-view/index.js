@@ -2,50 +2,21 @@ import Head from "next/head";
 import { useAppState } from "../../components/shared/AppProvider";
 import { useEffect, useState } from "react";
 import moment from 'moment';
-import { Button, Row, Col, notification, Table, Input, Tooltip, Form, Switch } from "antd";
+import { Button, Row, Col, notification, Table, Input, Tooltip } from "antd";
 import { handleSessions } from "../../utils/helpers";
-import { requestGet, requestPatch } from "../../utils/baseService";
-import ModalEditArticle from "../../components/Article/ModalEditArticle";
-import { PushNavigateTo } from "../../utils/helpersBrowser";
-import ModalAddBanner from "../../components/Banner/ModalAddBanner";
-import ModalDeleteBanner from "../../components/Banner/ModalDeleteBanner";
-import ModalEditBanner from "../../components/Banner/ModalEditBanner";
+import { requestGet } from "../../utils/baseService";
+import Link from "next/link";
+// import ModalDeletePageView from "../../components/PageView/ModalDeletePageView";
 
 const UsersAction = ({
   session,
   id,
   allData,
-  onEdit = () => { },
   onDelete = () => { },
-  onView = () => { },
 }) => {
   return (
       <>
           <Row gutter={[8, 8]} type="flex" align="middle" justify="start">
-              <Col xs={24} sm={24} md={24} lg={8}>
-                  <Tooltip placement="top" title={"Detail Banner"}>
-                      <img
-                          onClick={() => {
-                              PushNavigateTo(`/banner-detail?id=${id}`)
-                          }}
-                          className="pointer"
-                          src="/images/icon/login/eye.svg"
-                          alt="edit"
-                      />
-                  </Tooltip>
-              </Col>
-              <Col xs={24} sm={24} md={24} lg={8}>
-                  <Tooltip placement="top" title={"Edit"}>
-                      <img
-                          onClick={() => {
-                              onEdit(id, allData);
-                          }}
-                          className="pointer"
-                          src="/images/icon/prtg/edit.svg"
-                          alt="edit"
-                      />
-                  </Tooltip>
-              </Col>
               <Col xs={24} sm={24} md={24} lg={8}>
                   <Tooltip placement="top" title={"Delete"}>
                       <img
@@ -63,12 +34,12 @@ const UsersAction = ({
   );
 };
 
-const Banner = ({ session }) => {
+const PageView = ({ session }) => {
     const [state, dispatch] = useAppState();
     const [pagination, setPagination] = useState({
         current: 1,
         pageSize: 10,
-        total: 0,
+        total: 1,
         position: ["none", "bottomCenter"],
     });
 
@@ -78,35 +49,12 @@ const Banner = ({ session }) => {
     const [filtering, setFiltering] = useState('');
     const [sortering, setSorter] = useState({});
 
-    const [modalAdd, setModalAdd] = useState(false);
-
     const [modalDelete, setModalDelete] = useState(false);
     const [dataDelete, setDataDelete] = useState({});
-
-    const [modalEdit, setModalEdit] = useState(false);
-    const [dataEdit, setDataEdit] = useState({});
-    const [status, setIsActive] = useState()
-    const [getId, setGetId] = useState()
 
     useEffect(() => {
         fetchData({ page: pagination.current, limit: pagination.pageSize });
     }, []);
-
-    const [formIsActive] = Form.useForm();
-
-    const submitForm = async (values) => {
-        setLoading(true);
-        const data = await requestPatch(
-            session,
-            process.env.NEXT_PUBLIC_API_URL + `/api/v1/admin/banner/update/${values.id}/inactive`,
-            {}
-        );
-        setLoading(false);
-        if (data?.data?.statusCode == 200) {
-            showSuksesCustom("Berhasil", "Data berhasil di update");
-            fetchData({ page: pagination.current, limit: pagination.pageSize });
-        }
-    }
 
     const handleTableChangeTable1 = (paginationA, filtersA, sorterA) => {
       const pager = { ...pagination };
@@ -134,9 +82,26 @@ const Banner = ({ session }) => {
             params.search = searchWord;
         }
 
+        // console.log("asd", sorter);
+
+        if (sorter?.field == "counter") {
+          if (sorter.order == "descend") {
+            params.sort = "totalCounter@asc";
+          } else {
+            params.sort = "totalCounter@desc";
+          }
+        }
+        if (sorter?.field == "createdAt") {
+          if (sorter.order == "descend") {
+            params.sort = "createdAt@asc";
+          } else {
+            params.sort = "createdAt@desc";
+          }
+        }
+
         const datar = await requestGet(
           session,
-          process.env.NEXT_PUBLIC_API_URL + "/api/v1/admin/banner/list",
+          process.env.NEXT_PUBLIC_API_URL + "/api/v1/admin/article/list",
           {
             params: params,
           }
@@ -160,38 +125,7 @@ const Banner = ({ session }) => {
 
     return (
         <>
-            <ModalAddBanner
-                modalAdd={modalAdd}
-                setModalAdd={setModalAdd}
-                session={session}
-                onFinish={() => {
-                    fetchData({
-                        page: 1, limit: pagination.pageSize,
-                        filters: filtering, sorter: sortering
-                    });
-                }}
-            />
-
-            {/* <ModalViewArticle
-                modalView={modalView}
-                setModalView={setModalView}
-                dataView={dataView}
-            /> */}
-
-            <ModalEditBanner
-                modalEdit={modalEdit}
-                setModalEdit={setModalEdit}
-                dataEdit={dataEdit}
-                session={session}
-                onFinish={() => {
-                  fetchData({
-                        page: 1, limit: pagination.pageSize,
-                        filters: filtering, sorter: sortering
-                    });
-                }}
-            />
-
-            <ModalDeleteBanner
+            {/* <ModalDeletePageView
                 modalDelete={modalDelete}
                 setModalDelete={setModalDelete}
                 dataDelete={dataDelete}
@@ -202,7 +136,7 @@ const Banner = ({ session }) => {
                         filters: filtering, sorter: sortering
                     });
                 }}
-            />
+            /> */}
 
             <Row>
                 <Col xs={24} sm={24} md={24} lg={24}>
@@ -216,7 +150,7 @@ const Banner = ({ session }) => {
                 <Col xs={24} sm={24} md={24} lg={6}>
                     <Input
                         style={{ borderRadius: '4px', width: '100%', float: 'right' }}
-                        placeholder="Search by banner owner"
+                        placeholder="Search by name"
                         allowClear
                         enterButton="Search"
                         size="medium"
@@ -260,15 +194,6 @@ const Banner = ({ session }) => {
                             {!state.mobile && <Col xs={24} sm={24} md={24} lg={10}></Col>}
 
                             <Col xs={24} sm={24} md={24} lg={14}>
-                                <Button
-                                    onClick={() => {
-                                        setModalAdd(!modalAdd);
-                                    }}
-                                    className="btn btnBlue"
-                                    style={{ borderRadius: "4px" }}
-                                >
-                                    <p style={{ margin: '0' }}>Tambah Banner </p>
-                                </Button>
                             </Col>
                         </Row>
                     </div>
@@ -301,88 +226,29 @@ const Banner = ({ session }) => {
                         />
                         <Table.Column
                             title="Post Date"
-                            dataIndex="startDate"
+                            dataIndex="createdAt"
+                            sorter={true}
                             render={(value, item, index) => moment(value).format("DD-MMM-YYYY") ?? "-"}
                         />
                         <Table.Column
-                            title="End Date"
-                            dataIndex="endDate"
-                            render={(value, item, index) => moment(value).format("DD-MMM-YYYY") ?? "-"}
-                        />
-                        <Table.Column
-                            title="Banner Owner"
-                            dataIndex="owner"
-                            render={(value, item, index) => value ?? "-"}
-                        />
-                        <Table.Column
-                            title="Tipe"
-                            dataIndex="type"
-                            render={(value, item, index) => value?.name ?? "-"}
-                        />
-                        <Table.Column
-                            title="Placement"
-                            dataIndex="placement"
+                            title="Article Title"
+                            dataIndex="title"
                             render={(value, item, index) => {
-                              if( value !== 0){
-                                let loopData = []
-                                if (item?.placements?.length > 0){
-                                  for (let index = 0; index < item?.placements?.length; index++) {
-                                    let filearr = item?.placements?.[index];
-                                    loopData.push(filearr)
-                                  }
-                                  if (loopData.length > 0){
-                                    return (
-                                      <ul>
-                                        {loopData.map((data, index) => (
-                                          <li key={index}>{data.name}</li>
-                                        ))}
-                                      </ul>
-                                    )
-                                  }
-                                }
-                              }else{
-                                return "-"
-                              }
+                              return <Link href={`/article-detail?id=${item.id}`}>{value ?? ""}</Link>
                             }}
                         />
                         <Table.Column
-                            title="Status"
-                            dataIndex="_id"
-                            render={(id, item, index) => (
-                              <>
-                                <Form layout="vertical" form={formIsActive} className="formDaftar">
-                                  <Form.Item
-                                      name="id"
-                                      style={{display: "none"}}
-                                  >
-                                    <Input defaultValue={id}/>
-                                  </Form.Item>
-                                  <Form.Item
-                                      name="isActive"
-                                      style={{ marginBottom: '12px' }}
-                                  >
-                                      <Switch
-                                        onChange={(value) => {
-                                            formIsActive.setFieldsValue({
-                                                isActive: value,
-                                                id: id
-                                            })
-                                            setGetId(id)
-                                            setIsActive(value)
-                                        }}
-                                        onClick={() => {
-                                            formIsActive.validateFields().then(values => {
-                                              submitForm(values);
-                                            });
-                                        }}
-                                        checked={item.isActive === true ? true : false}
-                                      />
-                                  </Form.Item>
-                                </Form>
-                              </>
-                          )}
+                            title="Kanal"
+                            dataIndex="category"
+                            render={(value, item, index) => value?.name ?? "-"}
                         />
                         <Table.Column
+                            title="Page view"
+                            dataIndex="counter"
+                            sorter={true}
+                            render={(value, item, index) => value?.click ?? 0}
+                        />
+                        {/* <Table.Column
                           title="Actions"
                           dataIndex="_id"
                           width="10%"
@@ -393,13 +259,6 @@ const Banner = ({ session }) => {
                                       id={id}
                                       session={session}
                                       allData={item}
-                                      onView={(id) => {
-                                          PushNavigateTo(`/article-detail?id=${id}`)
-                                      }}
-                                      onEdit={(id, allData) => {
-                                          setDataEdit(allData);
-                                          setModalEdit(true);
-                                      }}
                                       onDelete={(id, allData) => {
                                           setDataDelete(allData);
                                           setModalDelete(true);
@@ -407,7 +266,7 @@ const Banner = ({ session }) => {
                                   />
                               </>
                           )}
-                      />
+                        /> */}
                     </Table>
                 </Col>
             </Row>
@@ -420,4 +279,4 @@ export async function getServerSideProps(context) {
   return checkSessions;
 }
 
-export default Banner;
+export default PageView;

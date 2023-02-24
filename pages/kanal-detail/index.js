@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import moment from 'moment';
 import { Button, Input, Form, Card, Select, DatePicker, Checkbox, Radio, Upload, Spin, Row, Col, Image, Divider, Tag } from "antd";
 import { handleSessions } from "../../utils/helpers";
-import { requestGetWithoutSession } from "../../utils/baseService";
+import { requestGetWithoutSession, requestPostWithoutSession } from "../../utils/baseService";
 import { useRouter } from "next/router";
 import LandingPage from "../../components/Layouts/LandingPageLayout";
 import CardLates from "../../components/Cards/CardLates";
@@ -21,10 +21,14 @@ const KanalDetail = ({}) => {
     const { id } = router.query
     const [state, dispatch] = useAppState();
     const [loading, setLoading] = useState(false);
+    const [loadingCount, setLoadingCount] = useState(false);
 
     const [dataDetail, setDataDetail] = useState({})
+    const [idData, setIdData] = useState([])
     const [pageData, setPageData] = useState([]);
+    const [idPageData, setIdPageData] = useState([]);
     const [topArticle, setTopArticle] = useState([]);
+    const [idTopArticle, setIdTopArticle] = useState([]);
     const [dataBanner, setDataBanner] = useState([])
 
     const fetchDataDetailArticle = async (idArticle) => {
@@ -75,6 +79,7 @@ const KanalDetail = ({}) => {
 
         if (datar?.data?.statusCode == 200) {
           setPageData(datar?.data?.data ?? []);
+          setIdPageData(datar?.data?.data?.map((k)=> k._id))
         }
     }
 
@@ -84,7 +89,7 @@ const KanalDetail = ({}) => {
 
         params.page = 1;
         params.perPage = 3;
-        params.sort = "count@desc"
+        params.sort = "totalCounter@desc"
         params.isActive = true
 
         const datar = await requestGetWithoutSession(
@@ -99,6 +104,7 @@ const KanalDetail = ({}) => {
 
         if (datar?.data?.statusCode == 200) {
           setTopArticle(datar?.data?.data ?? []);
+          setIdTopArticle(datar?.data?.data?.map((k)=> k._id))
         }
     }
 
@@ -124,8 +130,31 @@ const KanalDetail = ({}) => {
 
         if (datar?.data?.statusCode == 200) {
           setDataBanner(datar?.data?.data ?? []);
+          setIdData(datar?.data?.data?.map((k)=> k._id))
         }
     }
+
+    const fetchCounterBanner = async (ids) => {
+        setLoadingCount(true);
+        const param = {
+          "bannerIds": ids,
+          "tag": "view",
+        };
+
+        var counter = await requestPostWithoutSession(
+          "",
+          process.env.NEXT_PUBLIC_API_URL + '/api/v1/banner-counter/bulk-create',
+          param
+        )
+        setLoadingCount(false);
+        if (counter?.data?.statusCode < 400) {
+          console.log("berhasil count");
+        }
+    }
+
+    useEffect(() => {
+      fetchCounterBanner(idData)
+    }, [idData])
 
     const retangelBanner1 = dataBanner?.filter(element => element?.type?.name === "MEDIUM RECTANGLE 1");
     const retangelBanner2 = dataBanner?.filter(element => element?.type?.name === "MEDIUM RECTANGLE 2");
@@ -134,6 +163,50 @@ const KanalDetail = ({}) => {
     const fixHangingBottomBanner = dataBanner?.filter(element => element?.type?.name === "FIX HANGING BOTTOM");
     const leaderBoardBanner = dataBanner?.filter(element => element?.type?.name === "LEADERBOARD");
     const superLeaderBoardBanner = dataBanner?.filter(element => element?.type?.name === "SUPER LEADERBOARD");
+
+    // const fetchCounterArticle = async () => {
+    //     setLoadingCount(true);
+
+    //     const allId = [...idPageData, ...idTopArticle]
+
+    //     const param = {
+    //       "articleIds": allId,
+    //       "tag": "view",
+    //     };
+
+    //     var counter = await requestPostWithoutSession(
+    //       "",
+    //       process.env.NEXT_PUBLIC_API_URL + '/api/v1/article-counter/bulk-create',
+    //       param
+    //     )
+    //     setLoadingCount(false);
+    //     if (counter?.data?.statusCode < 400) {
+    //       console.log("berhasil count");
+    //     }
+    // }
+
+    const handleClickCount = async (id) => {
+      setLoadingCount(true);
+      const param = {
+        "article": id,
+        "tag": "click",
+      };
+
+      var counter = await requestPostWithoutSession(
+        "",
+        process.env.NEXT_PUBLIC_API_URL + '/api/v1/article-counter/create',
+        param
+      )
+      setLoadingCount(false);
+      if (counter?.data?.statusCode < 400) {
+        console.log("berhasil count");
+      }
+    }
+
+
+    // useEffect(() => {
+    //     fetchCounterArticle()
+    // }, [])
 
     return (
       <LandingPage title="Kanal-Detail">
@@ -215,7 +288,7 @@ const KanalDetail = ({}) => {
                   <div
                     key={index}
                     className="w-full cursor-pointer hovered-card hover:drop-shadow-lg"
-                    onClick={() =>
+                    onClick={() => {
                       router.push(
                         {
                           pathname: `/kanal-detail?id=${e?._id}`,
@@ -223,7 +296,8 @@ const KanalDetail = ({}) => {
                         },
                         `/kanal-detail?id=${e?._id}`
                       )
-                    }
+                      handleClickCount(e?._id)
+                    }}
                   >
                     <CardClass
                       width="full"
@@ -310,6 +384,9 @@ const KanalDetail = ({}) => {
                     <Col xs={14} sm={14} md={14} lg={14}>
                       <Link
                         href={`/kanal-detail?id=${e?._id}`}
+                        onClick={() =>{
+                          handleClickCount(e?._id)
+                        }}
                         className="text-lg underline font__tittle"
                       >
                         {e?.title}

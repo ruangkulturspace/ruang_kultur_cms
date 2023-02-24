@@ -531,7 +531,7 @@ export async function requestDelete(
 }
 
 export async function requestGetWithoutSession(
-	sessions,
+  session,
 	url,
 	{ params, headers } = {},
 ) {
@@ -552,6 +552,38 @@ export async function requestGetWithoutSession(
 		return response;
 	} catch (error) {
     showError(
+      error?.response?.data?.message ??
+      error?.response?.data?.info ??
+      "Terjadi Kesalahan pada server!"
+    );
+	}
+}
+
+export async function requestPostWithoutSession(
+  session,
+  url,
+  data,
+) {
+	try {
+		console.log("%c FetcherPostWithoutSession: " + url, "background: #222; color: #bada55");
+		console.log(
+			"%c withParam: " + JSON.stringify(data),
+			"background: #222; color: #bada55"
+		);
+
+		const response = await axios.post(
+      url,
+      data,
+      {
+        headers: {
+          'x-api-key': "PRODUCTION_RNQJHNTEBYMCGM:e422b4153fe3d287ef25cf3cafa03f4e7919a3cb13e5debcb2def30c498486e0"
+        }
+		  }
+    );
+
+		return response;
+	} catch (error) {
+		showError(
       error?.response?.data?.message ??
       error?.response?.data?.info ??
       "Terjadi Kesalahan pada server!"
