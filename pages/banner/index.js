@@ -10,6 +10,7 @@ import { PushNavigateTo } from "../../utils/helpersBrowser";
 import ModalAddBanner from "../../components/Banner/ModalAddBanner";
 import ModalDeleteBanner from "../../components/Banner/ModalDeleteBanner";
 import ModalEditBanner from "../../components/Banner/ModalEditBanner";
+import axios from "axios";
 
 const UsersAction = ({
   session,
@@ -85,7 +86,7 @@ const Banner = ({ session }) => {
 
     const [modalEdit, setModalEdit] = useState(false);
     const [dataEdit, setDataEdit] = useState({});
-    const [status, setIsActive] = useState()
+    const [isActive, setIsActive] = useState()
     const [getId, setGetId] = useState()
 
     useEffect(() => {
@@ -96,17 +97,48 @@ const Banner = ({ session }) => {
 
     const submitForm = async (values) => {
         setLoading(true);
+
+        const param = {
+            banner: values.id,
+        };
+
+        const swtich = values.isActive === false ? "inactive" : "active"
+
         const data = await requestPatch(
             session,
-            process.env.NEXT_PUBLIC_API_URL + `/api/v1/admin/banner/update/${values.id}/inactive`,
+            process.env.NEXT_PUBLIC_API_URL + `/api/v1/admin/banner/update/${values.id}/${swtich}`,
             {}
         );
+
         setLoading(false);
         if (data?.data?.statusCode == 200) {
             showSuksesCustom("Berhasil", "Data berhasil di update");
             fetchData({ page: pagination.current, limit: pagination.pageSize });
         }
     }
+
+    const handleClick = async () => {
+      try {
+        console.log("asd", getId);
+        console.log("asd2", isActive);
+        // const swtich = isActive === false ? "inactive" : "active"
+
+        // const data = await requestPatch(
+        //     session,
+        //     process.env.NEXT_PUBLIC_API_URL + `/api/v1/admin/banner/update/${getId}/${swtich}`,
+        //     param
+        // );
+
+        // setLoading(false);
+        // if (data?.data?.statusCode == 200) {
+        //     showSuksesCustom("Berhasil", "Data berhasil di update");
+        //     fetchData({ page: pagination.current, limit: pagination.pageSize });
+        // }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
 
     const handleTableChangeTable1 = (paginationA, filtersA, sorterA) => {
       const pager = { ...pagination };
@@ -367,14 +399,17 @@ const Banner = ({ session }) => {
                                                 isActive: value,
                                                 id: id
                                             })
-                                            setGetId(id)
-                                            setIsActive(value)
                                         }}
                                         onClick={() => {
                                             formIsActive.validateFields().then(values => {
                                               submitForm(values);
                                             });
                                         }}
+                                        // onClick={(value) => {
+                                        //   handleClick()
+                                        //   setGetId(id)
+                                        //   setIsActive(value)
+                                        // }}
                                         checked={item.isActive === true ? true : false}
                                       />
                                   </Form.Item>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import {
 	Button,
 	Menu,
@@ -12,10 +12,14 @@ import {
 	Dropdown,
 	Avatar,
 	Card,
+  Tooltip,
 } from "antd";
 
 import { useState } from "react";
 import Head from "next/head";
+import { handleSessions } from "../../utils/helpers";
+import { useAppState } from "../../components/shared/AppProvider";
+import { requestPatch, requestPut } from "../../utils/baseService";
 
 // const Content = styled.div`
 //   max-width: 400px;
@@ -24,14 +28,19 @@ import Head from "next/head";
 // `;
 const FormItem = Form.Item;
 
-const Profile = ({ form }) => {
+const Profile = ({ form, session }) => {
+  const [state, dispatch] = useAppState();
 	const [passVisible, setPassVisible] = useState(false);
 	const [passVisible2, setPassVisible2] = useState(false);
 	const [passVisible3, setPassVisible3] = useState(false);
+  const [avatarModal, setAvatarModal] = useState(false)
+	const [avatarCropData, setAvatarCropData] = useState("")
 
 	const [confirmPassVisible, setConfirmPassVisible] = useState(false);
 
 	const [formChangePass] = Form.useForm();
+
+  const avatarRef = useRef()
 
 	function showSukses(msg) {
 		notification["success"]({
@@ -40,24 +49,60 @@ const Profile = ({ form }) => {
 		});
 	}
 
+  const changeAvatar = (e) => {
+      if(typeof e.target.files !== 'undefined'){
+          if(e.target.files.length > 0){
+              setAvatarCropData(URL.createObjectURL(e.target.files[0]))
+              setAvatarModal(true)
+          }
+      }
+  }
+
 	const handleChangePass = async (values) => {
 		try {
-			console.log(values);
-			showSukses(JSON.stringify(values));
+			// console.log(values);
+			const datar = await requestPatch(session, process.env.NEXT_PUBLIC_API_URL + "/api/v1/user/change-password", {
+				oldPassword: values.password,
+				newPassword: values.newpassword,
+			});
+			if (datar.status === 200) {
+				showSukses("Password berhasil diubah!");
+				setPassVisible(false);
+				formChangePass.resetFields();
+			}
+			// showSukses(JSON.stringify(values));
+
 		} catch (error) {
 			console.log(error);
 		}
 	};
 
+
 	return (
 		<>
 			<Row>
 				<Col lg="4">
-					<Avatar
-						className="mx-4 my-auto pointer"
-						src="/images/cecep.jpg"
-						style={{ height: "90px", width: "90px" }}
-					/>
+          <span className="avatar-item" onClick={() => avatarRef.current.click()}>
+            <Tooltip placement="top" title={"Click to edit profile picture"}>
+              <Avatar
+                className="mx-4 my-auto pointer"
+                src={session?.data?.user?.avatar ? `${process.env.NEXT_PUBLIC_API_URL}/public/${session?.data?.user?.avatar}` : "/images/avatar.jpg"}
+                style={{ height: "150px", width: "150px" }}
+              />
+            </Tooltip>
+            <input
+              type="file"
+              accept="image/*"
+              onChange={changeAvatar}
+              onClick={(event)=> {
+                event.target.value = null
+              }}
+              ref={avatarRef}
+              style={{
+                display: "none"
+              }}
+            />
+          </span>
 				</Col>
 				<Col lg="8" style={{ display: "flex", alignItems: "center" }}>
 					<div>
@@ -66,10 +111,10 @@ const Profile = ({ form }) => {
 							className="my-1"
 							style={{ fontSize: "16px", fontWeight: "bold", color: "#33539E" }}
 						>
-							John Doe
+							{session?.data?.user?.firstName}{" "}{session?.data?.user?.lastName}
 						</div>
 						<div style={{ fontSize: "12px" }}>
-							admin@gmail.com
+              {session?.data?.user?.username}
 						</div>
 					</div>
 				</Col>
@@ -217,4 +262,10 @@ const Profile = ({ form }) => {
 		</>
 	);
 };
+
+export async function getServerSideProps(context) {
+  let checkSessions = await handleSessions(context);
+  return checkSessions;
+}
+
 export default Profile;

@@ -23,7 +23,7 @@ const CardClass = ({ title, category, date, kuota, imageName, width }) => {
         <div
           className="px-5 py-4"
         >
-          <p className="mb-1 font-semibold">{title}</p>
+          <p className="mb-1 font-semibold text-truncate">{title}</p>
           <p className="text-sm font-light cDarkGrey">{category}</p>
           <div style={{ borderBottom: "1px solid lightgrey" }} />
 

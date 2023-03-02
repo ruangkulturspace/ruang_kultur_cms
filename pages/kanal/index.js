@@ -18,6 +18,8 @@ import SkinAds from "../../components/Advertise/SkinAds";
 import FixHangingBottom from "../../components/Advertise/FixHangingBottom";
 import ExpandAble from "../../components/Advertise/ExpandAble";
 import HalfPage from "../../components/Advertise/HalfPage";
+import MedRetangle1 from "../../components/Advertise/MedRetangle1";
+import MedRetangle2 from "../../components/Advertise/MedRetangle2";
 
 const Kanal = ({}) => {
   const router = useRouter()
@@ -231,6 +233,22 @@ const Kanal = ({}) => {
         {skinAdsBanner?.map((e, index) => {
           return (
             <SkinAds
+              key={index}
+              data={e}
+            />
+          )
+        })}
+        {retangelBanner1?.map((e, index) => {
+          return (
+            <MedRetangle1
+              key={index}
+              data={e}
+            />
+          )
+        })}
+        {retangelBanner2?.map((e, index) => {
+          return (
+            <MedRetangle2
               key={index}
               data={e}
             />

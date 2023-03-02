@@ -139,12 +139,17 @@ export async function requestPatch(sessions, url, data) {
 		const response = await axios.patch(url, data, {
 			headers: {
 				Authorization: "Bearer " + sessions?.data?.accessToken ?? "",
-        'x-permission-token': sessions?.data?.grantAccess?.data ?? ""
+        'x-permission-token': sessions?.data?.grantAccess?.data ?? "",
+        'x-custom-lang': "en",
+        "Access-Control-Allow-Methods": "PUT, POST, PATCH, DELETE, GET",
+        // "Access-Control-Allow-Origin": 'https://staging-api.ruangkultur.com',
+        "Access-Control-Allow-Origin": "*"
 			},
 		});
 
 		return response;
 	} catch (error) {
+    console.log("error", error);
 		if (error?.response?.status == "401") {
 			await doRefreshToken(sessions);
       await doRefreshPermission(sessions);
