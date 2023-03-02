@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import moment from 'moment';
 import { Button, Row, Col, notification, Table, Input, Tooltip, Form, Switch } from "antd";
 import { handleSessions } from "../../utils/helpers";
-import { requestGet, requestPatch } from "../../utils/baseService";
+import { requestGet, requestPatch, showSuksesCustom } from "../../utils/baseService";
 import ModalEditArticle from "../../components/Article/ModalEditArticle";
 import { PushNavigateTo } from "../../utils/helpersBrowser";
 import ModalAddBanner from "../../components/Banner/ModalAddBanner";
@@ -116,29 +116,6 @@ const Banner = ({ session }) => {
             fetchData({ page: pagination.current, limit: pagination.pageSize });
         }
     }
-
-    const handleClick = async () => {
-      try {
-        console.log("asd", getId);
-        console.log("asd2", isActive);
-        // const swtich = isActive === false ? "inactive" : "active"
-
-        // const data = await requestPatch(
-        //     session,
-        //     process.env.NEXT_PUBLIC_API_URL + `/api/v1/admin/banner/update/${getId}/${swtich}`,
-        //     param
-        // );
-
-        // setLoading(false);
-        // if (data?.data?.statusCode == 200) {
-        //     showSuksesCustom("Berhasil", "Data berhasil di update");
-        //     fetchData({ page: pagination.current, limit: pagination.pageSize });
-        // }
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
 
     const handleTableChangeTable1 = (paginationA, filtersA, sorterA) => {
       const pager = { ...pagination };
@@ -405,11 +382,6 @@ const Banner = ({ session }) => {
                                               submitForm(values);
                                             });
                                         }}
-                                        // onClick={(value) => {
-                                        //   handleClick()
-                                        //   setGetId(id)
-                                        //   setIsActive(value)
-                                        // }}
                                         checked={item.isActive === true ? true : false}
                                       />
                                   </Form.Item>

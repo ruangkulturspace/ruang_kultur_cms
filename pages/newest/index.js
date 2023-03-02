@@ -2,9 +2,9 @@ import Head from "next/head";
 import { useAppState } from "../../components/shared/AppProvider";
 import { useEffect, useState } from "react";
 import moment from 'moment';
-import { Button, Row, Col, notification, Table, Input, Tooltip } from "antd";
+import { Button, Row, Col, notification, Table, Input, Tooltip, Form, Switch } from "antd";
 import { handleSessions } from "../../utils/helpers";
-import { requestGet } from "../../utils/baseService";
+import { requestGet, requestPatch, showSuksesCustom } from "../../utils/baseService";
 // import ModalViewArticle from "../../components/Article/ModalViewArticle";
 import ModalDeleteArticle from "../../components/Article/ModalDeleteArticle";
 import Link from "next/link";
@@ -61,6 +61,31 @@ const Newest = ({ session }) => {
     useEffect(() => {
         fetchData({ page: pagination.current, limit: pagination.pageSize });
     }, []);
+
+    const [formIsActive] = Form.useForm();
+
+    const submitForm = async (values) => {
+        setLoading(true);
+
+        const param = {
+            banner: values.id,
+        };
+
+        const swtich = values.isActive === false ? "inactive" : "active"
+
+        const data = await requestPatch(
+            session,
+            process.env.NEXT_PUBLIC_API_URL + `/api/v1/admin/article/update/${values.id}/${swtich}-on-landing-page`,
+            {}
+        );
+
+        setLoading(false);
+        if (data?.data?.statusCode == 200) {
+            showSuksesCustom("Berhasil", "Data berhasil di update");
+            fetchData({ page: pagination.current, limit: pagination.pageSize });
+        }
+    }
+
 
     const handleTableChangeTable1 = (paginationA, filtersA, sorterA) => {
       const pager = { ...pagination };
@@ -255,38 +280,38 @@ const Newest = ({ session }) => {
                         />
                         <Table.Column
                             title="Status"
-                            dataIndex="isActive"
-                            render={(value, item, index) => {
-                              if (value === true) {
-                                return (
-                                  <p
-                                    style={{
-                                      margin: '0px',
-                                      fontWeight: '600',
-                                      fontSize: '14px',
-                                      color: '#03C4A9',
-                                    }}
+                            dataIndex="_id"
+                            render={(id, item, index) => (
+                              <>
+                                <Form layout="vertical" form={formIsActive} className="formDaftar">
+                                  <Form.Item
+                                      name="id"
+                                      style={{display: "none"}}
                                   >
-                                    Active
-                                  </p>
-                                )
-                              }
-                              if (value === false) {
-                                return (
-                                  <p
-                                    style={{
-                                      margin: '0px',
-                                      fontWeight: '600',
-                                      fontSize: '14px',
-                                      color: '#D05C77',
-                                    }}
+                                    <Input defaultValue={id}/>
+                                  </Form.Item>
+                                  <Form.Item
+                                      name="isActive"
+                                      style={{ marginBottom: '12px' }}
                                   >
-                                    In Active
-                                  </p>
-                                )
-                              }
-                              return '-'
-                            }}
+                                      <Switch
+                                        onChange={(value) => {
+                                            formIsActive.setFieldsValue({
+                                                isActive: value,
+                                                id: id
+                                            })
+                                        }}
+                                        onClick={() => {
+                                            formIsActive.validateFields().then(values => {
+                                              submitForm(values);
+                                            });
+                                        }}
+                                        checked={item.isActive === true ? true : false}
+                                      />
+                                  </Form.Item>
+                                </Form>
+                              </>
+                          )}
                         />
                         <Table.Column
                           title="Actions"

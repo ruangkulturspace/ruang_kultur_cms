@@ -149,7 +149,6 @@ export async function requestPatch(sessions, url, data) {
 
 		return response;
 	} catch (error) {
-    console.log("error", error);
 		if (error?.response?.status == "401") {
 			await doRefreshToken(sessions);
       await doRefreshPermission(sessions);
