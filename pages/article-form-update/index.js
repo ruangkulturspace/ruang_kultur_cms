@@ -1,13 +1,14 @@
 import { useAppState } from "../../components/shared/AppProvider";
 import { useEffect, useState } from "react";
 import moment from 'moment';
-import { Button, Input, Form, Card, Select, DatePicker, Checkbox, Radio, Upload, Spin, Row, message } from "antd";
+import { Button, Input, Form, Card, Select, DatePicker, Checkbox, Radio, Upload, Spin, Row, message, Col, Image } from "antd";
 import { handleSessions } from "../../utils/helpers";
 import { requestGet, requestPostFormData, requestPut, showSuksesCustom } from "../../utils/baseService";
 import { ReloadOutlined, SaveFilled } from "@ant-design/icons";
 import { PushNavigateTo } from "../../utils/helpersBrowser";
 import { useRouter } from "next/router";
 import dynamic from "next/dynamic";
+import ModalUpdateImage from "../../components/Article/ModalUpdateImage";
 
 const Editor = dynamic(() => import("../../components/WSIWYG"), {
   ssr: false,
@@ -29,6 +30,7 @@ const ArticleFormUpdate = ({ session }) => {
     const [category, setCategory] = useState()
     const [content, setContent] = useState()
     const [dataUpdate, setDataUpdate] = useState({})
+    const [modalAdd, setModalAdd] = useState(false);
 
     const fetchDataDetailArticle = async (idArticle) => {
         setLoading(true);
@@ -134,212 +136,258 @@ const ArticleFormUpdate = ({ session }) => {
     }
 
     return (
-      <div className="p-6 rounded-lg bgW">
-        <div className="items-center justify-between w-full">
-          <h1 className="text-3xl font-bold">Edit Article</h1>
-          <hr className="mb-3" />
-          <Spin tip="Memuat..." size="large" spinning={state.loading || loading}>
-            <Form layout="vertical" form={formArticleUpdate}>
-              <div className="flex flex-col flex-wrap md:flex-row">
-                <div className="w-full px-0">
-                  <Form.Item
-                    name="type"
-                    label="Type"
-                    rules={[
-                        { required: true, message: 'Harap Lengkapi Data!' },
-                    ]}
-                  >
-                    <Radio.Group
-                        onChange={(e) => {
-                            setType(e.target.value)
-                        }}
-                        value={type}
-                    >
-                      {dataType?.map((k,v) => {
-                        return <Radio key={v} value={k._id}>{k.name}</Radio>
-                      })}
-                    </Radio.Group>
-                  </Form.Item>
-                </div>
-                <div className="w-full px-0">
-                  <Form.Item
-                    name="category"
-                    label="Kanal"
-                    rules={[
-                        { required: true, message: 'Harap Lengkapi Data!' },
-                    ]}
-                  >
-                    <Select
-                      showSearch
-                      placeholder="Pilih Kanal"
-                      optionFilterProp="children"
-                      onChange={(value, option) => {
-                          setCategory(value, option)
-                      }}
-                      filterOption={(input, option) =>
-                        option.children
-                          .toLowerCase()
-                          .includes(input.toLowerCase())
-                      }
-                    >
-                      {dataCategory?.map((k,v) => {
-                        return <Option key={v} value={k._id}>{k.name}</Option>
-                      })}
-                    </Select>
-                  </Form.Item>
-                </div>
-                <div className="w-full px-0">
-                  <Form.Item
-                    name="title"
-                    label="Judul"
-                    rules={[
-                        { required: true, message: 'Harap Lengkapi Data!' },
-                    ]}
-                  >
-                    <Input
-                      placeholder="Masukkan Judul"
-                    />
-                  </Form.Item>
-                </div>
+      <>
+        <ModalUpdateImage
+          modalAdd={modalAdd}
+          setModalAdd={setModalAdd}
+          session={session}
+          articleId={dataUpdate._id}
+          onFinish={() => {
+            fetchDataDetailArticle(dataUpdate._id);
+          }}
+        />
 
-                <div className="w-full px-0">
-                  <Form.Item
-                    name="reporter"
-                    label="Reporter"
-                    rules={[
-                        { required: true, message: 'Harap Lengkapi Data!' },
-                    ]}
-                  >
-                    <Input
-                      placeholder="Masukkan Nama Reporter"
-                    />
-                  </Form.Item>
-                </div>
-
-                <div className="w-full px-0">
-                  <Form.Item
-                    name="editor"
-                    label="Editor"
-                    rules={[
-                        { required: true, message: 'Harap Lengkapi Data!' },
-                    ]}
-                  >
-                    <Input
-                      placeholder="Masukkan Nama Editor"
-                    />
-                  </Form.Item>
-                </div>
-
-                <div className="w-full pr-0 lg:pr-1">
-                  <Form.Item
-                    name="date"
-                    label="Mulai"
-                    rules={[
-                        { required: true, message: 'Harap Lengkapi Data!' },
-                    ]}
-                  >
-                    <DatePicker
-                      style={{
-                        width: "100%",
-                      }}
-                    />
-                  </Form.Item>
-                </div>
-
-                <div className="w-full pr-0 lg:pr-1">
-                  <Row>
-                    <div className="w-1/2 px-0">
-                      {/* <Form.Item
-                        name="isOnLandingPage"
-                        label="Onlanding Page"
+        <div className="p-6 rounded-lg bgW">
+          <div className="items-center justify-between w-full">
+            <h1 className="text-3xl font-bold">Edit Article</h1>
+            <hr className="mb-3" />
+            <Spin tip="Memuat..." size="large" spinning={state.loading || loading}>
+              <Form layout="vertical" form={formArticleUpdate}>
+                <div className="flex flex-col flex-wrap md:flex-row">
+                  <Col span={18} className="pb-2 pr-3">
+                    <div className="w-full px-0">
+                      <Form.Item
+                        name="type"
+                        label="Type"
                         rules={[
                             { required: true, message: 'Harap Lengkapi Data!' },
                         ]}
                       >
                         <Radio.Group
                             onChange={(e) => {
-                              setIsOnLandingPage(e.target.value)
+                                setType(e.target.value)
                             }}
-                            options={[
-                                { label: 'Yes', value: true },
-                                { label: 'No', value: false }
-                            ]}
-                            value={isOnLandingPage}
-                        />
-                      </Form.Item> */}
+                            value={type}
+                        >
+                          {dataType?.map((k,v) => {
+                            return <Radio key={v} value={k._id}>{k.name}</Radio>
+                          })}
+                        </Radio.Group>
+                      </Form.Item>
                     </div>
-                  </Row>
+                    <div className="w-full px-0">
+                      <Form.Item
+                        name="category"
+                        label="Kanal"
+                        rules={[
+                            { required: true, message: 'Harap Lengkapi Data!' },
+                        ]}
+                      >
+                        <Select
+                          showSearch
+                          placeholder="Pilih Kanal"
+                          optionFilterProp="children"
+                          onChange={(value, option) => {
+                              setCategory(value, option)
+                          }}
+                          filterOption={(input, option) =>
+                            option.children
+                              .toLowerCase()
+                              .includes(input.toLowerCase())
+                          }
+                        >
+                          {dataCategory?.map((k,v) => {
+                            return <Option key={v} value={k._id}>{k.name}</Option>
+                          })}
+                        </Select>
+                      </Form.Item>
+                    </div>
+                    <div className="w-full px-0">
+                      <Form.Item
+                        name="title"
+                        label="Judul"
+                        rules={[
+                            { required: true, message: 'Harap Lengkapi Data!' },
+                        ]}
+                      >
+                        <Input
+                          placeholder="Masukkan Judul"
+                        />
+                      </Form.Item>
+                    </div>
+                  </Col>
+                  <Col span={6}>
+                    <Row>
+                      <Col span={24}>
+                        <Row>
+                          <Col span={12}>
+                            <p>Main image :</p>
+                          </Col>
+                          <Col span={12}>
+                            <Button
+                              onClick={() => {
+                                setModalAdd(!modalAdd);
+                              }}
+                              className="btn btnBlue ml-2 mb-1"
+                              style={{ borderRadius: "4px" }}
+                            >
+                              <p style={{ margin: '0' }}>
+                                Update gambar
+                              </p>
+                            </Button>
+                          </Col>
+                        </Row>
+                      </Col>
+                      <Col span={24}>
+                        <Image
+                          // width={200}
+                          alt={dataUpdate?.image?.pathWithFilename}
+                          src={dataUpdate?.image?.completedUrl}
+                        />
+                      </Col>
+                    </Row>
+                  </Col>
                 </div>
-              </div>
+                <div className="flex flex-col flex-wrap md:flex-row">
+                  <div className="w-full px-0">
+                    <Form.Item
+                      name="reporter"
+                      label="Reporter"
+                      rules={[
+                          { required: true, message: 'Harap Lengkapi Data!' },
+                      ]}
+                    >
+                      <Input
+                        placeholder="Masukkan Nama Reporter"
+                      />
+                    </Form.Item>
+                  </div>
 
-              <Form.Item
-                label="Content"
-                name="content"
-              >
-                {/* WYSWYG here */}
-                <div className="rounded-lg bgW">
-                  {content ? (
-                    <>
-                      <Editor
-                        raw={content}
-                        caller="tambahArticle"
-                        onChangeRaw={(value)=>{
-                          setContent(value)
+                  <div className="w-full px-0">
+                    <Form.Item
+                      name="editor"
+                      label="Editor"
+                      rules={[
+                          { required: true, message: 'Harap Lengkapi Data!' },
+                      ]}
+                    >
+                      <Input
+                        placeholder="Masukkan Nama Editor"
+                      />
+                    </Form.Item>
+                  </div>
+
+                  <div className="w-full pr-0 lg:pr-1">
+                    <Form.Item
+                      name="date"
+                      label="Mulai"
+                      rules={[
+                          { required: true, message: 'Harap Lengkapi Data!' },
+                      ]}
+                    >
+                      <DatePicker
+                        style={{
+                          width: "100%",
                         }}
                       />
-                    </>
-                  ):(
-                    <>
+                    </Form.Item>
+                  </div>
+
+                  <div className="w-full pr-0 lg:pr-1">
+                    <Row>
+                      <div className="w-1/2 px-0">
+                        {/* <Form.Item
+                          name="isOnLandingPage"
+                          label="Onlanding Page"
+                          rules={[
+                              { required: true, message: 'Harap Lengkapi Data!' },
+                          ]}
+                        >
+                          <Radio.Group
+                              onChange={(e) => {
+                                setIsOnLandingPage(e.target.value)
+                              }}
+                              options={[
+                                  { label: 'Yes', value: true },
+                                  { label: 'No', value: false }
+                              ]}
+                              value={isOnLandingPage}
+                          />
+                        </Form.Item> */}
+                      </div>
+                    </Row>
+                  </div>
+                </div>
+
+                <Form.Item
+                  label="Content"
+                  name="content"
+                >
+                  {/* WYSWYG here */}
+                  <div className="rounded-lg bgW">
+                    {content ? (
                       <>
                         <Editor
-                          // raw={content}
+                          raw={content}
                           caller="tambahArticle"
                           onChangeRaw={(value)=>{
                             setContent(value)
                           }}
                         />
                       </>
-                    </>
-                  )}
-                </div>
-              </Form.Item>
+                    ):(
+                      <>
+                        <>
+                          <Editor
+                            // raw={content}
+                            caller="tambahArticle"
+                            onChangeRaw={(value)=>{
+                              setContent(value)
+                            }}
+                          />
+                        </>
+                      </>
+                    )}
+                  </div>
+                </Form.Item>
 
-              <div style={{ display: 'flex', justifyContent: 'end' }}>
-                <Button
-                  style={{
-                    backgroundColor: '#0db8a1',
-                    color: 'white',
-                    width: '10%',
-                    marginRight: '10px',
-                  }}
-                  onClick={() => {
-                    formArticleUpdate.validateFields().then((values) => {
-                      submitForm(values);
-                    });
-                  }}
-                  icon={<SaveFilled style={{ marginTop: '-3px' }} />}
-                >
-                  Submit
-                </Button>
-                <Button
-                  style={{
-                    backgroundColor: '#de0910',
-                    color: 'white',
-                    width: '10%',
-                  }}
-                  icon={<ReloadOutlined style={{ marginTop: '-3px' }} />}
-                  onClick={() => {
-                    formArticleUpdate.resetFields();
-                    // setFileList([]);
-                  }}
-                >
-                  Reset
-                </Button>
-              </div>
-            </Form>
-          </Spin>
+                <div style={{ display: 'flex', justifyContent: 'end' }}>
+                  <Button
+                    style={{
+                      backgroundColor: '#0db8a1',
+                      color: 'white',
+                      width: '10%',
+                      marginRight: '10px',
+                    }}
+                    onClick={() => {
+                      formArticleUpdate.validateFields().then((values) => {
+                        submitForm(values);
+                      });
+                    }}
+                    icon={<SaveFilled style={{ marginTop: '-3px' }} />}
+                  >
+                    Submit
+                  </Button>
+                  <Button
+                    style={{
+                      backgroundColor: '#de0910',
+                      color: 'white',
+                      width: '10%',
+                    }}
+                    icon={<ReloadOutlined style={{ marginTop: '-3px' }} />}
+                    onClick={() => {
+                      formArticleUpdate.resetFields();
+                      // setFileList([]);
+                    }}
+                  >
+                    Reset
+                  </Button>
+                </div>
+              </Form>
+            </Spin>
+          </div>
         </div>
-      </div>
+      </>
     );
 };
 
