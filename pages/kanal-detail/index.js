@@ -244,7 +244,7 @@ const KanalDetail = ({}) => {
         })}
         <Row
           gutter={[16, 24]}
-          className="px-10 pt-5 font-semibold bgW md:px-28"
+          className="px-10 pt-5 bgW md:px-28"
         >
           <Col xs={24} sm={24} md={18} lg={18}>
             <Tag color="#BAFF4A">
@@ -273,7 +273,7 @@ const KanalDetail = ({}) => {
             />
             <div className="my-3 text-container" dangerouslySetInnerHTML={{ __html: dataDetail?.content }} />
             <p
-              className="my-3 text-lg"
+              className="my-3 text-lg font-semibold"
               style={{
                 textDecoration: "none",
                 borderBottom:"5px solid #BAFF4A",
@@ -282,7 +282,7 @@ const KanalDetail = ({}) => {
             >
               Rekomendasi
             </p>
-            <div className="grid gap-10 grid-rows md:grid-cols-2 lg:grid-cols-3">
+            <div className="grid gap-10 font-semibold grid-rows md:grid-cols-2 lg:grid-cols-3">
               {pageData?.map((e, index) => {
                 return (
                   <div
@@ -350,7 +350,7 @@ const KanalDetail = ({}) => {
               )
             })}
             <p
-              className="my-3 text-lg"
+              className="my-3 text-lg font-semibold"
               style={{
                 textDecoration: "none",
                 borderBottom:"5px solid #BAFF4A",
@@ -365,7 +365,7 @@ const KanalDetail = ({}) => {
                   <Row
                     key={index}
                     gutter={[16, 24]}
-                    className="py-2"
+                    className="py-2 font-semibold"
                   >
                     <Col xs={10} sm={10} md={10} lg={10}>
                       <Image
