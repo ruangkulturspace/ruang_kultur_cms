@@ -2,9 +2,9 @@ import Head from "next/head";
 import { useAppState } from "../../components/shared/AppProvider";
 import { useEffect, useState } from "react";
 import moment from 'moment';
-import { Button, Row, Col, notification, Table, Input, Tooltip } from "antd";
+import { Button, Row, Col, notification, Table, Input, Tooltip, Form, Switch } from "antd";
 import { handleSessions } from "../../utils/helpers";
-import { requestGet } from "../../utils/baseService";
+import { requestGet, requestPatch, showSuksesCustom } from "../../utils/baseService";
 // import ModalViewArticle from "../../components/Article/ModalViewArticle";
 import ModalDeleteArticle from "../../components/Article/ModalDeleteArticle";
 import Link from "next/link";
@@ -86,6 +86,26 @@ const Article = ({ session }) => {
     useEffect(() => {
         fetchData({ page: pagination.current, limit: pagination.pageSize });
     }, []);
+
+    const [formIsActive] = Form.useForm();
+
+    const submitForm = async (values) => {
+        setLoading(true);
+
+        const swtich = values.isActive === false ? "inactive" : "active"
+
+        const data = await requestPatch(
+            session,
+            process.env.NEXT_PUBLIC_API_URL + `/api/v1/admin/article/update/${values.id}/${swtich}`,
+            {}
+        );
+
+        setLoading(false);
+        if (data?.data?.statusCode == 200) {
+            showSuksesCustom("Berhasil", "Data berhasil di update");
+            fetchData({ page: pagination.current, limit: pagination.pageSize });
+        }
+    }
 
     const handleTableChangeTable1 = (paginationA, filtersA, sorterA) => {
       const pager = { ...pagination };
@@ -261,7 +281,7 @@ const Article = ({ session }) => {
                             dataIndex="category"
                             render={(value, item, index) => value?.name ?? "-"}
                         />
-                        <Table.Column
+                        {/* <Table.Column
                             title="Status"
                             dataIndex="isActive"
                             render={(value, item, index) => {
@@ -295,6 +315,41 @@ const Article = ({ session }) => {
                               }
                               return '-'
                             }}
+                        /> */}
+                        <Table.Column
+                            title="Status"
+                            dataIndex="_id"
+                            render={(id, item, index) => (
+                              <>
+                                <Form layout="vertical" form={formIsActive} className="formDaftar">
+                                  <Form.Item
+                                      name="id"
+                                      style={{display: "none"}}
+                                  >
+                                    <Input defaultValue={id}/>
+                                  </Form.Item>
+                                  <Form.Item
+                                      name="isActive"
+                                      style={{ marginBottom: '12px' }}
+                                  >
+                                      <Switch
+                                        onChange={(value) => {
+                                            formIsActive.setFieldsValue({
+                                                isActive: value,
+                                                id: id
+                                            })
+                                        }}
+                                        onClick={() => {
+                                            formIsActive.validateFields().then(values => {
+                                              submitForm(values);
+                                            });
+                                        }}
+                                        checked={item.isActive === true ? true : false}
+                                      />
+                                  </Form.Item>
+                                </Form>
+                              </>
+                          )}
                         />
                         <Table.Column
                           title="Actions"

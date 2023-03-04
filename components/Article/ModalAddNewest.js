@@ -46,6 +46,8 @@ const ModalAddNewest = ({ session, modalAdd, setModalAdd, onFinish = () => { } }
         setLoading(true);
         var params = {};
 
+        params.isActive = true;
+
         const datar = await requestGet(
           session,
           process.env.NEXT_PUBLIC_API_URL + "/api/v1/admin/article/list",
