@@ -106,7 +106,7 @@ const Index = ({type, arrow, height}) => {
       ) : (
         <>
           <Carousel
-            // autoplay
+            autoplay
             arrows={arrow || false}
             prevArrow={<LeftOutlined />}
             nextArrow={<RightOutlined />}
