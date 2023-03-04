@@ -766,3 +766,38 @@ div.DraftEditor-root {
 .rdw-image-modal {
   left: -85px !important;
 }
+
+.fixed-wrap{
+  position: absolute;
+  bottom: 0;
+  max-width: 188vh;
+  word-wrap: break-word;
+}
+
+
+@media screen and (max-width: 768px) {
+  .fixed-wrap {
+    font-size: 14px;
+    max-width: 62vh;
+    padding: 5px;
+    position: absolute;
+    bottom: 0;
+    word-wrap: break-word;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .fixed-wrap {
+    font-size: 12px;
+    max-width: 62vh;
+    padding: 3px;
+    position: absolute;
+    bottom: 0;
+    word-wrap: break-word;
+  }
+
+  img {
+    /* max-width: 90%; */
+    height: auto;
+  }
+}

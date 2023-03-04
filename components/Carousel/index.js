@@ -106,7 +106,7 @@ const Index = ({type, arrow, height}) => {
       ) : (
         <>
           <Carousel
-            autoplay
+            // autoplay
             arrows={arrow || false}
             prevArrow={<LeftOutlined />}
             nextArrow={<RightOutlined />}
@@ -140,15 +140,14 @@ const Index = ({type, arrow, height}) => {
                     objectPosition: "center",
                   }}
                 />
-                <p
+                <div
                   style={{
-                    width: "100%",
                     background: "rgb(190 190 190 / 20%)"
                   }}
-                  className="fixed bottom-0 p-10 text-4xl font-bold text-white font__tittle"
+                  className="p-10 text-4xl font-bold text-white font__tittle fixed-wrap"
                 >
                   {item?.title}
-                </p>
+                </div>
               </div>
             ))}
           </Carousel>
