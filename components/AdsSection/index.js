@@ -3,12 +3,12 @@ import React from "react";
 const AdsSection = () => {
   return (
     <div className="flex flex-col p-10 bgImgRk md:p-28">
-      <div className="flex flex-col items-start justify-between md:flex-row md:items-center">
+      <div className="flex flex-col items-start justify-between pt-1 md:flex-row md:items-center">
         <div className="flex flex-col justify-between">
           <p className="my-0 text-3xl font-bold">Our Service</p>
         </div>
       </div>
-      <div className="flex flex-col justify-between gap-5 pt-10 pb-10 md:flex-row md:gap-10 lg:gap-32">
+      <div className="flex flex-col justify-between gap-5 pt-10 pb-10 mt-3 md:flex-row md:gap-10 lg:gap-32">
         <div className="w-full md:w-1/2 lg:w-1/4">
           <p className="text-lg font-bold"><u>CONTENT TAP</u></p>
           <p className="text-xs">
