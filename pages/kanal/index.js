@@ -269,6 +269,7 @@ const Kanal = ({}) => {
                 type={type}
                 arrow={true}
                 height={"66vh"}
+                width={"119vh"}
               />
             </Col>
             <Col xs={24} sm={24} md={6} lg={6}>

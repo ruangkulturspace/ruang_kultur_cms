@@ -770,7 +770,7 @@ div.DraftEditor-root {
 .fixed-wrap{
   position: absolute;
   bottom: 0;
-  max-width: 188vh;
+  width: 188vh;
   word-wrap: break-word;
 }
 
@@ -778,7 +778,7 @@ div.DraftEditor-root {
 @media screen and (max-width: 768px) {
   .fixed-wrap {
     font-size: 14px;
-    max-width: 62vh;
+    max-width: 62vh !important;
     padding: 5px;
     position: absolute;
     bottom: 0;
@@ -789,7 +789,7 @@ div.DraftEditor-root {
 @media screen and (max-width: 480px) {
   .fixed-wrap {
     font-size: 12px;
-    max-width: 62vh;
+    max-width: 62vh !important;
     padding: 3px;
     position: absolute;
     bottom: 0;

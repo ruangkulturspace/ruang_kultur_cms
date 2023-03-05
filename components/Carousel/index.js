@@ -5,9 +5,10 @@ import { useRouter } from "next/router";
 import { LeftOutlined, RightOutlined } from "@ant-design/icons";
 import { useAppState } from "../shared/AppProvider";
 
-const Index = ({type, arrow, height}) => {
+const Index = ({type, arrow, height, width}) => {
   const router = useRouter();
   const [state, dispatch] = useAppState();
+  console.log("asd", state);
   const [pageDataJumboTron, setPageDataJumboTron] = useState([]);
   const [idData, setIdData] = useState([])
   const [loading, setLoading] = useState(false);
@@ -106,7 +107,7 @@ const Index = ({type, arrow, height}) => {
       ) : (
         <>
           <Carousel
-            autoplay
+            // autoplay
             arrows={arrow || false}
             prevArrow={<LeftOutlined />}
             nextArrow={<RightOutlined />}
@@ -142,7 +143,9 @@ const Index = ({type, arrow, height}) => {
                 />
                 <div
                   style={{
-                    background: "rgb(190 190 190 / 20%)"
+                    background: "rgb(190 190 190 / 20%)",
+                    // width: width || "188vh",
+                    width: state.mobile === true ? "42vh" : width
                   }}
                   className="p-10 text-4xl font-bold text-white font__tittle fixed-wrap"
                 >
