@@ -7,6 +7,7 @@ import { requestGet, requestPostFormData, showSuksesCustom } from "../../utils/b
 import { ReloadOutlined, SaveFilled, UploadOutlined } from "@ant-design/icons";
 import { PushNavigateTo } from "../../utils/helpersBrowser";
 import dynamic from "next/dynamic";
+import TextArea from "antd/lib/input/TextArea";
 
 const Editor = dynamic(() => import("../../components/WSIWYG"), {
   ssr: false,
@@ -98,6 +99,7 @@ const ArticleForm = ({ session }) => {
         formData.append('category', values.category ?? "-");
         formData.append('editor', values.editor ?? "-");
         formData.append('reporter', values.reporter ?? "-");
+        formData.append('metaData', values.metaData ?? "-");
         formData.append('isActive', active);
         formData.append('isOnLandingPage', false);
         formData.append('content', content);
@@ -151,32 +153,32 @@ const ArticleForm = ({ session }) => {
                   </Form.Item>
                 </div>
                 <div className="w-full px-0">
-                    <Form.Item
-                      name="category"
-                      label="Kanal"
-                      rules={[
-                          { required: true, message: 'Harap Lengkapi Data!' },
-                      ]}
+                  <Form.Item
+                    name="category"
+                    label="Kanal"
+                    rules={[
+                        { required: true, message: 'Harap Lengkapi Data!' },
+                    ]}
+                  >
+                    <Select
+                      showSearch
+                      placeholder="Pilih Kanal"
+                      optionFilterProp="children"
+                      onChange={(value, option) => {
+                          setCategory(value, option)
+                      }}
+                      filterOption={(input, option) =>
+                        option.children
+                          .toLowerCase()
+                          .includes(input.toLowerCase())
+                      }
                     >
-                      <Select
-                        showSearch
-                        placeholder="Pilih Kanal"
-                        optionFilterProp="children"
-                        onChange={(value, option) => {
-                            setCategory(value, option)
-                        }}
-                        filterOption={(input, option) =>
-                          option.children
-                            .toLowerCase()
-                            .includes(input.toLowerCase())
-                        }
-                      >
-                        {dataCategory?.map((k,v) => {
-                          return <Option key={v} value={k._id}>{k.name}</Option>
-                        })}
-                      </Select>
-                    </Form.Item>
-                  </div>
+                      {dataCategory?.map((k,v) => {
+                        return <Option key={v} value={k._id}>{k.name}</Option>
+                      })}
+                    </Select>
+                  </Form.Item>
+                </div>
                 <div className="w-full px-0">
                   <Form.Item
                     name="title"
@@ -188,6 +190,17 @@ const ArticleForm = ({ session }) => {
                     <Input
                       placeholder="Masukkan Judul"
                     />
+                  </Form.Item>
+                </div>
+                <div className="w-full px-0">
+                  <Form.Item
+                    name="metaData"
+                    label="Meta Data"
+                    rules={[
+                        { required: true, message: 'Harap Lengkapi Data!' },
+                    ]}
+                  >
+                    <TextArea rows={4} />
                   </Form.Item>
                 </div>
 

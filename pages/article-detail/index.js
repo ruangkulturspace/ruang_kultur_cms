@@ -64,6 +64,12 @@ const ArticleDetail = ({ session }) => {
                 </div>
                 <div className="w-full px-0 mt-3">
                   <Row>
+                    <Col span={8}>Meta Data</Col>
+                    <Col span={16}>: {dataDetail?.metaData ?? "-"}</Col>
+                  </Row>
+                </div>
+                <div className="w-full px-0 mt-3">
+                  <Row>
                     <Col span={8}>Reporter</Col>
                     <Col span={16}>: {dataDetail?.reporter ?? "-"}</Col>
                   </Row>

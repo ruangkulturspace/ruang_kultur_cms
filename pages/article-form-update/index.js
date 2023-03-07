@@ -9,6 +9,7 @@ import { PushNavigateTo } from "../../utils/helpersBrowser";
 import { useRouter } from "next/router";
 import dynamic from "next/dynamic";
 import ModalUpdateImage from "../../components/Article/ModalUpdateImage";
+import TextArea from "antd/lib/input/TextArea";
 
 const Editor = dynamic(() => import("../../components/WSIWYG"), {
   ssr: false,
@@ -96,6 +97,7 @@ const ArticleFormUpdate = ({ session }) => {
     useEffect(() => {
         formArticleUpdate.setFieldsValue({
             title: dataUpdate?.title,
+            metaData: dataUpdate?.metaData,
             type: dataUpdate?.type?._id,
             category: dataUpdate?.category?._id,
             editor: dataUpdate?.editor,
@@ -113,6 +115,7 @@ const ArticleFormUpdate = ({ session }) => {
             const param = {
                 title: values?.title,
                 type: values?.type,
+                metaData: values?.metaData,
                 category: category ?? values?.category,
                 editor: values?.editor,
                 reporter: values?.reporter,
@@ -228,7 +231,7 @@ const ArticleFormUpdate = ({ session }) => {
                               onClick={() => {
                                 setModalAdd(!modalAdd);
                               }}
-                              className="btn btnBlue ml-2 mb-1"
+                              className="mb-1 ml-2 btn btnBlue"
                               style={{ borderRadius: "4px" }}
                             >
                               <p style={{ margin: '0' }}>
@@ -249,6 +252,17 @@ const ArticleFormUpdate = ({ session }) => {
                   </Col>
                 </div>
                 <div className="flex flex-col flex-wrap md:flex-row">
+                  <div className="w-full px-0">
+                    <Form.Item
+                      name="metaData"
+                      label="Meta Data"
+                      rules={[
+                          { required: true, message: 'Harap Lengkapi Data!' },
+                      ]}
+                    >
+                      <TextArea rows={4} />
+                    </Form.Item>
+                  </div>
                   <div className="w-full px-0">
                     <Form.Item
                       name="reporter"
