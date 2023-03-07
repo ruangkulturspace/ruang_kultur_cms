@@ -66,7 +66,7 @@ const TopMenu = ({session}) => {
               <img src="/assets/icons/logo_ruang_kultur.gif" alt="logo" height={100} width={180} />
             </a>
           </Link>
-          <div className="flex-row items-center justify-start hidden gap-8 lg:flex">
+          <div className="flex-row items-center justify-start hidden gap-8 lg:flex app-subnav__link">
             <Link
               className={pathname === "/kanal" ? `cCnBlue` : `cLg`}
               href="/kanal?type=KULTURATIF"
