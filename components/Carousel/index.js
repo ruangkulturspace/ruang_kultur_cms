@@ -63,10 +63,6 @@ const Index = ({type, arrow, height, width}) => {
     fetchDataJumboTron();
   }, [type]);
 
-  // useEffect(() => {
-  //   fetchCounterArticle(idData)
-  // }, [idData])
-
   const handleClickCount = async (id) => {
     setLoadingCount(true);
     const param = {
@@ -107,7 +103,7 @@ const Index = ({type, arrow, height, width}) => {
         <>
           <Carousel
             // autoplay
-            arrows={arrow || false}
+            arrows={true}
             prevArrow={<LeftOutlined />}
             nextArrow={<RightOutlined />}
           >
@@ -116,17 +112,26 @@ const Index = ({type, arrow, height, width}) => {
                 style={contentStyle}
                 key={index}
                 className="cursor-pointer"
-                onClick={() => {
-                  router.push(
-                    {
-                      pathname: `/kanal-detail?id=${item?._id}`,
-                      query: item,
-                    },
-                    `/kanal-detail?id=${item?._id}`
-                  )
-                  handleClickCount(item?._id)
-                }}
               >
+                <div
+                  style={{
+                    position: "absolute",
+                    // background: "red",
+                    width: "50vh",
+                    height: "22rem",
+                    margin: "8rem 30rem"
+                  }}
+                  onClick={() => {
+                    router.push(
+                      {
+                        pathname: `/kanal-detail?id=${item?._id}`,
+                        query: item,
+                      },
+                      `/kanal-detail?id=${item?._id}`
+                    )
+                    handleClickCount(item?._id)
+                  }}
+                ></div>
                 <img
                   src={item?.image?.completedUrl}
                   alt={item.title}
@@ -143,7 +148,6 @@ const Index = ({type, arrow, height, width}) => {
                 <div
                   style={{
                     background: "rgb(190 190 190 / 20%)",
-                    // width: width || "188vh",
                     width: state.mobile === true ? "42vh" : width
                   }}
                   className="p-10 text-4xl font-bold text-white font__tittle fixed-wrap"
