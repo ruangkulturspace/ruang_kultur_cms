@@ -1,7 +1,9 @@
 import React, { useState } from 'react'
 import { requestPostWithoutSession } from '../../utils/baseService';
+import { useAppState } from '../shared/AppProvider';
 
 export default function SuperLeaderBoardBanner({data, key}) {
+  const [state, dispatch] = useAppState();
   const [displaySuperLeaderBoard, setDisplaySuperLeaderBoard] = useState(true);
   const [loadingCount, setLoadingCount] = useState(false);
 
@@ -40,9 +42,9 @@ export default function SuperLeaderBoardBanner({data, key}) {
               style={{
                 background: `url("${data?.image?.completedUrl}") no-repeat`,
                 height: "90px",
-                width: "970px",
+                width: !(state.mobile) ? "75%" : "72%",
                 top: "20%",
-                left:"25%",
+                left:"12%",
                 transform: "translate(-50%, -50%);",
                 backgroundSize: "cover",
                 backgroundPosition: "center",
@@ -56,7 +58,7 @@ export default function SuperLeaderBoardBanner({data, key}) {
                 className="fixed z-50 px-2 py-1 m-3 text-center cursor-pointer top-28"
                 onClick={() => closeButtonSuperLeaderBoard()}
                 style={{
-                  right: "20%"
+                  right: !(state.mobile) ? "10%" : "5%"
                 }}
             >
                 X

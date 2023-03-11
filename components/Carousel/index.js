@@ -8,7 +8,6 @@ import { useAppState } from "../shared/AppProvider";
 const Index = ({type, arrow, height, width}) => {
   const router = useRouter();
   const [state, dispatch] = useAppState();
-  console.log("asd", state);
   const [pageDataJumboTron, setPageDataJumboTron] = useState([]);
   const [idData, setIdData] = useState([])
   const [loading, setLoading] = useState(false);

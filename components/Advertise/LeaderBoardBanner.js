@@ -1,7 +1,9 @@
 import React, { useState } from 'react'
 import { requestPostWithoutSession } from '../../utils/baseService';
+import { useAppState } from '../shared/AppProvider';
 
 export default function LeaderBoardBanner({data, key}) {
+  const [state, dispatch] = useAppState();
   const [displayBillboard, setDisplayBillboard] = useState(true);
   const [loadingCount, setLoadingCount] = useState(false);
 
@@ -40,9 +42,9 @@ export default function LeaderBoardBanner({data, key}) {
               style={{
                 background: `url("${data?.image?.completedUrl}") no-repeat`,
                 height: "90px",
-                width: "720px",
+                width: !(state.mobile) ? "970px" : "72%",
                 top: "8%",
-                left:"25%",
+                left:"12%",
                 transform: "translate(-50%, -50%);",
                 backgroundSize: "cover",
                 backgroundPosition: "center",
@@ -56,7 +58,7 @@ export default function LeaderBoardBanner({data, key}) {
                 className="fixed z-50 px-2 py-1 m-3 text-center cursor-pointer top-5"
                 onClick={() => closeButtonLeaderBoard()}
                 style={{
-                  right: "20%"
+                  right: !(state.mobile) ? "10%" : "5%"
                 }}
             >
                 X

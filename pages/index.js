@@ -16,10 +16,11 @@ import ExpandAble from "../components/Advertise/ExpandAble";
 import HalfPage from "../components/Advertise/HalfPage";
 import MedRetangle1 from "../components/Advertise/MedRetangle1";
 import MedRetangle2 from "../components/Advertise/MedRetangle2";
+import { useAppState } from "../components/shared/AppProvider";
 
 const Home = ({session}) => {
   const router = useRouter();
-
+  const [state, dispatch] = useAppState();
   const [dataBanner, setDataBanner] = useState([])
   const [idData, setIdData] = useState([])
 
@@ -89,14 +90,6 @@ const Home = ({session}) => {
   return (
     <>
       <LandingPage title="Beranda">
-        {billboardBanner?.map((e, index) => {
-          return (
-            <BillboardBanner
-              key={index}
-              data={e}
-            />
-          )
-        })}
         {leaderBoardBanner?.map((e, index) => {
           return (
             <LeaderBoardBanner
@@ -113,14 +106,26 @@ const Home = ({session}) => {
             />
           )
         })}
-        {skinAdsBanner?.map((e, index) => {
-          return (
-            <SkinAds
-              key={index}
-              data={e}
-            />
-          )
-        })}
+        {state.mobile === false ? (
+          <>
+            {billboardBanner?.map((e, index) => {
+              return (
+                <BillboardBanner
+                  key={index}
+                  data={e}
+                />
+              )
+            })}
+            {skinAdsBanner?.map((e, index) => {
+              return (
+                <SkinAds
+                  key={index}
+                  data={e}
+                />
+              )
+            })}
+          </>
+        ) : null }
         {retangelBanner1?.map((e, index) => {
           return (
             <MedRetangle1
@@ -150,22 +155,26 @@ const Home = ({session}) => {
             />
           )
         })}
-        {expandAble?.map((e, index) => {
-          return (
-            <ExpandAble
-              key={index}
-              data={e}
-            />
-          )
-        })}
-        {halfPage?.map((e, index) => {
-          return (
-            <HalfPage
-              key={index}
-              data={e}
-            />
-          )
-        })}
+        {state.mobile === false ? (
+          <>
+            {expandAble?.map((e, index) => {
+              return (
+                <ExpandAble
+                  key={index}
+                  data={e}
+                />
+              )
+            })}
+            {halfPage?.map((e, index) => {
+              return (
+                <HalfPage
+                  key={index}
+                  data={e}
+                />
+              )
+            })}
+          </>
+        ) : null }
       </LandingPage>
     </>
   );

@@ -2,7 +2,7 @@ import { useAppState } from "../../components/shared/AppProvider";
 import { useEffect, useState } from "react";
 import axios from 'axios'
 
-import { Button, Row, Col, notification, Table } from "antd";
+import { Button, Row, Col, notification, Table, Card } from "antd";
 import { getRandomUser } from "../../utils/services/getRandomUser";
 import { showError } from "../../utils/helpersBrowser";
 import { handleSessions } from "../../utils/helpers";
@@ -55,8 +55,28 @@ const DashboardAdmin = ({ session }) => {
 
     return (
         <>
-            <h3>Helloooooo, {getUser}</h3>
-        </>
+          <h3>Helloooooo, {getUser}</h3>
+          <Row gutter={[16, 16]}>
+            <Col span={10}>
+              <Card
+                title="Persentase Kanal"
+              >
+                <Row justify="space-between">
+                  <p>Card content</p>
+                  <p>Card content</p>
+                </Row>
+              </Card>
+            </Col>
+            <Col span={6} />
+            {/* <Col span={6} />
+            <Col span={6} />
+
+            <Col span={6} />
+            <Col span={6} />
+            <Col span={6} />
+            <Col span={6} /> */}
+          </Row>
+      </>
     );
 };
 

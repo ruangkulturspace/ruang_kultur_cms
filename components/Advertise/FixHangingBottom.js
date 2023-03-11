@@ -1,7 +1,9 @@
 import React, { useState } from 'react'
 import { requestPostWithoutSession } from '../../utils/baseService';
+import { useAppState } from '../shared/AppProvider';
 
 export default function FixHangingBottom({data, key}) {
+  const [state, dispatch] = useAppState();
   const [displayHangingBottom, setDisplaySkinAd] = useState(true);
   const [loadingCount, setLoadingCount] = useState(false);
 
@@ -40,7 +42,7 @@ export default function FixHangingBottom({data, key}) {
               style={{
                 background: `url("${data?.image?.completedUrl}") no-repeat`,
                 height: "90px",
-                width: "970px",
+                width: !(state.mobile) ? "970px" : "72%",
                 bottom: "8%",
                 left:"15%",
                 transform: "translate(-50%, -50%);",
@@ -56,7 +58,7 @@ export default function FixHangingBottom({data, key}) {
                 className="fixed z-50 py-1 m-3 text-center cursor-pointer"
                 onClick={() => closeButtonSkinAds()}
                 style={{
-                  right: "10%",
+                  right: !(state.mobile) ? "10%" : "5%",
                   bottom: "15%",
                 }}
             >

@@ -313,42 +313,46 @@ const KanalDetail = ({}) => {
             <br />
           </Col>
           <Col xs={24} sm={24} md={6} lg={6}>
-            {retangelBanner1?.map((e, index) => {
-              return (
-                <Card
-                  bordered={false}
-                  key={index}
-                >
-                  <a href={e?.url}>
-                    <Image
-                      preview={false}
-                      width={300}
-                      height={250}
-                      alt={e?.image?.pathWithFilename}
-                      src={e?.image?.completedUrl}
-                    />
-                  </a>
-                </Card>
-              )
-            })}
-            {retangelBanner2?.map((e, index) => {
-              return (
-                <Card
-                  bordered={false}
-                  key={index}
-                >
-                  <a href={e?.url}>
-                    <Image
-                      preview={false}
-                      width={300}
-                      height={250}
-                      alt={e?.image?.pathWithFilename}
-                      src={e?.image?.completedUrl}
-                    />
-                  </a>
-                </Card>
-              )
-            })}
+            {state.mobile === false ? (
+              <>
+                {retangelBanner1?.map((e, index) => {
+                  return (
+                    <Card
+                      bordered={false}
+                      key={index}
+                    >
+                      <a href={e?.url}>
+                        <Image
+                          preview={false}
+                          width={300}
+                          height={250}
+                          alt={e?.image?.pathWithFilename}
+                          src={e?.image?.completedUrl}
+                        />
+                      </a>
+                    </Card>
+                  )
+                })}
+                {retangelBanner2?.map((e, index) => {
+                  return (
+                    <Card
+                      bordered={false}
+                      key={index}
+                    >
+                      <a href={e?.url}>
+                        <Image
+                          preview={false}
+                          width={300}
+                          height={250}
+                          alt={e?.image?.pathWithFilename}
+                          src={e?.image?.completedUrl}
+                        />
+                      </a>
+                    </Card>
+                  )
+                })}
+              </>
+            ) : null }
             <p
               className="my-3 text-lg font-semibold"
               style={{
