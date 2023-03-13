@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Carousel, Spin } from "antd";
+import { Carousel, Row, Spin } from "antd";
 import { requestGetWithoutSession, requestPostWithoutSession } from "../../utils/baseService";
 import { useRouter } from "next/router";
 import { LeftOutlined, RightOutlined } from "@ant-design/icons";
@@ -101,62 +101,80 @@ const Index = ({type, arrow, height, width}) => {
         </div>
       ) : (
         <>
-          <Carousel
-            // autoplay
-            arrows={true}
-            prevArrow={<LeftOutlined />}
-            nextArrow={<RightOutlined />}
-          >
-            {pageDataJumboTron?.map((item, index) => (
-              <div
-                style={contentStyle}
-                key={index}
-                className="cursor-pointer"
-              >
+          {pageDataJumboTron.length > 0 ? (
+            <Carousel
+              // autoplay
+              arrows={true}
+              prevArrow={<LeftOutlined />}
+              nextArrow={<RightOutlined />}
+            >
+              {pageDataJumboTron?.map((item, index) => (
                 <div
-                  style={{
-                    position: "absolute",
-                    // background: "red",
-                    width: "50vh",
-                    height: "22rem",
-                    margin: "8rem 30rem"
-                  }}
-                  onClick={() => {
-                    router.push(
-                      {
-                        pathname: `/kanal-detail?id=${item?._id}`,
-                        query: item,
-                      },
-                      `/kanal-detail?id=${item?._id}`
-                    )
-                    handleClickCount(item?._id)
-                  }}
-                ></div>
-                <img
-                  src={item?.image?.completedUrl}
-                  alt={item.title}
-                  style={{
-                    backgroundSize: "cover",
-                    backgroundPosition: "center",
-                    width: "100%",
-                    height: height || "80vh",
-                    maxHeight: "100vh",
-                    objectFit: "cover",
-                    objectPosition: "center",
-                  }}
-                />
-                <div
-                  style={{
-                    background: "rgb(190 190 190 / 20%)",
-                    width: state.mobile === true ? "42vh" : width
-                  }}
-                  className="p-10 text-4xl font-bold text-white font__tittle fixed-wrap"
+                  style={contentStyle}
+                  key={index}
+                  className="cursor-pointer"
                 >
-                  {item?.title}
+                  <div
+                    style={{
+                      position: "absolute",
+                      // background: "red",
+                      width: "50vh",
+                      height: "22rem",
+                      margin: "8rem 30rem"
+                    }}
+                    onClick={() => {
+                      router.push(
+                        {
+                          pathname: `/kanal-detail?id=${item?._id}`,
+                          query: item,
+                        },
+                        `/kanal-detail?id=${item?._id}`
+                      )
+                      handleClickCount(item?._id)
+                    }}
+                  ></div>
+                  <img
+                    src={item?.image?.completedUrl}
+                    alt={item.title}
+                    style={{
+                      backgroundSize: "cover",
+                      backgroundPosition: "center",
+                      width: "100%",
+                      height: height || "80vh",
+                      maxHeight: "100vh",
+                      objectFit: "cover",
+                      objectPosition: "center",
+                    }}
+                  />
+                  <div
+                    style={{
+                      background: "rgb(190 190 190 / 20%)",
+                      width: state.mobile === true ? "42vh" : width
+                    }}
+                    className="p-10 text-4xl font-bold text-white font__tittle fixed-wrap"
+                  >
+                    {item?.title}
+                  </div>
                 </div>
-              </div>
-            ))}
-          </Carousel>
+              ))}
+            </Carousel>
+          ):(
+            <Row gutter={[10, 10]} align="middle" justify="center">
+              <span
+                style={{
+                    color: '#FA4547',
+                    background: 'rgba(250, 69, 71, 0.2)',
+                    padding: '3px 10px',
+                    borderRadius: '10px',
+                    fontSize: '12px',
+                    whiteSpace: 'nowrap',
+                    fontWeight: 'bold',
+                }}
+              >
+                No Data
+              </span>
+            </Row>
+          )}
         </>
       )}
     </>
