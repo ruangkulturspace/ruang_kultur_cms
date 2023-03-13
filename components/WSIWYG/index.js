@@ -33,13 +33,42 @@ function uploadImageCallBack(file) {
 }
 
 const WSIWYGEditor = ({ raw, onChangeRaw }) => {
+  const blocksFromHTML = convertFromHTML(raw ?? "");
+  const customContentStateConverter = (contentState) => {
+    // changes block type of images to 'atomic'
+    const newBlockMap = contentState.getBlockMap().map((block) => {
+        const entityKey = block.getEntityAt(0);
+        if (entityKey !== null) {
+            const entityBlock = contentState.getEntity(entityKey);
+            const entityType = entityBlock.getType();
+            switch (entityType) {
+                case 'IMAGE': {
+                    const newBlock = block.merge({
+                        type: 'atomic',
+                        text: 'img',
+                    });
+                    return newBlock;
+                }
+                default:
+                    return block;
+            }
+        }
+        return block;
+    });
+    const newContentState = contentState.set('blockMap', newBlockMap);
+    return newContentState;
+  }
   // console.log("console log nya raw", raw);
   const [editorState, setEditorState] = useState(
     raw === undefined || raw === ""
       ? () => {
           EditorState.createEmpty();
         }
-      : EditorState.createWithContent(stateFromHTML(raw))
+      : EditorState.createWithContent(customContentStateConverter(
+        ContentState.createFromBlockArray(
+            blocksFromHTML.contentBlocks,
+            blocksFromHTML.entityMap
+        )))
   );
   const [rawHTML, setRawHTML] = useState("");
 
