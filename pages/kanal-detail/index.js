@@ -282,7 +282,7 @@ const KanalDetail = ({}) => {
             >
               Rekomendasi
             </p>
-            <div className="grid gap-10 mb-11 grid-rows md:grid-cols-2 lg:grid-cols-3 xxl:grid-cols-4">
+            <div className="grid gap-10 mb-11 grid-rows md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
               {pageData?.map((e, index) => {
                 return (
                   <div
