@@ -36,7 +36,7 @@ const Home = ({session}) => {
       var params = {};
 
       params.page = 1;
-      params.isActive = true;
+      params.isActive = "true";
       params.placement = "HOMEPAGE"
 
       const datar = await requestGetWithoutSession(

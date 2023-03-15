@@ -107,7 +107,7 @@ const Newest = ({ session }) => {
         if (!isExport) {
           params.page = page;
           params.perPage = limit;
-          params.isActive = true;
+          params.isActive = "true";
           params.isOnLandingPage = true
         }
 

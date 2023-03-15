@@ -20,6 +20,7 @@ const Index = ({type, arrow, height, width}) => {
       if(type !== undefined){
         params.category = type;
         params.perPage = 10
+        params.isActive = "true";
         // params.isOnLandingPage = false
       }else{
         params.isOnLandingPage = true

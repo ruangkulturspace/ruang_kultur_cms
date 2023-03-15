@@ -35,7 +35,7 @@ const CardLates = ({ }) => {
       params.page = page;
       params.perPage = limit;
       params.sort = "date@desc"
-      params.isActive = true
+      params.isActive = "true"
 
       const datar = await requestGetWithoutSession(
         "",

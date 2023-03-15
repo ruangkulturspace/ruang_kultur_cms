@@ -57,6 +57,7 @@ const Kanal = ({}) => {
         params.page = page;
         params.perPage = limit;
         params.category = category;
+        params.isActive = "true";
       }
 
       const datar = await requestGetWithoutSession(
@@ -97,7 +98,7 @@ const Kanal = ({}) => {
       params.page = 1;
       params.perPage = 3;
       params.sort = "totalCounter@desc"
-      params.isActive = true
+      params.isActive = "true";
 
       const datar = await requestGetWithoutSession(
         "",
