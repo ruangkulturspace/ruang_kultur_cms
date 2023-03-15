@@ -24,6 +24,7 @@ const KanalDetail = ({}) => {
     const [loadingCount, setLoadingCount] = useState(false);
 
     const [dataDetail, setDataDetail] = useState({})
+    const [printableText, setPrintableText] = useState()
     const [idData, setIdData] = useState([])
     const [pageData, setPageData] = useState([]);
     const [idPageData, setIdPageData] = useState([]);
@@ -41,6 +42,9 @@ const KanalDetail = ({}) => {
         setLoading(false);
         if (datar?.data?.statusCode == 200 ?? false) {
           setDataDetail(datar?.data?.data);
+
+          const printableText = datar?.data?.data?.content.replace(/(?:\r\n|\r|\n)/g, "<br />");
+          setPrintableText(printableText)
         }
     }
 
@@ -271,7 +275,7 @@ const KanalDetail = ({}) => {
               alt={dataDetail?.image?.pathWithFilename}
               src={dataDetail?.image?.completedUrl}
             />
-            <div className="my-3 text-container" dangerouslySetInnerHTML={{ __html: dataDetail?.content }} />
+            <div className="my-3 text-container" dangerouslySetInnerHTML={{ __html: printableText }} />
             <p
               className="my-3 text-lg font-semibold"
               style={{

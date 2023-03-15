@@ -15,6 +15,7 @@ const ArticleDetail = ({ session }) => {
     const [loading, setLoading] = useState(false);
 
     const [dataDetail, setDataDetail] = useState({})
+    const [printableText, setPrintableText] = useState()
 
     const fetchDataDetailArticle = async (idArticle) => {
         setLoading(true);
@@ -26,6 +27,9 @@ const ArticleDetail = ({ session }) => {
         setLoading(false);
         if (datar?.data?.statusCode == 200 ?? false) {
           setDataDetail(datar?.data?.data);
+
+          const printableText = datar?.data?.data?.content.replace(/(?:\r\n|\r|\n)/g, "<br />");
+          setPrintableText(printableText)
         }
     }
 
@@ -133,7 +137,7 @@ const ArticleDetail = ({ session }) => {
             <div className="flex flex-row flex-wrap">
               <Col span={24} className="pb-2">Content :</Col>
               <Col span={24} className="pb-2">
-                <div className="text-container" dangerouslySetInnerHTML={{ __html: dataDetail?.content }} />
+                <div className="text-container" dangerouslySetInnerHTML={{ __html: printableText }} />
               </Col>
             </div>
           </Spin>
