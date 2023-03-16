@@ -104,7 +104,7 @@ const Index = ({type, arrow, height, width}) => {
         <>
           {pageDataJumboTron.length > 0 ? (
             <Carousel
-              // autoplay
+              autoplay
               arrows={true}
               prevArrow={<LeftOutlined />}
               nextArrow={<RightOutlined />}
