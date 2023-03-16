@@ -24,6 +24,7 @@ const Index = ({type, arrow, height, width}) => {
         // params.isOnLandingPage = false
       }else{
         params.isOnLandingPage = true
+        params.isActive = "true";
       }
 
       const datar = await requestGetWithoutSession(
