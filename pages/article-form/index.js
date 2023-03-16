@@ -1,10 +1,10 @@
 import { useAppState } from "../../components/shared/AppProvider";
 import { useEffect, useState } from "react";
 import moment from 'moment';
-import { Button, Input, Form, Card, Select, DatePicker, Checkbox, Radio, Upload, Spin, Row, message } from "antd";
+import { Button, Input, Form, Card, Select, DatePicker, Checkbox, Radio, Upload, Spin, Row, message, Popover } from "antd";
 import { handleSessions } from "../../utils/helpers";
 import { requestGet, requestPostFormData, showSuksesCustom } from "../../utils/baseService";
-import { ReloadOutlined, SaveFilled, UploadOutlined } from "@ant-design/icons";
+import { QuestionOutlined, ReloadOutlined, SaveFilled, SearchOutlined, UploadOutlined } from "@ant-design/icons";
 import { PushNavigateTo } from "../../utils/helpersBrowser";
 import dynamic from "next/dynamic";
 import TextArea from "antd/lib/input/TextArea";
@@ -257,19 +257,24 @@ const ArticleForm = ({ session }) => {
                       ]}
                       style={{ marginBottom: '12px' }}
                   >
-                      <Upload {...uploadSettings}>
-                          <Button style={{
-                              borderRadius: '4px',
-                              color: '#ffffff',
-                              background: "#33539E",
-                              boxShadow: '0px 2px 5px rgba(51, 83, 158, 0.2)',
-                              float: 'right',
-                              margin: "0",
-                          }}
-                              icon={<UploadOutlined />}>
-                              Click to Upload
-                          </Button>
-                      </Upload>
+                      <Row>
+                        <Upload {...uploadSettings}>
+                            <Button style={{
+                                borderRadius: '4px',
+                                color: '#ffffff',
+                                background: "#33539E",
+                                boxShadow: '0px 2px 5px rgba(51, 83, 158, 0.2)',
+                                float: 'right',
+                                margin: "0",
+                            }}
+                                icon={<UploadOutlined />}>
+                                Click to Upload
+                            </Button>
+                        </Upload>
+                        <Popover content="Rekomendasi Ukuran : 764px * 600px" trigger="click">
+                          <Button className="mx-2" shape="circle" size="small" icon={<QuestionOutlined />}></Button>
+                        </Popover>
+                      </Row>
                   </Form.Item>
                 </div>
 

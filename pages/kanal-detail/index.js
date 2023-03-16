@@ -271,7 +271,7 @@ const KanalDetail = ({}) => {
                 objectFit: "cover",
                 objectPosition: "center"
               }}
-              className="w-screen h-96"
+              className="w-screen h-fit"
               alt={dataDetail?.image?.pathWithFilename}
               src={dataDetail?.image?.completedUrl}
             />
