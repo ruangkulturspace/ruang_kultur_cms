@@ -119,9 +119,9 @@ const Index = ({type, arrow, height, width}) => {
                     style={{
                       position: "absolute",
                       // background: "red",
-                      width: "50vh",
-                      height: "22rem",
-                      margin: "8rem 30rem"
+                      width: "55vw",
+                      height: "55vh",
+                      margin: "1% 4%"
                     }}
                     onClick={() => {
                       router.push(
