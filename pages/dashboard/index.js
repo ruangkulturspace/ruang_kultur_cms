@@ -1,17 +1,47 @@
 import { useAppState } from "../../components/shared/AppProvider";
 import { useEffect, useState } from "react";
 import axios from 'axios'
+import dynamic from "next/dynamic";
+const ApexCharts = dynamic(() => import("react-apexcharts"), { ssr: false });
+import "apexcharts/dist/apexcharts.css";
 
-import { Button, Row, Col, notification, Table, Card } from "antd";
+
+import { Button, Row, Col, notification, Table, Card, Statistic } from "antd";
 import { getRandomUser } from "../../utils/services/getRandomUser";
 import { showError } from "../../utils/helpersBrowser";
 import { handleSessions } from "../../utils/helpers";
 import { requestPost } from "../../utils/baseService";
 import { setGrantPermisson } from "../../utils/server/helpers2";
+import { UserOutlined } from "@ant-design/icons";
 
 const DashboardAdmin = ({ session }) => {
     const [state, dispatch] = useAppState();
     const getUser = session?.data?.user?.firstName ?? null
+
+    const [chartData, setChartData] = useState({
+        options: {
+            chart: {
+                id: "basic-bar"
+            },
+            xaxis: {
+                categories: [
+                  "KULTURATIF",
+                  "KULTURAMA",
+                  "KULTURNEMA",
+                  "KULTURMAIN",
+                  "KULTURAGA",
+                  "KULTURGAYA",
+                  "KULTURBISNIS"
+                ]
+            }
+        },
+        series: [
+            {
+                name: "User",
+                data: [30, 40, 35, 50, 49, 60, 70]
+            }
+        ]
+    });
 
     // console.log("asd", session);
 
@@ -54,28 +84,22 @@ const DashboardAdmin = ({ session }) => {
     }, []);
 
     return (
-        <>
-          <h3>Helloooooo, {getUser}</h3>
-          <Row gutter={[16, 16]}>
-            <Col span={10}>
-              <Card
-                title="Persentase Kanal"
-              >
-                <Row justify="space-between">
-                  <p>Card content</p>
-                  <p>Card content</p>
-                </Row>
-              </Card>
-            </Col>
-            <Col span={6} />
-            {/* <Col span={6} />
-            <Col span={6} />
-
-            <Col span={6} />
-            <Col span={6} />
-            <Col span={6} />
-            <Col span={6} /> */}
-          </Row>
+      <>
+        <h3>Helloooooo, {getUser}</h3>
+        <Row gutter={[16, 16]}>
+          <Col span={12}>
+            <Card
+              title="Persentase Kanal"
+            >
+              <ApexCharts options={chartData.options} series={chartData.series} type="bar" height={350} />
+            </Card>
+          </Col>
+          <Col span={12}>
+            <Card>
+              <Statistic title="Uniq Visitor" value={1128} prefix={<UserOutlined />} />
+            </Card>
+          </Col>
+        </Row>
       </>
     );
 };
