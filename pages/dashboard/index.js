@@ -4,7 +4,7 @@ import axios from 'axios'
 
 import "apexcharts/dist/apexcharts.css";
 
-import { Button, Row, Col, notification, Table, Card, Statistic } from "antd";
+import { Button, Row, Col, notification, Table, Card, Statistic, Divider } from "antd";
 import { handleSessions } from "../../utils/helpers";
 import { requestGet, requestPost } from "../../utils/baseService";
 import { setGrantPermisson } from "../../utils/server/helpers2";
@@ -16,6 +16,10 @@ const UserVisitorChart = dynamic(() => import("../../components/Chart/UserVisito
   ssr: false,
 });
 
+const GenderPercentage = dynamic(() => import("../../components/Chart/GenderPercentage"), {
+  ssr: false,
+});
+
 const formatter = (value) => <CountUp end={value} separator="," />;
 
 const DashboardAdmin = ({ session }) => {
@@ -24,21 +28,19 @@ const DashboardAdmin = ({ session }) => {
 
     const [dataVisitorPercentage, setDataVisitorPercentage] = useState([])
     const [dataCategory, setdataCategory] = useState([])
+    const [dataLabelGender, setdataLabelGender] = useState([])
+    const [dataSeriesGender, setdataSeriesGender] = useState([])
     const [totalArticle, setTotalArticle] = useState()
     const [totalBanner, setTotalBanner] = useState()
 
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
-      fetchGraph();
       fetchData({})
+      FetchDataVisitor();
+      FetchDataGender();
+      return () => { };
     }, [])
-
-    const fetchGraph = async () => {
-      setLoading(true);
-      await FetchDataVisitor();
-      setLoading(false);
-    };
 
     const FetchDataVisitor = async () => {
         setLoading(true);
@@ -66,6 +68,33 @@ const DashboardAdmin = ({ session }) => {
           setdataCategory(arrCategory)
         }
     }
+
+    const FetchDataGender = async () => {
+      setLoading(true);
+      var params = {};
+
+      const datar = await requestGet(
+        session,
+        process.env.NEXT_PUBLIC_API_URL + "/api/v1/admin/category/list",
+        {
+          params: params,
+        }
+      );
+      setLoading(false);
+
+      if (datar?.data?.statusCode == 200) {
+
+        let arrGender = [70,30]
+        let arrLabelGender = ["Laki-laki", "Perempuan"]
+        // datar?.data?.data.map((k,v)=>{
+        //   arrGender.push(k?.article?.percentage ?? 0)
+        //   arrLabelGender.push(k?.name)
+        // })
+
+        setdataSeriesGender(arrGender)
+        setdataLabelGender(arrLabelGender)
+      }
+  }
 
     const fetchData = async ({}) => {
         setLoading(true);
@@ -136,11 +165,11 @@ const DashboardAdmin = ({ session }) => {
 
     return (
       <>
-        <h3>Hellooooo, {getUser}</h3>
         <Row gutter={[16, 16]}>
-          <Col xs={24} sm={24} md={24} lg={12}>
+          <Col xs={24} sm={24} md={24} lg={8}>
             <Card
               title="Persentase Kanal"
+              style={{height: "100%"}}
             >
               {dataVisitorPercentage.length >= 1 && dataCategory.length >= 1 && (
                 <UserVisitorChart
@@ -150,24 +179,49 @@ const DashboardAdmin = ({ session }) => {
               )}
             </Card>
           </Col>
-          <Col xs={24} sm={24} md={24} lg={12}>
-            <Row gutter={[16, 16]}>
-              <Col xs={24} sm={24} md={12} lg={12}>
-                <Card>
-                  <Statistic title="Uniq Visitor" value={1128} prefix={<UserOutlined />} formatter={formatter}/>
-                </Card>
-              </Col>
-              <Col xs={24} sm={24} md={12} lg={12}>
-                <Card>
-                  <Statistic title="Total Article" value={totalArticle} prefix={<FileOutlined />} formatter={formatter}/>
-                </Card>
-              </Col>
-              <Col xs={24} sm={24} md={12} lg={12}>
-                <Card>
-                  <Statistic title="Total Banner" value={totalBanner} prefix={<BoxPlotOutlined />} formatter={formatter}/>
-                </Card>
-              </Col>
-            </Row>
+          <Col xs={24} sm={24} md={24} lg={8}>
+            <Card
+              title="Persentase Gender"
+              style={{height: "100%"}}
+            >
+              {dataSeriesGender.length >= 1 && dataLabelGender.length >= 1 && (
+                <GenderPercentage
+                  series={dataSeriesGender}
+                  label={dataLabelGender}
+                />
+              )}
+            </Card>
+          </Col>
+          <Col xs={24} sm={24} md={24} lg={8}>
+            <Card
+              title="Persentase Visitor Age"
+              style={{height: "100%"}}
+            >
+              {/* {dataSeriesGender.length >= 1 && dataLabelGender.length >= 1 && (
+                <GenderPercentage
+                  series={dataSeriesGender}
+                  label={dataLabelGender}
+                />
+              )} */}
+            </Card>
+          </Col>
+        </Row>
+        <br />
+        <Row gutter={[16, 16]}>
+          <Col xs={24} sm={24} md={12} lg={8}>
+            <Card>
+              <Statistic title="Uniq Visitor" value={1128} prefix={<UserOutlined />} formatter={formatter}/>
+            </Card>
+          </Col>
+          <Col xs={24} sm={24} md={12} lg={8}>
+            <Card>
+              <Statistic title="Total Article" value={totalArticle} prefix={<FileOutlined />} formatter={formatter}/>
+            </Card>
+          </Col>
+          <Col xs={24} sm={24} md={12} lg={8}>
+            <Card>
+              <Statistic title="Total Banner" value={totalBanner} prefix={<BoxPlotOutlined />} formatter={formatter}/>
+            </Card>
           </Col>
         </Row>
       </>
