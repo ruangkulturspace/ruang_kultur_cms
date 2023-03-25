@@ -6,7 +6,7 @@ export const handleSessions = async (ctx, needLogin = true, dontRedirect = false
     let grantPermission = await getGrantAccessFromHeader(ctx.req);
     if (sessionUser.code === 0) {
         try {
-            const { data } = await axios.get(process.env.NEXT_PUBLIC_API_URL + '/api/v1/user/info', {
+            const { data } = await axios.get(process.env.NEXT_PUBLIC_API_URL + '/api/v1/user/profile', {
                 headers: {
                     Authorization: "Bearer " + sessionUser?.data?.accessToken,
                 }

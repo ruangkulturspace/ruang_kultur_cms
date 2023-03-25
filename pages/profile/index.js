@@ -20,6 +20,7 @@ import Head from "next/head";
 import { handleSessions } from "../../utils/helpers";
 import { useAppState } from "../../components/shared/AppProvider";
 import { requestPatch, requestPut } from "../../utils/baseService";
+import ModalImageCrop from "../../components/image/ModalImageCrop";
 
 // const Content = styled.div`
 //   max-width: 400px;
@@ -80,13 +81,14 @@ const Profile = ({ form, session }) => {
 
 	return (
 		<>
+      <ModalImageCrop session={session} modalVisible={avatarModal} imageData={avatarCropData} setModalVisible={setAvatarModal}/>
 			<Row>
 				<Col lg="4">
           <span className="avatar-item" onClick={() => avatarRef.current.click()}>
             <Tooltip placement="top" title={"Click to edit profile picture"}>
               <Avatar
                 className="mx-4 my-auto pointer"
-                src={session?.data?.user?.avatar ? `${process.env.NEXT_PUBLIC_API_URL}/public/${session?.data?.user?.avatar}` : "/images/avatar.jpg"}
+                src={session?.data?.user?.photo?.completedUrl ? session?.data?.user?.photo?.completedUrl : "/images/avatar.jpg"}
                 style={{ height: "150px", width: "150px" }}
               />
             </Tooltip>

@@ -109,31 +109,6 @@ const TopMenu = ({session}) => {
             >
               KULTURBISNIS
             </Link>
-            {/* <div className="flex flex-row items-center justify-end md:justify-start">
-              <Dropdown overlay={smallMenu} trigger={["click"]}>
-                <a onClick={(e) => e.preventDefault()} className="text-dark">
-                  <Space size="small">
-                    <div className="pt-0.5">
-                      {pathname === "/"
-                        ? "MORE"
-                        : pathname === "/kanal?type=KULTURAMA"
-                        ? "KULTURNEMA"
-                        : pathname === "/kanal?type=KULTURNEMA"
-                        ? "KULTURMAIN"
-                        : pathname === "/kanal?type=KULTURMAIN"
-                        ? "KULTURAGA"
-                        : pathname === "/kanal?type=KULTURAGA"
-                        ? "KULTURGAYA"
-                        : pathname === "/kanal?type=KULTURGAYA"
-                        ? "KULTURBISNIS"
-                        : pathname === "/kanal?type=KULTURBISNIS"
-                      }
-                    </div>
-                    <DownOutlined />
-                  </Space>
-                </a>
-              </Dropdown>
-            </div> */}
           </div>
           <div className="flex flex-row items-center justify-end w-full lg:hidden md:justify-start">
             <Dropdown overlay={smallMenu} trigger={["click"]}>

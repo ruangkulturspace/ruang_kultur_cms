@@ -116,7 +116,8 @@ const Kanal = ({}) => {
   }
 
   useEffect(() => {
-    fetchData({ page: pagination.current, limit: pagination.pageSize, category: type });
+    setPageData([])
+    fetchData({ page: 1, limit: pagination.pageSize, category: type });
     fetchDataTopArticle();
     fetchDataBanner({type})
   }, [type]);

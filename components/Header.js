@@ -36,7 +36,7 @@ const MainHeader = ({ session, fromDashboard = false }) => {
   useEffect(() => {
     FetchUserProfile({ });
     return () => { };
-  }, [state]);
+  }, []);
 
   const FetchUserProfile = async ({}) => {
       // setLoading(true);
@@ -118,7 +118,7 @@ const MainHeader = ({ session, fromDashboard = false }) => {
 
           <Dropdown overlay={menuDesktop}>
             <div className="mr-3" style={{ cursor: "pointer" }}>
-              <Avatar className="mx-4 my-auto pointer" src={session?.data?.user?.avatar ? `${process.env.NEXT_PUBLIC_API_URL}/public/${session?.data?.user?.avatar}` : "/images/avatar.jpg"} />
+              <Avatar className="mx-4 my-auto pointer" src={dataUser?.photo?.completedUrl ? dataUser?.photo?.completedUrl : "/images/avatar.jpg"} />
               <span
                 className="mr-1"
                 style={{ fontWeight: "bold", color: "#33539E" }}
