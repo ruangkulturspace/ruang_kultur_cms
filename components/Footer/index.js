@@ -22,30 +22,42 @@ const Footer = () => {
         <Col xs={24} sm={12} md={12} lg={6}>
           <p className="text-lg font-bold">About Us</p>
           <div className="flex flex-row">
-            <div className="w-1/2">
+            <div className="w-2/5">
               <div className="py-2">
-                <Link href="/kanal?type=KULTURATIF" className="text-xs">Kulturatif</Link>
-              </div>
-              <div className="py-2">
-                <Link href="/kanal?type=KULTURAMA" className="text-xs">Kulturama</Link>
-              </div>
-              <div className="py-2">
-                <Link href="/kanal?type=KULTUR RAGA" className="text-xs">Kulturaga</Link>
-              </div>
-              <div className="py-2">
-                <Link href="/kanal?type=KULTURNEMA" className="text-xs">Kulturnema</Link>
+                <p className="text-xs">
+                  Telephone
+                </p>
               </div>
             </div>
-            <div className="w-1/2">
+            <div className="w-3/5">
               <div className="py-2">
-                <Link href="/kanal?type=KULTURAGA" className="text-xs">Kulturaga</Link>
+                <p className="text-xs">
+                  : 0812345678
+                </p>
               </div>
+            </div>
+          </div>
+          <div className="flex flex-row">
+            <div className="w-2/5">
               <div className="py-2">
-                <Link href="/kanal?type=KULTUR MAIN" className="text-xs">Kulturmain</Link>
+                <p className="text-xs">
+                  Email
+                </p>
               </div>
+            </div>
+            <div className="w-3/5">
               <div className="py-2">
-                <Link href="/kanal?type=KULTURBISNIS" className="text-xs">Kulturbisnis</Link>
+                <p className="text-xs">
+                  : Ruangkultur@gmail.com
+                </p>
               </div>
+            </div>
+          </div>
+          <div className="w-full">
+            <div className="py-2">
+              <a className="mt-3 text-lg font-bold" href="https://dewatacollectivestudio.com/">
+                Collaborations
+              </a>
             </div>
           </div>
         </Col>
