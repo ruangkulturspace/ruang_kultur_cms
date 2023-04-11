@@ -16,6 +16,7 @@ const TopMenu = ({session}) => {
   const [state, dispatch] = useAppState();
   const router = useRouter();
   const pathname = router.pathname;
+  console.log("asd", pathname);
 
   const [type, setType] = useState()
   const [loading, setLoading] = useState(false);
@@ -66,49 +67,56 @@ const TopMenu = ({session}) => {
               <img src="/assets/icons/logo_ruang_kultur.gif" alt="logo" height={100} width={180} />
             </a>
           </Link>
-          <div className="flex-row items-center justify-start hidden gap-8 lg:flex app-subnav__link">
-            <Link
-              className={pathname === "/kanal" ? `cCnBlue` : `cLg`}
-              href="/kanal?type=KULTURATIF"
-            >
-              KULTURATIF
-            </Link>
-            <Link
-              className={pathname === "/tentang-kami" ? `cCnBlue` : `cLg`}
-              href="/kanal?type=KULTURAMA"
-            >
-              KULTURAMA
-            </Link>
-            <Link
-              className={pathname === "/tentang-kami" ? `cCnBlue` : `cLg`}
-              href="/kanal?type=KULTURNEMA"
-            >
-              KULTURNEMA
-            </Link>
-            <Link
-              className={pathname === "/tentang-kami" ? `cCnBlue` : `cLg`}
-              href="/kanal?type=KULTURMAIN"
-            >
-              KULTURMAIN
-            </Link>
-            <Link
-              className={pathname === "/tentang-kami" ? `cCnBlue` : `cLg`}
-              href="/kanal?type=KULTURAGA"
-            >
-              KULTURAGA
-            </Link>
-            <Link
-              className={pathname === "/tentang-kami" ? `cCnBlue` : `cLg`}
-              href="/kanal?type=KULTURGAYA"
-            >
-              KULTURGAYA
-            </Link>
-            <Link
-              className={pathname === "/tentang-kami" ? `cCnBlue` : `cLg`}
-              href="/kanal?type=KULTURBISNIS"
-            >
-              KULTURBISNIS
-            </Link>
+          <div className="flex-row items-center justify-start hidden gap-8 lg:flex">
+            <div className="text-gray-950 app-subnav__link">
+              <Link
+                href="/kanal?type=KULTURATIF"
+              >
+                KULTURATIF
+              </Link>
+            </div>
+            <div className="text-gray-950 app-subnav__link">
+              <Link
+                href="/kanal?type=KULTURAMA"
+              >
+                KULTURAMA
+              </Link>
+            </div>
+            <div className="text-gray-950 app-subnav__link">
+              <Link
+                href="/kanal?type=KULTURNEMA"
+              >
+                KULTURNEMA
+              </Link>
+            </div>
+            <div className="text-gray-950 app-subnav__link">
+              <Link
+                href="/kanal?type=KULTURMAIN"
+              >
+                KULTURMAIN
+              </Link>
+            </div>
+            <div className="text-gray-950 app-subnav__link">
+              <Link
+                href="/kanal?type=KULTURAGA"
+              >
+                KULTURAGA
+              </Link>
+            </div>
+            <div className="text-gray-950 app-subnav__link">
+              <Link
+                href="/kanal?type=KULTURGAYA"
+              >
+                KULTURGAYA
+              </Link>
+            </div>
+            <div className="text-gray-950 app-subnav__link">
+              <Link
+                href="/kanal?type=KULTURBISNIS"
+              >
+                KULTURBISNIS
+              </Link>
+            </div>
           </div>
           <div className="flex flex-row items-center justify-end w-full lg:hidden md:justify-start">
             <Dropdown overlay={smallMenu} trigger={["click"]}>

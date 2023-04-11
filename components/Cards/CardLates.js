@@ -117,13 +117,13 @@ const CardLates = ({ }) => {
   };
 
   return (
-    <div className="flex flex-col p-10 font-semibold bgW md:p-28">
+    <div className="flex flex-col p-10 font-semibold bgW lg:p-28">
       <div className="flex flex-col items-start justify-between mb-5 md:flex-row md:items-center">
         <div className="flex flex-col justify-between">
           <p className="my-0 text-3xl font-bold">Lates</p>
         </div>
       </div>
-      <div className="grid gap-10 mb-11 grid-rows md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
+      <div className="grid gap-10 grid-rows md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
         {pageData?.map((e, index) => {
           return (
             <div
@@ -171,7 +171,7 @@ const CardLates = ({ }) => {
                 onClick={handleChangeTable1}
                 className="btn btnLightCnBlue"
             >
-                Load more data
+                Load more article
             </Button>
           </>
         )}

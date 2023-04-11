@@ -778,7 +778,7 @@ div.DraftEditor-root {
 @media screen and (max-width: 768px) {
   .fixed-wrap {
     font-size: 14px;
-    max-width: 62vh !important;
+    max-width: 81vw !important;
     padding: 5px;
     position: absolute;
     bottom: 0;
@@ -802,6 +802,12 @@ div.DraftEditor-root {
   }
 }
 
+.app-subnav__link {
+  width: 10ch;
+  font-weight: 400;
+}
+
 .app-subnav__link a:hover{
-  color: #B4FD4A;
+  color: #000000;
+  font-weight: bold;
 }

@@ -150,8 +150,8 @@ const Index = ({type, arrow, height, width}) => {
                   />
                   <div
                     style={{
-                      background: "rgb(190 190 190 / 20%)",
-                      width: state.mobile === true ? "42vh" : width
+                      // background: "rgb(190 190 190 / 20%)",
+                      width: state.mobile === true ? "81vw" : width
                     }}
                     className="p-10 text-4xl font-bold text-white font__tittle fixed-wrap"
                   >

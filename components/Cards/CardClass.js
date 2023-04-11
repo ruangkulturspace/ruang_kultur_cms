@@ -1,8 +1,11 @@
 import { ClockCircleOutlined } from "@ant-design/icons";
 import React, { useState } from "react";
+import { useAppState } from "../shared/AppProvider";
 
 const CardClass = ({ title, category, date, kuota, imageName, width }) => {
   const [hovered, setHovered] = useState(false);
+  const [state, dispatch] = useAppState();
+
   return (
     <div
       onMouseEnter={() => setHovered(true)}
@@ -10,7 +13,7 @@ const CardClass = ({ title, category, date, kuota, imageName, width }) => {
       className="flex flex-col justify-start rounded-2xl drop-shadow bgW"
       style={{
         height: "90%",
-        width: "100%",
+        width: state.mobile === true ? "50vh" : "100%",
       }}
     >
       <img
@@ -37,7 +40,7 @@ const CardClass = ({ title, category, date, kuota, imageName, width }) => {
           </div>
           <div className="flex flex-col items-start justify-center mt-2 mb-5 text-xs font-normal cMedgrey">
             <div className="flex flex-row items-center gap-2">
-              <button className="float-right btnLightCnBlue text-xs font-semibold">
+              <button className="float-right text-xs font-semibold btnLightCnBlue">
                 {category}
               </button>
             </div>

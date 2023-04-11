@@ -58,6 +58,7 @@ const Kanal = ({}) => {
         params.perPage = limit;
         params.category = category;
         params.isActive = "true";
+        params.sort = "date@desc"
       }
 
       const datar = await requestGetWithoutSession(
@@ -260,7 +261,7 @@ const Kanal = ({}) => {
             />
           )
         })}
-        <div className="flex flex-col px-10 py-5 font-semibold bgW md:px-28">
+        <div className="flex flex-col px-10 py-5 font-semibold bgW lg:px-28">
           <div className="flex flex-col items-start justify-between md:flex-row md:items-center">
             <div className="flex flex-col justify-between">
               <p className="my-0 text-3xl font-bold">{type}</p>
@@ -270,7 +271,7 @@ const Kanal = ({}) => {
             gutter={[16, 24]}
             className="py-5"
           >
-            <Col xs={24} sm={24} md={18} lg={18}>
+            <Col xs={24} sm={24} md={16} lg={18}>
               <Carousel
                 type={type}
                 arrow={true}
@@ -278,7 +279,7 @@ const Kanal = ({}) => {
                 width={"119vh"}
               />
             </Col>
-            <Col xs={24} sm={24} md={6} lg={6}>
+            <Col xs={24} sm={24} md={8} lg={6}>
               <p
                 className="mb-3 text-lg"
                 style={{
@@ -306,7 +307,7 @@ const Kanal = ({}) => {
                             backgroundPosition: "center",
                             height: "10vh",
                             objectFit: "cover",
-                            objectPosition: "center"
+                            objectPosition: "center",
                           }}
                           alt={e?.image?.pathWithFilename}
                           src={e?.image?.completedUrl}
@@ -395,7 +396,7 @@ const Kanal = ({}) => {
                         onClick={handleChangeTable1}
                         className="btn btnLightCnBlue"
                     >
-                        Load more data
+                        Load more article
                     </Button>
                   </>
                 )}
