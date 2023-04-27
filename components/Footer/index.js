@@ -1,5 +1,6 @@
 import { FacebookOutlined, InstagramOutlined, TwitterOutlined, YoutubeOutlined } from "@ant-design/icons";
 import { Button, Col, Input, Row } from "antd";
+import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
@@ -7,15 +8,15 @@ const Footer = () => {
   return (
     <div className="flex flex-col bgRkGreen cD">
       <div className="flex flex-col justify-start gap-5 px-10 pt-20 bgLightRkGreen md:flex-row md:px-28">
-        <img src="/assets/icons/LOGO_DEVELOPE_rK-12.png" alt="logo" className="mb-4" height={80} width={80}/>
+        <Image src="/assets/icons/logo_r_kultur.png" alt="logo" className="logo" height={50} width={250}/>
       </div>
       <Row
         gutter={[16, 24]}
         className="flex flex-col justify-center px-10 pb-10 bgLightRkGreen md:flex-row md:px-28"
       >
         <Col xs={24} sm={12} md={12} lg={6}>
-          <p className="text-lg font-bold">Ruang Kultur</p>
-          <p className="text-xs">
+          {/* <p className="text-lg font-bold">Ruang Kultur</p> */}
+          <p className="mt-2 text-xs">
             Ruang Kultur  is a digital creative and communicative talk about Art, Entertainment, Lifestyle and things currently happening.{" "}
           </p>
         </Col>
