@@ -33,7 +33,7 @@ const Footer = () => {
             <div className="w-3/5">
               <div className="py-2">
                 <p className="text-xs">
-                  : 0812345678
+                  : +6281388886776
                 </p>
               </div>
             </div>
@@ -49,7 +49,7 @@ const Footer = () => {
             <div className="w-3/5">
               <div className="py-2">
                 <p className="text-xs">
-                  : Ruangkultur@gmail.com
+                  : Management@Dewata.info
                 </p>
               </div>
             </div>
