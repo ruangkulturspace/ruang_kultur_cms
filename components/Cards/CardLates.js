@@ -123,7 +123,7 @@ const CardLates = ({ }) => {
           <p className="my-0 text-3xl font-bold">Lates</p>
         </div>
       </div>
-      <div className="grid gap-10 grid-rows md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
+      <div className="grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
         {pageData?.map((e, index) => {
           return (
             <div
