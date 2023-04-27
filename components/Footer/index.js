@@ -14,13 +14,13 @@ const Footer = () => {
         gutter={[16, 24]}
         className="flex flex-col justify-center px-10 pb-10 bgLightRkGreen md:flex-row md:px-28"
       >
-        <Col xs={24} sm={12} md={12} lg={6}>
+        <Col xs={24} sm={12} md={12} lg={8}>
           {/* <p className="text-lg font-bold">Ruang Kultur</p> */}
           <p className="mt-2 text-xs">
             Ruang Kultur  is a digital creative and communicative talk about Art, Entertainment, Lifestyle and things currently happening.{" "}
           </p>
         </Col>
-        <Col xs={24} sm={12} md={12} lg={6}>
+        <Col xs={24} sm={12} md={12} lg={8}>
           <p className="text-lg font-bold">About Us</p>
           <div className="flex flex-row">
             <div className="w-2/5">
@@ -56,21 +56,27 @@ const Footer = () => {
           </div>
           <div className="w-full">
             <div className="py-2">
-              <a className="mt-3 text-lg font-bold" href="https://dewatacollectivestudio.com/">
+              <a className="mt-3 text-xs" href="https://dewatacollectivestudio.com/">
                 Collaborations
               </a>
             </div>
           </div>
-        </Col>
-        <Col xs={24} sm={12} md={12} lg={6}>
-          <p className="mb-3 text-lg font-bold">Network</p>
-          <div className="flex flex-col justify-center gap-2">
-            <a className="mt-3 text-lg font-bold" href="https://dewatacollectivestudio.com/">
-              DEWATA COLLECTIVE
-            </a>
+          <div className="w-full">
+            <div className="py-2">
+              <a className="mt-3 text-xs" href="https://dewatacollectivestudio.com/">
+                Network
+              </a>
+            </div>
+          </div>
+          <div className="w-full">
+            <div className="py-2">
+              <a className="mt-3 text-xs" href="https://dewatacollectivestudio.com/">
+                Member of Kencana Dewata
+              </a>
+            </div>
           </div>
         </Col>
-        <Col xs={24} sm={12} md={12} lg={6}>
+        <Col xs={24} sm={12} md={12} lg={8}>
           <div className="mapouter">
             <div className="gmap_canvas">
               <iframe width="100%" height="100%" id="gmap_canvas" src="https://maps.google.com/maps?q=dewata collective&t=&z=10&ie=UTF8&iwloc=&output=embed" frameBorder="0" scrolling="no" marginHeight="0" marginWidth="0">
