@@ -128,6 +128,104 @@ async function doRefreshPermission(req, res) {
   }
 }
 
+export async function requestDownloadWithPost(
+	sessions, url, data,
+	settings = {},
+	filename,
+) {
+	try {
+		console.log("%c FetcherDownloadWithPost: " + url, "background: #222; color: #bada55");
+		console.log(
+			"%c withParam: " + JSON.stringify(data),
+			"background: #222; color: #bada55"
+		);
+
+		const response = await axios.post(url, data, {
+			headers: {
+				Authorization: "Bearer " + sessions?.data?.accessToken ?? "",
+        'x-permission-token': sessions?.data?.grantAccess?.data ?? ""
+			},
+			responseType: 'blob',
+		});
+
+		const urlCreate = window.URL.createObjectURL(new Blob([response.data]));
+		const link = document.createElement('a');
+		link.href = urlCreate;
+		link.setAttribute('download', filename); //or any other extension
+		document.body.appendChild(link);
+		link.click();
+	} catch (error) {
+		if (error?.response?.data?.message === "report not found") {
+			showErrorCustom(
+				"Gagal mengenerate report",
+				"Berita Acara penagihan yang anda pilih belum memiliki data pada periode penagihan yang dipilih"
+			);
+		} else {
+			showError(
+				error?.response?.data?.message ?? "Terjadi Kesalahan pada server!"
+			);
+		}
+		if (error?.response?.data?.statusCode == "401") {
+			doLogout();
+		}
+		console.error(error);
+		return error;
+	}
+}
+
+export async function requestDownload(
+	sessions,
+	url,
+	{ params, headers, silent = false } = {},
+	filename,
+) {
+	try {
+		console.log("%c FetcherDownload: " + url, "background: #222; color: #bada55");
+		console.log(
+			"%c withParam: " + JSON.stringify(params),
+			"background: #222; color: #bada55"
+		);
+
+		const response = await axios.get(url,
+			{
+				params,
+				headers: {
+					...headers,
+					Authorization: "Bearer " + sessions?.data?.accessToken ?? "",
+          'x-permission-token': sessions?.data?.grantAccess?.data ?? ""
+				},
+				method: 'GET',
+				responseType: 'blob',
+			}
+		);
+
+		console.log(response)
+
+		const urlCreate = window.URL.createObjectURL(new Blob([response.data]));
+		const link = document.createElement('a');
+		link.href = urlCreate;
+		link.setAttribute('download', filename); //or any other extension
+		document.body.appendChild(link);
+		link.click();
+	} catch (error) {
+		if (error?.response?.data?.message === "report not found") {
+			showErrorCustom(
+				"Gagal mengenerate report",
+				"Berita Acara penagihan yang anda pilih belum memiliki data pada periode penagihan yang dipilih"
+			);
+		} else {
+			showError(
+				error?.response?.data?.message ?? "Terjadi Kesalahan pada server!"
+			);
+		}
+		if (error?.response?.data?.statusCode == "401") {
+			doLogout();
+		}
+		console.error(error);
+		return error;
+	}
+}
+
 export async function requestPatch(sessions, url, data) {
 	try {
 		console.log("%c FetcherPatch: " + url, "background: #222; color: #bada55");

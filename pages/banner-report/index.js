@@ -2,10 +2,11 @@ import Head from "next/head";
 import { useAppState } from "../../components/shared/AppProvider";
 import { useEffect, useState } from "react";
 import moment from 'moment';
-import { Button, Row, Col, notification, Table, Input, Tooltip } from "antd";
+import { Button, Row, Col, notification, Table, Input, Tooltip, DatePicker } from "antd";
 import { handleSessions } from "../../utils/helpers";
-import { requestGet } from "../../utils/baseService";
+import { requestDownloadWithPost, requestGet } from "../../utils/baseService";
 import Link from "next/link";
+import { DisableDateMonth } from "../../utils/helpersBrowser";
 // import ModalDeletePageView from "../../components/PageView/ModalDeletePageView";
 
 const UsersAction = ({
@@ -48,6 +49,7 @@ const BannerReport = ({ session }) => {
     const [searchWord, setSearchWord] = useState('');
     const [filtering, setFiltering] = useState('');
     const [sortering, setSorter] = useState({});
+    const [periode, setPeriode] = useState([])
 
     const [modalDelete, setModalDelete] = useState(false);
     const [dataDelete, setDataDelete] = useState({});
@@ -68,6 +70,7 @@ const BannerReport = ({ session }) => {
       limit = pagination.pageSize,
       isExport = false,
       filters = filtering,
+      range = [],
       sorter = sortering
     }) => {
         setLoading(true);
@@ -99,13 +102,30 @@ const BannerReport = ({ session }) => {
           }
         }
 
-        const datar = await requestGet(
-          session,
-          process.env.NEXT_PUBLIC_API_URL + "/api/v1/admin/banner/list",
-          {
-            params: params,
+        if (range) {
+          if (range?.[0]) {
+            params.startDate = range[0].toISOString();
           }
-        );
+          if (range?.[1]) {
+            params.endDate = range[1].toISOString();
+          }
+        }
+
+        const datar = !isExport
+          ? await requestGet(
+            session,
+            process.env.NEXT_PUBLIC_API_URL + "/api/v1/admin/banner/list",
+            {
+              params: params,
+            }
+          )
+          : await requestDownloadWithPost(
+            session,
+            process.env.NEXT_PUBLIC_API_URL + "/api/v1/admin/banner/export",
+            params,
+            {},
+            range[0] ? `Banner_Report_${range[0].format("YYYY-MM-DD")}_${range[1].format("YYYY-MM-DD")}.xlsx` : "Banner_Report.xlsx"
+          )
         setLoading(false);
 
         if (datar?.data?.statusCode == 200) {
@@ -137,6 +157,41 @@ const BannerReport = ({ session }) => {
                     });
                 }}
             /> */}
+
+            <Row>
+              <Col xs={24} sm={24} md={24} lg={24}>
+                <h1 style={{ fontSize: '12px' }} className="headerPage">
+                  Date Range
+                </h1>
+              </Col>
+            </Row>
+            <Row gutter={[10, 10]} justify="space-between">
+              <Col xs={24} sm={24} md={24} lg={6}>
+                <DatePicker.RangePicker
+                  style={{
+                    width: "100%",
+                    borderRadius: "4px",
+                  }}
+                  suffixIcon={
+                    <Row align="middle">
+                      <img alt="dropdown" src="/images/icon/arrow-down-blue.svg" />
+                    </Row>
+                  }
+                  disabled={loading}
+                  // placeholder="Cari Bulan & Tahun"
+                  disabledDate={DisableDateMonth}
+                  onChange={(value, vstring) => {
+                    fetchData({
+                      page: 1,
+                      limit: pagination.pageSize,
+                      range: value
+                    });
+                    setPeriode(value);
+                    // onChange(filter, value);
+                  }}
+                />
+              </Col>
+            </Row>
 
             <Row>
                 <Col xs={24} sm={24} md={24} lg={24}>
@@ -193,8 +248,32 @@ const BannerReport = ({ session }) => {
                         <Row gutter={[10, 10]}>
                             {!state.mobile && <Col xs={24} sm={24} md={24} lg={10}></Col>}
 
-                            <Col xs={24} sm={24} md={24} lg={14}>
+                            {/* <Col xs={24} sm={24} md={24} lg={14}>
 
+                            </Col> */}
+                            <Col xs={24} sm={24} md={24} lg={10}>
+                              <Button
+                                loading={loading}
+                                style={{
+                                  borderRadius: "4px",
+                                  color: "#33539E",
+                                  boxShadow: "0px 2px 5px rgba(51, 83, 158, 0.2)",
+                                  width: "100%",
+                                }}
+                                className="btn"
+                                onClick={() => {
+                                  fetchData({
+                                    page: pagination.current,
+                                    limit: pagination.pageSize,
+                                    filters: filtering,
+                                    sorter: sortering,
+                                    isExport: true,
+                                    range: periode
+                                  });
+                                }}
+                              >
+                                Export
+                              </Button>
                             </Col>
                         </Row>
                     </div>

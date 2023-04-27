@@ -2,13 +2,13 @@ import Head from "next/head";
 import { useAppState } from "../../components/shared/AppProvider";
 import { useEffect, useState } from "react";
 import moment from 'moment';
-import { Button, Row, Col, notification, Table, Input, Tooltip, Form, Switch } from "antd";
+import { Button, Row, Col, notification, Table, Input, Tooltip, Form, Switch, DatePicker, Divider } from "antd";
 import { handleSessions } from "../../utils/helpers";
-import { requestGet, requestPatch, showSuksesCustom } from "../../utils/baseService";
+import { requestDownloadWithPost, requestGet, requestPatch, requestPost, showSuksesCustom } from "../../utils/baseService";
 // import ModalViewArticle from "../../components/Article/ModalViewArticle";
 import ModalDeleteArticle from "../../components/Article/ModalDeleteArticle";
 import Link from "next/link";
-import { PushNavigateTo } from "../../utils/helpersBrowser";
+import { DisableDateMonth, PushNavigateTo } from "../../utils/helpersBrowser";
 
 const UsersAction = ({
   session,
@@ -79,12 +79,16 @@ const Article = ({ session }) => {
     const [searchWord, setSearchWord] = useState('');
     const [filtering, setFiltering] = useState('');
     const [sortering, setSorter] = useState({});
+    const [periode, setPeriode] = useState([])
 
     const [modalDelete, setModalDelete] = useState(false);
     const [dataDelete, setDataDelete] = useState({});
 
     useEffect(() => {
-        fetchData({ page: pagination.current, limit: pagination.pageSize });
+        fetchData({
+          page: pagination.current,
+          limit: pagination.pageSize
+        });
     }, []);
 
     const [formIsActive] = Form.useForm();
@@ -119,7 +123,8 @@ const Article = ({ session }) => {
       limit = pagination.pageSize,
       isExport = false,
       filters = filtering,
-      sorter = sortering
+      range = [],
+      sorter = sortering,
     }) => {
         setLoading(true);
         var params = {};
@@ -130,16 +135,33 @@ const Article = ({ session }) => {
         }
 
         if (searchWord != '') {
-            params.search = searchWord;
+          params.search = searchWord;
         }
 
-        const datar = await requestGet(
-          session,
-          process.env.NEXT_PUBLIC_API_URL + "/api/v1/admin/article/list",
-          {
-            params: params,
+        if (range) {
+          if (range?.[0]) {
+            params.startDate = range[0].toISOString();
           }
-        );
+          if (range?.[1]) {
+            params.endDate = range[1].toISOString();
+          }
+        }
+
+        const datar = !isExport
+          ? await requestGet(
+            session,
+            process.env.NEXT_PUBLIC_API_URL + "/api/v1/admin/article/list",
+            {
+              params: params,
+            }
+          )
+          : await requestDownloadWithPost(
+            session,
+            process.env.NEXT_PUBLIC_API_URL + "/api/v1/admin/article/export",
+            params,
+            {},
+            range[0] ? `Article_List_Export_${range[0].format("YYYY-MM-DD")}_${range[1].format("YYYY-MM-DD")}.xlsx` : "Article_List_Export.xlsx"
+          )
         setLoading(false);
 
         if (datar?.data?.statusCode == 200) {
@@ -173,8 +195,43 @@ const Article = ({ session }) => {
             />
 
             <Row>
+              <Col xs={24} sm={24} md={24} lg={24}>
+                <h1 style={{ fontSize: '12px' }} className="headerPage">
+                  Date Range
+                </h1>
+              </Col>
+            </Row>
+            <Row gutter={[10, 10]} justify="space-between">
+              <Col xs={24} sm={24} md={24} lg={6}>
+                <DatePicker.RangePicker
+                  style={{
+                    width: "100%",
+                    borderRadius: "4px",
+                  }}
+                  suffixIcon={
+                    <Row align="middle">
+                      <img alt="dropdown" src="/images/icon/arrow-down-blue.svg" />
+                    </Row>
+                  }
+                  disabled={loading}
+                  // placeholder="Cari Bulan & Tahun"
+                  disabledDate={DisableDateMonth}
+                  onChange={(value, vstring) => {
+                    fetchData({
+                      page: 1,
+                      limit: pagination.pageSize,
+                      range: value
+                    });
+                    setPeriode(value);
+                    // onChange(filter, value);
+                  }}
+                />
+              </Col>
+            </Row>
+
+            <Row>
                 <Col xs={24} sm={24} md={24} lg={24}>
-                    <h1 style={{ fontSize: '12px' }} className="headerPage">
+                    <h1 style={{ fontSize: '12px' }} className="mt-2 headerPage">
                         Search
                     </h1>
                 </Col>
@@ -225,9 +282,9 @@ const Article = ({ session }) => {
                         style={{ float: 'right', width: state.mobile ? 'auto' : '340px' }}
                     >
                         <Row gutter={[10, 10]}>
-                            {!state.mobile && <Col xs={24} sm={24} md={24} lg={10}></Col>}
+                            {!state.mobile && <Col xs={24} sm={24} md={24} lg={2}></Col>}
 
-                            <Col xs={24} sm={24} md={24} lg={14}>
+                            <Col xs={24} sm={24} md={24} lg={10}>
                                 <Button
                                     className="btn btnBlue"
                                     style={{ borderRadius: "4px" }}
@@ -236,6 +293,30 @@ const Article = ({ session }) => {
                                       Tambah Article
                                     </Link>
                                 </Button>
+                            </Col>
+                            <Col xs={24} sm={24} md={24} lg={10}>
+                              <Button
+                                loading={loading}
+                                style={{
+                                  borderRadius: "4px",
+                                  color: "#33539E",
+                                  boxShadow: "0px 2px 5px rgba(51, 83, 158, 0.2)",
+                                  width: "100%",
+                                }}
+                                className="btn"
+                                onClick={() => {
+                                  fetchData({
+                                    page: pagination.current,
+                                    limit: pagination.pageSize,
+                                    filters: filtering,
+                                    sorter: sortering,
+                                    isExport: true,
+                                    range: periode
+                                  });
+                                }}
+                              >
+                                Export
+                              </Button>
                             </Col>
                         </Row>
                     </div>
