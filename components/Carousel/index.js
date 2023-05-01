@@ -21,6 +21,7 @@ const Index = ({type, arrow, height, width}) => {
         params.category = type;
         params.perPage = 10
         params.isActive = "true";
+        params.sort = "date@desc"
         // params.isOnLandingPage = false
       }else{
         params.isOnLandingPage = true
@@ -105,7 +106,7 @@ const Index = ({type, arrow, height, width}) => {
         <>
           {pageDataJumboTron.length > 0 ? (
             <Carousel
-              // autoplay
+              autoplay
               arrows={true}
               prevArrow={<LeftOutlined />}
               nextArrow={<RightOutlined />}
