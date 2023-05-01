@@ -5,6 +5,14 @@ import Link from "next/link";
 import React from "react";
 
 const Footer = () => {
+  const openWhatsApp = () => {
+    window.open('https://wa.me/+6281388886776', '_blank');
+  };
+
+  const openEmail = () => {
+    window.open('https://mail.google.com/mail/');
+  };
+
   return (
     <div className="flex flex-col bgRkGreen cD">
       <div className="flex flex-col justify-start gap-5 px-10 pt-20 bgLightRkGreen md:flex-row md:px-28">
@@ -32,9 +40,9 @@ const Footer = () => {
             </div>
             <div className="w-3/5">
               <div className="py-2">
-                <p className="text-xs">
+                <a className="text-xs" href="#" onClick={openWhatsApp}>
                   : +6281388886776
-                </p>
+                </a>
               </div>
             </div>
           </div>
@@ -48,9 +56,9 @@ const Footer = () => {
             </div>
             <div className="w-3/5">
               <div className="py-2">
-                <p className="text-xs">
+                <a className="text-xs" href="#" onClick={openEmail}>
                   : Management@Dewata.info
-                </p>
+                </a>
               </div>
             </div>
           </div>
