@@ -15,14 +15,12 @@ const Footer = () => {
 
   return (
     <div className="flex flex-col bgRkGreen cD">
-      <div className="flex flex-col justify-start gap-5 px-10 pt-20 bgLightRkGreen md:flex-row md:px-28">
-        <Image src="/assets/icons/logo_r_kultur.png" alt="logo" className="logo" height={50} width={250}/>
-      </div>
       <Row
         gutter={[16, 24]}
-        className="flex flex-col justify-center px-10 pb-10 bgLightRkGreen md:flex-row md:px-28"
+        className="flex flex-col justify-center p-10 bgLightRkGreen md:flex-row md:px-28"
       >
         <Col xs={24} sm={12} md={12} lg={8}>
+          <Image src="/assets/icons/logo_r_kultur.png" alt="logo" className="py-2 logo" height={70} width={250}/>
           {/* <p className="text-lg font-bold">Ruang Kultur</p> */}
           <p className="mt-2 text-xs">
             Ruang Kultur  is a digital creative and communicative talk about Art, Entertainment, Lifestyle and things currently happening.{" "}
