@@ -62,14 +62,14 @@ const Footer = () => {
           </div>
           <div className="w-full">
             <div className="py-2">
-              <a className="mt-3 text-xs" href="https://dewatacollectivestudio.com/">
+              <a className="mt-3 text-xs" href="#" onClick={openEmail}>
                 Collaborations
               </a>
             </div>
           </div>
           <div className="w-full">
             <div className="py-2">
-              <a className="mt-3 text-xs" href="https://dewatacollectivestudio.com/">
+              <a className="mt-3 text-xs" href="#">
                 Network
               </a>
             </div>
