@@ -29,7 +29,7 @@ const Footer = () => {
           </p>
         </Col>
         <Col xs={24} sm={12} md={12} lg={8}>
-          <p className="text-lg font-bold">About Us</p>
+          <p className="text-lg font-bold">Contact Us</p>
           <div className="flex flex-row">
             <div className="w-2/5">
               <div className="py-2">

@@ -143,7 +143,8 @@ export async function requestDownloadWithPost(
 		const response = await axios.post(url, data, {
 			headers: {
 				Authorization: "Bearer " + sessions?.data?.accessToken ?? "",
-        'x-permission-token': sessions?.data?.grantAccess?.data ?? ""
+        'x-permission-token': sessions?.data?.grantAccess?.data ?? "",
+        'x-custom-lang': "en",
 			},
 			responseType: 'blob',
 		});
