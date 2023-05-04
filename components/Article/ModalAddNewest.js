@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Button, Modal, Row, Col, Form, Input, Select, Checkbox, Radio, Switch, Upload, DatePicker } from 'antd';
+import { Button, Modal, Row, Col, Form, Input, Select, Checkbox, Radio, Switch, Upload, DatePicker, AutoComplete } from 'antd';
 import styled from 'styled-components';
 // import { FetcherGet, requestPost, showSuksesCustom } from "../../utils/fetcher";
 import { useAppState } from "../shared/AppProvider";
@@ -15,6 +15,9 @@ const ModalAddNewest = ({ session, modalAdd, setModalAdd, onFinish = () => { } }
     const [titleArticle, setTitleArticle] = useState()
     const [idArticle, setIdArticle] = useState([])
     const [dataTitleArticle, setDataTitleArticle] = useState()
+
+    const [autoCompleteOptions, setAutoCompleteOptions] = useState([])
+    const [searchWord, setSearch] = useState('')
 
     const [formAddBanner] = Form.useForm();
 
@@ -42,29 +45,32 @@ const ModalAddNewest = ({ session, modalAdd, setModalAdd, onFinish = () => { } }
         });
     }
 
-    const fetchDataTitleArticle = async () => {
-        setLoading(true);
-        var params = {};
-
-        params.isActive = true;
-
-        const datar = await requestGet(
+    const autoCompleteSearch = async (value) => {
+      if (value.length > 1) {
+        const data = await requestGet(
           session,
-          process.env.NEXT_PUBLIC_API_URL + "/api/v1/admin/article/list",
+          process.env.NEXT_PUBLIC_API_URL + '/api/v1/admin/article/list',
           {
-            params: params,
+            params: {
+              search: value,
+            },
+          },
+        )
+        // console.log(data?.data?.data);
+        let fixOptions = data?.data?.data?.map((item, index) => {
+          return {
+            label: (item?.title ?? '-'),
+            value: item?._id ?? '',
           }
-        );
-        setLoading(false);
-
-        if (datar?.data?.statusCode == 200) {
-          setDataTitleArticle(datar?.data?.data ?? []);
-        }
+        })
+        // console.log(fixOptions);
+        setAutoCompleteOptions(fixOptions ?? [])
+      }
     }
 
-    useEffect(() => {
-        fetchDataTitleArticle();
-    }, []);
+    const autoCompleteSelect = (value) => {
+      setSearch(value)
+    }
 
     const Content = styled.div`
         max-width: 400px;
@@ -131,13 +137,30 @@ const ModalAddNewest = ({ session, modalAdd, setModalAdd, onFinish = () => { } }
                 </Row>
 
                 <div style={{ height: '20px' }}></div>
-                <Row type="flex" align="middle" justify="center">
-                    <Content>
+                <Row type="flex" align="middle" justify="start">
+                    <p style={StyleHeaderInput} className="mb-2">
+                      Title Article
+                    </p>
+                    <AutoComplete
+                      className="autocomplete-custom"
+                      placeholder="Pilih Title Article"
+                      filterOption={false}
+                      mode="tags"
+                      allowClear
+                      options={autoCompleteOptions}
+                      style={{ borderRadius: '5px', width: '100%' }}
+                      onSelect={autoCompleteSelect}
+                      onSearch={autoCompleteSearch}
+                      onChange={(value) => {
+                        setSearch(value)
+                        setTitleArticle(value)
+                        setIdArticle([value])
+                      }}
+                      value={searchWord}
+                    />
+                    {/* <Content>
                         <Form layout="vertical" form={formAddBanner} className="formDaftar">
                           <>
-                            <p style={StyleHeaderInput}>
-                              Title Article
-                            </p>
                             <Form.Item
                                 name="articleIds"
                                 style={{ marginBottom: '12px' }}
@@ -166,7 +189,7 @@ const ModalAddNewest = ({ session, modalAdd, setModalAdd, onFinish = () => { } }
                           </>
 
                         </Form>
-                    </Content>
+                    </Content> */}
                 </Row>
             </Modal>
         </>
