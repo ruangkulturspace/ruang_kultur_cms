@@ -92,7 +92,7 @@ const ArticleDetail = ({ session }) => {
                 </div>
                 <div className="w-full px-0 mt-3">
                   <Row>
-                    <Col span={8}>Onlanding Page</Col>
+                    <Col span={8}>Newest</Col>
                     <Col span={16}>
                       <Radio.Group
                         options={[
