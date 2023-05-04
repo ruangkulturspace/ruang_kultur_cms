@@ -20,11 +20,12 @@ const Footer = () => {
         className="flex flex-col justify-center p-10 bgLightRkGreen md:flex-row md:px-28"
       >
         <Col xs={24} sm={12} md={12} lg={8}>
-          <Image src="/assets/icons/logo_r_kultur.png" alt="logo" className="py-2 logo" height={70} width={250}/>
+          <Image src="/assets/icons/logo_r_kultur.png" alt="logo" className="py-2 logo" height={50} width={210}/>
           {/* <p className="text-lg font-bold">Ruang Kultur</p> */}
           <p className="mt-2 text-xs">
             Ruang Kultur  is a digital creative and communicative talk about Art, Entertainment, Lifestyle and things currently happening.{" "}
           </p>
+          <Image src="/assets/icons/Asset_21.png" alt="logo" className="py-2 mt-2 logo" height={135} width={345}/>
         </Col>
         <Col xs={24} sm={12} md={12} lg={8}>
           <p className="text-lg font-bold">Contact Us</p>
@@ -74,13 +75,13 @@ const Footer = () => {
               </a>
             </div>
           </div>
-          <div className="w-full">
+          {/* <div className="w-full">
             <div className="py-2">
               <a className="mt-3 text-xs" href="https://dewatacollectivestudio.com/">
                 Member of Kencana Dewata
               </a>
             </div>
-          </div>
+          </div> */}
         </Col>
         <Col xs={24} sm={12} md={12} lg={8}>
           <div className="mapouter">
