@@ -25,7 +25,7 @@ const Footer = () => {
           <p className="mt-2 text-xs">
             Ruang Kultur  is a digital creative and communicative talk about Art, Entertainment, Lifestyle and things currently happening.{" "}
           </p>
-          <Image src="/assets/icons/Asset_21.png" alt="logo" className="py-2 mt-2 logo" height={100} width={260}/>
+          <Image src="/assets/icons/Asset_21.png" alt="logo" className="py-2 mt-2 logo" height={70} width={165}/>
         </Col>
         <Col xs={24} sm={12} md={12} lg={8}>
           <p className="text-lg font-bold">Contact Us</p>
